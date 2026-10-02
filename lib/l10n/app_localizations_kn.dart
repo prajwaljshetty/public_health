@@ -187,4 +187,29 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get openSettings => 'ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ';
+
+  @override
+  String get profile => 'ಪ್ರೊಫೈಲ್';
+
+  @override
+  String get account => 'ಖಾತೆ';
+
+  @override
+  String get personalInformation => 'ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ';
+
+  @override
+  String get changePassword => 'ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಿ';
+
+  @override
+  String get logOut => 'ಲಾಗ್ ಔಟ್';
+
+  @override
+  String get pickupRequested => 'ಪಿಕಪ್ ವಿನಂತಿಸಲಾಗಿದೆ';
+
+  @override
+  String get pickupConfirmationMessage =>
+      'ನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಕಾರ್ಮಿಕರನ್ನು ನಿಯೋಜಿಸಿದಾಗ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.';
+
+  @override
+  String get done => 'ಮುಗಿದಿದೆ';
 }

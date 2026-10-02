@@ -95,8 +95,7 @@ class _LocationPageState extends State<LocationPage> {
             height: 320,
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
-              color: AppColors.hero,
-              border: BoxBorder.all(color: AppColors.textPrimary),
+              color: AppColors.yellow,
               borderRadius: BorderRadius.circular(24),
             ),
             child: Stack(

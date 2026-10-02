@@ -112,7 +112,7 @@ class _PhotoPageState extends State<PhotoPage> {
                 ),
 
                 Align(
-                  alignment: const Alignment(-1, 1.1),
+                  alignment: const Alignment(-1, 1.08),
                   child: Text(
                     l10n.wasteVerification,
                     style: const TextStyle(

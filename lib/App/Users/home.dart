@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 // Theme
 import 'package:public_health/Theme/theme.dart';
 import 'package:public_health/Theme/language_switcher.dart';
+import 'package:public_health/Theme/profileicon.dart';
 
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
@@ -10,7 +11,7 @@ import 'package:public_health/l10n/app_localizations.dart';
 // Geolocator :
 import 'package:geolocator/geolocator.dart';
 
-// Map Confirmation :
+// Location Page :
 import 'package:public_health/App/Users/Pickup%20Request%20Flow/location.dart';
 
 class HomePage extends StatelessWidget {
@@ -22,7 +23,7 @@ class HomePage extends StatelessWidget {
 
     return AppScaffold(
       showBack: false,
-      trailing: const LanguageSwitcher(),
+      trailing: const [LanguageSwitcher(), SizedBox(width: 10), ProfileIcon()],
       body: Column(
         children: [
           const SizedBox(height: 60),
@@ -34,7 +35,7 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(22),
             alignment: Alignment.bottomLeft,
             decoration: BoxDecoration(
-              color: AppColors.hero,
+              color: AppColors.yellow,
               borderRadius: BorderRadius.circular(24),
             ),
             child: Column(

@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
-// Theme
+// Theme :
 import 'package:public_health/Theme/theme.dart';
 
-// Language
+// Language :
 import 'package:public_health/l10n/app_localizations.dart';
+
+// Pickup Confirmation :
+import 'package:public_health/App/Users/Pickup Request Flow/requestconfirmation.dart';
 
 class QuestionnairePage extends StatefulWidget {
   const QuestionnairePage({super.key});
@@ -26,7 +29,10 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         _selectedAnswer = null;
       });
     } else {
-      // TODO: Navigate to location page
+      Navigator.push(
+        context,
+        CupertinoPageRoute(builder: (_) => PickupConfirmationPage()),
+      );
     }
   }
 
@@ -46,7 +52,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 24),
+          const SizedBox(height: 100),
 
           // Heading
           Text(
@@ -79,7 +85,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(22, 20, 22, 24),
             decoration: BoxDecoration(
-              color: AppColors.background,
+              color: AppColors.yellow,
               border: Border.all(color: AppColors.textPrimary, width: 1.5),
               borderRadius: BorderRadius.circular(24),
             ),
@@ -191,17 +197,15 @@ class _AnswerOption extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: selected
-                    ? AppColors.background
-                    : AppColors.textSecondary,
+                color: selected ? AppColors.yellow : AppColors.textPrimary,
                 width: 2,
               ),
             ),
             child: selected
                 ? Center(
                     child: Container(
-                      width: 14,
-                      height: 14,
+                      width: 20,
+                      height: 20,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: AppColors.accent,
@@ -210,7 +214,7 @@ class _AnswerOption extends StatelessWidget {
                   )
                 : null,
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: 10),
           Text(
             text,
             style: const TextStyle(

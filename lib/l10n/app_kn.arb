@@ -77,5 +77,15 @@
 
   "locationDeniedTitle": "ಸ್ಥಳದ ಅನುಮತಿ ಬೇಕಾಗಿದೆ",
   "locationDeniedMessage": "ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ನೀಡಿ.",
-  "openSettings": "ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ"
+  "openSettings": "ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ",
+
+  "profile": "ಪ್ರೊಫೈಲ್",
+  "account": "ಖಾತೆ",
+  "personalInformation": "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+  "changePassword": "ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಿ",
+  "logOut": "ಲಾಗ್ ಔಟ್",
+
+  "pickupRequested": "ಪಿಕಪ್ ವಿನಂತಿಸಲಾಗಿದೆ",
+  "pickupConfirmationMessage": "ನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಕಾರ್ಮಿಕರನ್ನು ನಿಯೋಜಿಸಿದಾಗ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.",
+  "done": "ಮುಗಿದಿದೆ"
 }

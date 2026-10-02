@@ -6,7 +6,7 @@ class AppColors {
   static const border = Color(0xFFE7ECEB);
   static const accent = Color(0xFF19673F);
   static const accentSoft = Color(0xFFE2F1E8);
-  static const hero = Color(0xFFE8E3D0);
+  static const yellow = Color(0xFFE8E3D0);
   static const textPrimary = CupertinoColors.black;
   static const textSecondary = CupertinoColors.systemGrey;
 }
@@ -51,7 +51,7 @@ class AppText {
 class AppScaffold extends StatelessWidget {
   final Widget body;
   final Widget? bottom;
-  final Widget? trailing; // top-right widget
+  final List<Widget>? trailing;
   final bool showBack;
 
   const AppScaffold({
@@ -100,7 +100,11 @@ class AppScaffold extends StatelessWidget {
                 ),
               ),
             if (trailing != null)
-              Positioned(top: 8, right: 22, child: trailing!),
+              Positioned(
+                top: 8,
+                right: 22,
+                child: Row(mainAxisSize: MainAxisSize.min, children: trailing!),
+              ),
           ],
         ),
       ),
@@ -144,7 +148,7 @@ class AppOptionCard extends StatelessWidget {
                 color: AppColors.accent,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(icon, color: AppColors.hero, size: 26),
+              child: Icon(icon, color: AppColors.background, size: 26),
             ),
             const SizedBox(width: 16),
             Expanded(

@@ -186,4 +186,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openSettings => 'Open Settings';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get personalInformation => 'Personal Information';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get logOut => 'Log Out';
+
+  @override
+  String get pickupRequested => 'Pickup Requested';
+
+  @override
+  String get pickupConfirmationMessage =>
+      'We\'ll notify you when a worker is assigned to your pickup.';
+
+  @override
+  String get done => 'Done';
 }
