@@ -1,0 +1,38 @@
+{
+  "@@locale": "en",
+
+  "portalTitle": "Safe Medical Waste Pickup",
+  "portalSubtitle": "A Purasabhe service connecting households with verified workers for safe collection of medical waste",
+  "household": "Household",
+  "householdSubtitle": "Request a medical waste pickup",
+  "worker": "Purasabhe Worker",
+  "workerSubtitle": "Accept and collect pickup requests",
+  "selectRole": "Please select your role to continue",
+
+  "welcome": "Welcome",
+  "authSubtitle": "Request safe pickup of your household medical waste",
+  "createAccount": "Create account",
+  "createAccountCardSubtitle": "New here? Register to request pickups",
+  "login": "Log in",
+  "loginCardSubtitle": "Already registered? Continue to your account",
+  "termsNote": "By continuing, you agree to our Privacy Policy and Terms & Conditions",
+
+  "createAccountSubtitle": "Register to request medical waste pickups from your home",
+  "fullName": "Full name",
+  "fullNamePlaceholder": "Enter your full name",
+  "phoneNumber": "Phone number",
+  "phonePlaceholder": "Enter your mobile number",
+  "createAccountNote": "Your details are used only to manage your account and coordinate pickups.",
+
+  "loginSubtitle": "Enter your registered phone number to request or track a pickup",
+  "registeredPlaceholder": "Enter your registered number",
+
+  "workerLoginTitle": "Worker login",
+  "workerLoginSubtitle": "Sign in with your Purasabhe worker ID to view and accept pickup requests",
+  "workerId": "Worker ID",
+  "workerIdPlaceholder": "Enter your Purasabhe worker ID",
+  "password": "Password",
+  "passwordPlaceholder": "Enter your password",
+  "signIn": "Sign in",
+  "workerNote": "Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending."
+}
