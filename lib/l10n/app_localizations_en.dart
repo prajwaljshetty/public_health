@@ -108,4 +108,82 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get workerNote =>
       'Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending.';
+
+  @override
+  String get homeHeroTitle => 'Ready to hand it over?';
+
+  @override
+  String get homeHeroSubtitle => 'We\'ll take it from here.';
+
+  @override
+  String get yourPickups => 'Your pickups';
+
+  @override
+  String get noPickupsYet => 'No pickups yet. Your requests will show up here.';
+
+  @override
+  String get requestPickup => 'Request Pickup';
+
+  @override
+  String get wasteVerification => 'Waste Verification';
+
+  @override
+  String get wasteVerificationSubtitle => 'Show us what you\'re handing over';
+
+  @override
+  String get addPhoto => 'Add Photo';
+
+  @override
+  String get quickCheck => 'Quick Check';
+
+  @override
+  String get quickCheckSubtitle =>
+      'A quick safety check.\nHelp us prepare for your pickup.';
+
+  @override
+  String get sharpObjectsQuestion =>
+      'Does the waste contain any sharp objects?';
+
+  @override
+  String get expiredMedicineQuestion =>
+      'Does the waste include unused or expired medicine?';
+
+  @override
+  String get bodyFluidsQuestion =>
+      'Does the waste include items that have been in contact with blood or other body fluids?';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get continueButton => 'Continue';
+
+  @override
+  String get locationTitle => 'Let us find you.';
+
+  @override
+  String get locationSubtitle =>
+      'Enable your location so we can arrange your pickup.';
+
+  @override
+  String get allowLocation => 'Allow Location';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get locationDeniedTitle => 'Location access needed';
+
+  @override
+  String get locationDeniedMessage =>
+      'Please allow location access in Settings so we can arrange your pickup.';
+
+  @override
+  String get openSettings => 'Open Settings';
 }

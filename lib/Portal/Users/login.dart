@@ -6,6 +6,9 @@ import 'package:public_health/Theme/theme.dart';
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 
+// Home :
+import 'package:public_health/App/Users/home.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -49,7 +52,11 @@ class _LoginState extends State<Login> {
           AppPrimaryButton(
             text: l10n.login,
             onPressed: () {
-              // Login
+              Navigator.pushAndRemoveUntil(
+                context,
+                CupertinoPageRoute(builder: (_) => const HomePage()),
+                (route) => false,
+              );
             },
           ),
           const SizedBox(height: 18),

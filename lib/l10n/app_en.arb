@@ -34,5 +34,33 @@
   "password": "Password",
   "passwordPlaceholder": "Enter your password",
   "signIn": "Sign in",
-  "workerNote": "Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending."
+  "workerNote": "Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending.",
+
+  "homeHeroTitle": "Ready to hand it over?",
+  "homeHeroSubtitle": "We'll take it from here.",
+  "yourPickups": "Your pickups",
+  "noPickupsYet": "No pickups yet. Your requests will show up here.",
+  "requestPickup": "Request Pickup",
+
+  "wasteVerification": "Waste Verification",
+  "wasteVerificationSubtitle": "Show us what you're handing over",
+  "addPhoto": "Add Photo",
+
+  "quickCheck": "Quick Check",
+  "quickCheckSubtitle": "A quick safety check.\nHelp us prepare for your pickup.",
+  "sharpObjectsQuestion": "Does the waste contain any sharp objects?",
+  "expiredMedicineQuestion": "Does the waste include unused or expired medicine?",
+  "bodyFluidsQuestion": "Does the waste include items that have been in contact with blood or other body fluids?",
+  "yes": "Yes",
+  "no": "No",
+  "next": "Next",
+  "continueButton": "Continue",
+
+  "locationTitle": "Let us find you.",
+  "locationSubtitle": "Enable your location so we can arrange your pickup.",
+  "allowLocation": "Allow Location",
+  "cancel": "Cancel",
+  "locationDeniedTitle": "Location access needed",
+  "locationDeniedMessage": "Please allow location access in Settings so we can arrange your pickup.",
+  "openSettings": "Open Settings"
 }

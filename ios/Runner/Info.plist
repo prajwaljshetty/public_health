@@ -66,5 +66,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is used to arrange medical waste pickups from your home.</string>
+
+	<key>NSCameraUsageDescription</key>
+	<string>We use the camera to take a photo of the medical waste for verification.</string>
 </dict>
 </plist>

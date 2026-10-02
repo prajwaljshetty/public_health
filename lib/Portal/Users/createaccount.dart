@@ -6,6 +6,9 @@ import 'package:public_health/Theme/theme.dart';
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 
+// Home :
+import 'package:public_health/App/Users/home.dart';
+
 class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
 
@@ -59,7 +62,11 @@ class _CreateAccountState extends State<CreateAccount> {
           AppPrimaryButton(
             text: l10n.createAccount,
             onPressed: () {
-              // Create account
+              Navigator.pushAndRemoveUntil(
+                context,
+                CupertinoPageRoute(builder: (_) => const HomePage()),
+                (route) => false,
+              );
             },
           ),
           SizedBox(height: 10),

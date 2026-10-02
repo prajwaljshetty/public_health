@@ -277,6 +277,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending.'**
   String get workerNote;
+
+  /// No description provided for @homeHeroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to hand it over?'**
+  String get homeHeroTitle;
+
+  /// No description provided for @homeHeroSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll take it from here.'**
+  String get homeHeroSubtitle;
+
+  /// No description provided for @yourPickups.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pickups'**
+  String get yourPickups;
+
+  /// No description provided for @noPickupsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No pickups yet. Your requests will show up here.'**
+  String get noPickupsYet;
+
+  /// No description provided for @requestPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Pickup'**
+  String get requestPickup;
+
+  /// No description provided for @wasteVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Waste Verification'**
+  String get wasteVerification;
+
+  /// No description provided for @wasteVerificationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show us what you\'re handing over'**
+  String get wasteVerificationSubtitle;
+
+  /// No description provided for @addPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Photo'**
+  String get addPhoto;
+
+  /// No description provided for @quickCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Check'**
+  String get quickCheck;
+
+  /// No description provided for @quickCheckSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A quick safety check.\nHelp us prepare for your pickup.'**
+  String get quickCheckSubtitle;
+
+  /// No description provided for @sharpObjectsQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Does the waste contain any sharp objects?'**
+  String get sharpObjectsQuestion;
+
+  /// No description provided for @expiredMedicineQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Does the waste include unused or expired medicine?'**
+  String get expiredMedicineQuestion;
+
+  /// No description provided for @bodyFluidsQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Does the waste include items that have been in contact with blood or other body fluids?'**
+  String get bodyFluidsQuestion;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @continueButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueButton;
+
+  /// No description provided for @locationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let us find you.'**
+  String get locationTitle;
+
+  /// No description provided for @locationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable your location so we can arrange your pickup.'**
+  String get locationSubtitle;
+
+  /// No description provided for @allowLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Location'**
+  String get allowLocation;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @locationDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location access needed'**
+  String get locationDeniedTitle;
+
+  /// No description provided for @locationDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please allow location access in Settings so we can arrange your pickup.'**
+  String get locationDeniedMessage;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get openSettings;
 }
 
 class _AppLocalizationsDelegate

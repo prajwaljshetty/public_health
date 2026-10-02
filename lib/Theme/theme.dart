@@ -6,6 +6,7 @@ class AppColors {
   static const border = Color(0xFFE7ECEB);
   static const accent = Color(0xFF19673F);
   static const accentSoft = Color(0xFFE2F1E8);
+  static const hero = Color(0xFFE8E3D0);
   static const textPrimary = CupertinoColors.black;
   static const textSecondary = CupertinoColors.systemGrey;
 }
@@ -132,7 +133,7 @@ class AppOptionCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.border, width: 1),
+          border: Border.all(color: AppColors.border),
         ),
         child: Row(
           children: [
@@ -140,10 +141,10 @@ class AppOptionCard extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: AppColors.accentSoft,
+                color: AppColors.accent,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(icon, color: AppColors.accent, size: 26),
+              child: Icon(icon, color: AppColors.hero, size: 26),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -239,6 +240,43 @@ class AppPrimaryButton extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Text(text, style: AppText.button),
+      ),
+    );
+  }
+}
+
+class AppSecondaryButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  const AppSecondaryButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: onPressed,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 18),
+        decoration: BoxDecoration(
+          color: AppColors.background,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.border, width: 1.5),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
+        ),
       ),
     );
   }
