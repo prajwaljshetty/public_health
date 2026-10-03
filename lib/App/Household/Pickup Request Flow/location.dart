@@ -8,7 +8,7 @@ import 'package:public_health/Theme/theme.dart';
 import 'package:public_health/l10n/app_localizations.dart';
 
 // Page :
-import 'package:public_health/App/Users/Pickup Request Flow/photo.dart';
+import 'package:public_health/App/Household/Pickup%20Request%20Flow/photo.dart';
 
 class LocationPage extends StatefulWidget {
   const LocationPage({super.key});

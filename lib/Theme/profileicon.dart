@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:public_health/Theme/theme.dart';
 
 // Profile :
-import 'package:public_health/App/Users/profile.dart';
+import 'package:public_health/App/Household/profile.dart';
 
 class ProfileIcon extends StatelessWidget {
   const ProfileIcon({super.key});

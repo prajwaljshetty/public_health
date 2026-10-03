@@ -1,17 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 import 'package:public_health/locale_controller.dart';
 
-// Portal
-import 'package:public_health/Portal/portal.dart';
+// Bridge
+import 'package:public_health/bridge.dart';
+
+// Providers
+import 'package:public_health/Providers/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await localeController.load();
-  runApp(const MyApp());
+
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,15 +34,19 @@ class MyApp extends StatelessWidget {
       listenable: localeController,
       builder: (context, _) => CupertinoApp(
         debugShowCheckedModeBanner: false,
+
         locale: localeController.locale,
+
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
         ],
+
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const Portal(),
+
+        home: const Bridge(),
       ),
     );
   }

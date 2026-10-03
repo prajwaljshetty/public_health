@@ -3,38 +3,52 @@
 
   "portalTitle": "Safe Medical Waste Pickup",
   "portalSubtitle": "A Purasabhe service connecting households with verified workers for safe collection of medical waste",
+  "selectRole": "Please select your role to continue",
+
   "household": "Household",
   "householdSubtitle": "Request a medical waste pickup",
   "worker": "Purasabhe Worker",
   "workerSubtitle": "Accept and collect pickup requests",
-  "selectRole": "Please select your role to continue",
 
   "welcome": "Welcome",
   "authSubtitle": "Request safe pickup of your household medical waste",
-  "createAccount": "Create account",
-  "createAccountCardSubtitle": "New here? Register to request pickups",
   "login": "Log in",
+  "loginSubtitle": "Enter your registered phone number to request or track a pickup",
   "loginCardSubtitle": "Already registered? Continue to your account",
-  "termsNote": "By continuing, you agree to our Privacy Policy and Terms & Conditions",
 
+  "createAccount": "Create account",
   "createAccountSubtitle": "Register to request medical waste pickups from your home",
+  "createAccountCardSubtitle": "New here? Register to request pickups",
+  "createAccountNote": "Your details are used only to manage your account and coordinate pickups.",
+
   "fullName": "Full name",
   "fullNamePlaceholder": "Enter your full name",
   "phoneNumber": "Phone number",
   "phonePlaceholder": "Enter your mobile number",
-  "createAccountNote": "Your details are used only to manage your account and coordinate pickups.",
-
-  "loginSubtitle": "Enter your registered phone number to request or track a pickup",
   "registeredPlaceholder": "Enter your registered number",
+  "password": "Password",
+  "passwordPlaceholder": "Enter your password",
+
+  "usernameRequired": "Full name is required",
+  "usernameMinLength": "Full name must be at least 3 characters",
+  "invalidUsername": "Name can contain only letters and spaces",
+  "phoneNumberRequired": "Phone number is required",
+  "invalidPhoneNumber": "Enter a valid phone number",
+  "phoneNumberAlreadyRegistered": "Phone number already registered",
+  "phoneNumberNotRegistered": "Phone number is not registered",
+  "passwordRequired": "Password is required",
+  "passwordMinLength": "Password must be at least 6 characters",
+  "incorrectPassword": "Incorrect password",
 
   "workerLoginTitle": "Worker login",
   "workerLoginSubtitle": "Sign in with your Purasabhe worker ID to view and accept pickup requests",
   "workerId": "Worker ID",
   "workerIdPlaceholder": "Enter your Purasabhe worker ID",
-  "password": "Password",
-  "passwordPlaceholder": "Enter your password",
+  "workerIdRequired": "Worker ID is required",
   "signIn": "Sign in",
   "workerNote": "Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending.",
+
+  "termsNote": "By continuing, you agree to our Privacy Policy and Terms & Conditions",
 
   "homeHeroTitle": "Ready to hand it over?",
   "homeHeroSubtitle": "We'll take it from here.",
@@ -64,13 +78,13 @@
   "locationDeniedMessage": "Please allow location access in Settings so we can arrange your pickup.",
   "openSettings": "Open Settings",
 
+  "pickupRequested": "Pickup Requested",
+  "pickupConfirmationMessage": "We'll notify you when a worker is assigned to your pickup.",
+  "done": "Done",
+
   "profile": "Profile",
   "account": "Account",
   "personalInformation": "Personal Information",
   "changePassword": "Change Password",
-  "logOut": "Log Out",
-
-  "pickupRequested": "Pickup Requested",
-  "pickupConfirmationMessage": "We'll notify you when a worker is assigned to your pickup.",
-  "done": "Done"
+  "logOut": "Log Out"
 }

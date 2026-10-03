@@ -12,7 +12,7 @@ import 'package:public_health/l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 
 // Location Page :
-import 'package:public_health/App/Users/Pickup%20Request%20Flow/location.dart';
+import 'package:public_health/App/Household/Pickup%20Request%20Flow/location.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -110,6 +110,12 @@ abstract class AppLocalizations {
   /// **'A Purasabhe service connecting households with verified workers for safe collection of medical waste'**
   String get portalSubtitle;
 
+  /// No description provided for @selectRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your role to continue'**
+  String get selectRole;
+
   /// No description provided for @household.
   ///
   /// In en, this message translates to:
@@ -134,12 +140,6 @@ abstract class AppLocalizations {
   /// **'Accept and collect pickup requests'**
   String get workerSubtitle;
 
-  /// No description provided for @selectRole.
-  ///
-  /// In en, this message translates to:
-  /// **'Please select your role to continue'**
-  String get selectRole;
-
   /// No description provided for @welcome.
   ///
   /// In en, this message translates to:
@@ -152,23 +152,17 @@ abstract class AppLocalizations {
   /// **'Request safe pickup of your household medical waste'**
   String get authSubtitle;
 
-  /// No description provided for @createAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Create account'**
-  String get createAccount;
-
-  /// No description provided for @createAccountCardSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'New here? Register to request pickups'**
-  String get createAccountCardSubtitle;
-
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
   /// **'Log in'**
   String get login;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your registered phone number to request or track a pickup'**
+  String get loginSubtitle;
 
   /// No description provided for @loginCardSubtitle.
   ///
@@ -176,17 +170,29 @@ abstract class AppLocalizations {
   /// **'Already registered? Continue to your account'**
   String get loginCardSubtitle;
 
-  /// No description provided for @termsNote.
+  /// No description provided for @createAccount.
   ///
   /// In en, this message translates to:
-  /// **'By continuing, you agree to our Privacy Policy and Terms & Conditions'**
-  String get termsNote;
+  /// **'Create account'**
+  String get createAccount;
 
   /// No description provided for @createAccountSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Register to request medical waste pickups from your home'**
   String get createAccountSubtitle;
+
+  /// No description provided for @createAccountCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New here? Register to request pickups'**
+  String get createAccountCardSubtitle;
+
+  /// No description provided for @createAccountNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your details are used only to manage your account and coordinate pickups.'**
+  String get createAccountNote;
 
   /// No description provided for @fullName.
   ///
@@ -212,23 +218,83 @@ abstract class AppLocalizations {
   /// **'Enter your mobile number'**
   String get phonePlaceholder;
 
-  /// No description provided for @createAccountNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Your details are used only to manage your account and coordinate pickups.'**
-  String get createAccountNote;
-
-  /// No description provided for @loginSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your registered phone number to request or track a pickup'**
-  String get loginSubtitle;
-
   /// No description provided for @registeredPlaceholder.
   ///
   /// In en, this message translates to:
   /// **'Enter your registered number'**
   String get registeredPlaceholder;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @passwordPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get passwordPlaceholder;
+
+  /// No description provided for @usernameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name is required'**
+  String get usernameRequired;
+
+  /// No description provided for @usernameMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name must be at least 3 characters'**
+  String get usernameMinLength;
+
+  /// No description provided for @invalidUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Name can contain only letters and spaces'**
+  String get invalidUsername;
+
+  /// No description provided for @phoneNumberRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneNumberRequired;
+
+  /// No description provided for @invalidPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid phone number'**
+  String get invalidPhoneNumber;
+
+  /// No description provided for @phoneNumberAlreadyRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number already registered'**
+  String get phoneNumberAlreadyRegistered;
+
+  /// No description provided for @phoneNumberNotRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is not registered'**
+  String get phoneNumberNotRegistered;
+
+  /// No description provided for @passwordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequired;
+
+  /// No description provided for @passwordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMinLength;
+
+  /// No description provided for @incorrectPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect password'**
+  String get incorrectPassword;
 
   /// No description provided for @workerLoginTitle.
   ///
@@ -254,17 +320,11 @@ abstract class AppLocalizations {
   /// **'Enter your Purasabhe worker ID'**
   String get workerIdPlaceholder;
 
-  /// No description provided for @password.
+  /// No description provided for @workerIdRequired.
   ///
   /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
-  /// No description provided for @passwordPlaceholder.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter your password'**
-  String get passwordPlaceholder;
+  /// **'Worker ID is required'**
+  String get workerIdRequired;
 
   /// No description provided for @signIn.
   ///
@@ -277,6 +337,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending.'**
   String get workerNote;
+
+  /// No description provided for @termsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'By continuing, you agree to our Privacy Policy and Terms & Conditions'**
+  String get termsNote;
 
   /// No description provided for @homeHeroTitle.
   ///
@@ -422,6 +488,24 @@ abstract class AppLocalizations {
   /// **'Open Settings'**
   String get openSettings;
 
+  /// No description provided for @pickupRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Requested'**
+  String get pickupRequested;
+
+  /// No description provided for @pickupConfirmationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll notify you when a worker is assigned to your pickup.'**
+  String get pickupConfirmationMessage;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
   /// No description provided for @profile.
   ///
   /// In en, this message translates to:
@@ -451,24 +535,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log Out'**
   String get logOut;
-
-  /// No description provided for @pickupRequested.
-  ///
-  /// In en, this message translates to:
-  /// **'Pickup Requested'**
-  String get pickupRequested;
-
-  /// No description provided for @pickupConfirmationMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'We\'ll notify you when a worker is assigned to your pickup.'**
-  String get pickupConfirmationMessage;
-
-  /// No description provided for @done.
-  ///
-  /// In en, this message translates to:
-  /// **'Done'**
-  String get done;
 }
 
 class _AppLocalizationsDelegate

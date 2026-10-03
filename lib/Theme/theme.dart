@@ -49,6 +49,7 @@ class AppText {
 }
 
 class AppScaffold extends StatelessWidget {
+  final Widget? header;
   final Widget body;
   final Widget? bottom;
   final List<Widget>? trailing;
@@ -56,6 +57,7 @@ class AppScaffold extends StatelessWidget {
 
   const AppScaffold({
     super.key,
+    this.header,
     required this.body,
     this.bottom,
     this.trailing,
@@ -64,26 +66,63 @@ class AppScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final keyboard = MediaQuery.viewInsetsOf(context).bottom;
+
     return CupertinoPageScaffold(
       backgroundColor: AppColors.background,
+      resizeToAvoidBottomInset: false,
       child: SafeArea(
+        bottom: keyboard == 0,
         child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22),
-              child: Column(
-                children: [
-                  Expanded(
+            Column(
+              children: [
+                // FIXED HEADER
+                if (header != null) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    child: header!,
+                  ),
+
+                  // Feather
+                  Container(
+                    height: 20,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          AppColors.background,
+                          AppColors.background.withOpacity(0),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+
+                // ONLY BODY SCROLLS
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
                     child: SingleChildScrollView(
                       keyboardDismissBehavior:
                           ScrollViewKeyboardDismissBehavior.onDrag,
+                      padding: EdgeInsets.only(bottom: keyboard + 16),
                       child: body,
                     ),
                   ),
-                  if (bottom != null) bottom!,
-                ],
-              ),
+                ),
+
+                // FIXED BOTTOM
+                if (bottom != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    child: bottom!,
+                  ),
+              ],
             ),
+
+            // BACK BUTTON
             if (showBack)
               Positioned(
                 top: 0,
@@ -99,6 +138,8 @@ class AppScaffold extends StatelessWidget {
                   ),
                 ),
               ),
+
+            // TRAILING BUTTONS
             if (trailing != null)
               Positioned(
                 top: 8,

@@ -10,7 +10,7 @@ import 'package:public_health/assetmaper.dart';
 import 'package:public_health/l10n/app_localizations.dart';
 
 // Home :
-import 'package:public_health/App/Users/home.dart';
+import 'package:public_health/App/Household/home.dart';
 
 class PickupConfirmationPage extends StatefulWidget {
   const PickupConfirmationPage({super.key});

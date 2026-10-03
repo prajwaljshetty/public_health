@@ -8,7 +8,7 @@ import 'package:public_health/Theme/language_switcher.dart';
 import 'package:public_health/l10n/app_localizations.dart';
 
 // User :
-import 'package:public_health/Portal/Users/authgate.dart';
+import 'package:public_health/Portal/Household/authgate.dart';
 
 // Worker :
 import 'package:public_health/Portal/Workers/login.dart';

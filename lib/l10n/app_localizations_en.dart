@@ -17,6 +17,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'A Purasabhe service connecting households with verified workers for safe collection of medical waste';
 
   @override
+  String get selectRole => 'Please select your role to continue';
+
+  @override
   String get household => 'Household';
 
   @override
@@ -29,9 +32,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workerSubtitle => 'Accept and collect pickup requests';
 
   @override
-  String get selectRole => 'Please select your role to continue';
-
-  @override
   String get welcome => 'Welcome';
 
   @override
@@ -39,26 +39,30 @@ class AppLocalizationsEn extends AppLocalizations {
       'Request safe pickup of your household medical waste';
 
   @override
-  String get createAccount => 'Create account';
-
-  @override
-  String get createAccountCardSubtitle =>
-      'New here? Register to request pickups';
-
-  @override
   String get login => 'Log in';
+
+  @override
+  String get loginSubtitle =>
+      'Enter your registered phone number to request or track a pickup';
 
   @override
   String get loginCardSubtitle =>
       'Already registered? Continue to your account';
 
   @override
-  String get termsNote =>
-      'By continuing, you agree to our Privacy Policy and Terms & Conditions';
+  String get createAccount => 'Create account';
 
   @override
   String get createAccountSubtitle =>
       'Register to request medical waste pickups from your home';
+
+  @override
+  String get createAccountCardSubtitle =>
+      'New here? Register to request pickups';
+
+  @override
+  String get createAccountNote =>
+      'Your details are used only to manage your account and coordinate pickups.';
 
   @override
   String get fullName => 'Full name';
@@ -73,15 +77,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonePlaceholder => 'Enter your mobile number';
 
   @override
-  String get createAccountNote =>
-      'Your details are used only to manage your account and coordinate pickups.';
-
-  @override
-  String get loginSubtitle =>
-      'Enter your registered phone number to request or track a pickup';
-
-  @override
   String get registeredPlaceholder => 'Enter your registered number';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get passwordPlaceholder => 'Enter your password';
+
+  @override
+  String get usernameRequired => 'Full name is required';
+
+  @override
+  String get usernameMinLength => 'Full name must be at least 3 characters';
+
+  @override
+  String get invalidUsername => 'Name can contain only letters and spaces';
+
+  @override
+  String get phoneNumberRequired => 'Phone number is required';
+
+  @override
+  String get invalidPhoneNumber => 'Enter a valid phone number';
+
+  @override
+  String get phoneNumberAlreadyRegistered => 'Phone number already registered';
+
+  @override
+  String get phoneNumberNotRegistered => 'Phone number is not registered';
+
+  @override
+  String get passwordRequired => 'Password is required';
+
+  @override
+  String get passwordMinLength => 'Password must be at least 6 characters';
+
+  @override
+  String get incorrectPassword => 'Incorrect password';
 
   @override
   String get workerLoginTitle => 'Worker login';
@@ -97,10 +129,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workerIdPlaceholder => 'Enter your Purasabhe worker ID';
 
   @override
-  String get password => 'Password';
-
-  @override
-  String get passwordPlaceholder => 'Enter your password';
+  String get workerIdRequired => 'Worker ID is required';
 
   @override
   String get signIn => 'Sign in';
@@ -108,6 +137,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get workerNote =>
       'Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending.';
+
+  @override
+  String get termsNote =>
+      'By continuing, you agree to our Privacy Policy and Terms & Conditions';
 
   @override
   String get homeHeroTitle => 'Ready to hand it over?';
@@ -188,6 +221,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get openSettings => 'Open Settings';
 
   @override
+  String get pickupRequested => 'Pickup Requested';
+
+  @override
+  String get pickupConfirmationMessage =>
+      'We\'ll notify you when a worker is assigned to your pickup.';
+
+  @override
+  String get done => 'Done';
+
+  @override
   String get profile => 'Profile';
 
   @override
@@ -201,14 +244,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logOut => 'Log Out';
-
-  @override
-  String get pickupRequested => 'Pickup Requested';
-
-  @override
-  String get pickupConfirmationMessage =>
-      'We\'ll notify you when a worker is assigned to your pickup.';
-
-  @override
-  String get done => 'Done';
 }

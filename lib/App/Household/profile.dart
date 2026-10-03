@@ -6,12 +6,20 @@ import 'package:public_health/l10n/app_localizations.dart';
 // Theme :
 import 'package:public_health/Theme/theme.dart';
 
+// Provider :
+import 'package:provider/provider.dart';
+import 'package:public_health/Providers/user.dart';
+
+// Portal :
+import 'package:public_health/Portal/portal.dart';
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final userProvider = Provider.of<UserProvider>(context);
 
     return AppScaffold(
       body: Column(
@@ -38,11 +46,14 @@ class ProfilePage extends StatelessWidget {
 
                 const SizedBox(height: 10),
 
-                const Text('username', style: AppText.cardTitle),
+                Text(userProvider.username ?? '', style: AppText.cardTitle),
 
                 const SizedBox(height: 4),
 
-                const Text('+91 8765 438 098', style: AppText.cardSubtitle),
+                Text(
+                  '+91 ${userProvider.phoneno ?? ''}',
+                  style: AppText.cardSubtitle,
+                ),
               ],
             ),
           ),
@@ -72,7 +83,17 @@ class ProfilePage extends StatelessWidget {
           _ProfileOption(
             icon: CupertinoIcons.square_arrow_right,
             title: l10n.logOut,
-            onPressed: () {},
+            onPressed: () async {
+              await userProvider.logout();
+
+              if (!context.mounted) return;
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                CupertinoPageRoute(builder: (_) => const Portal()),
+                (route) => false,
+              );
+            },
           ),
         ],
       ),

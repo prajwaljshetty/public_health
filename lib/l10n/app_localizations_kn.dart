@@ -17,6 +17,9 @@ class AppLocalizationsKn extends AppLocalizations {
       'ಮನೆಗಳಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ಪುರಸಭೆ ಕಾರ್ಮಿಕರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುವ ಸೇವೆ';
 
   @override
+  String get selectRole => 'ಮುಂದುವರಿಯಲು ನಿಮ್ಮ ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
   String get household => 'ಮನೆ';
 
   @override
@@ -30,9 +33,6 @@ class AppLocalizationsKn extends AppLocalizations {
       'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಿಸಿ';
 
   @override
-  String get selectRole => 'ಮುಂದುವರಿಯಲು ನಿಮ್ಮ ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ';
-
-  @override
   String get welcome => 'ಸ್ವಾಗತ';
 
   @override
@@ -40,25 +40,29 @@ class AppLocalizationsKn extends AppLocalizations {
       'ನಿಮ್ಮ ಮನೆಯ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಪಿಕಪ್ ಮಾಡಿಸಲು ವಿನಂತಿಸಿ';
 
   @override
+  String get login => 'ಲಾಗಿನ್';
+
+  @override
+  String get loginSubtitle =>
+      'ಪಿಕಪ್‌ಗಾಗಿ ವಿನಂತಿಸಲು ಅಥವಾ ಅದರ ಸ್ಥಿತಿಯನ್ನು ನೋಡಲು ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
+
+  @override
+  String get loginCardSubtitle => 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಮುಂದುವರಿಯಿರಿ';
+
+  @override
   String get createAccount => 'ಖಾತೆ ರಚಿಸಿ';
+
+  @override
+  String get createAccountSubtitle =>
+      'ನಿಮ್ಮ ಮನೆಯಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಪಿಕಪ್‌ಗಾಗಿ ನೋಂದಾಯಿಸಿ';
 
   @override
   String get createAccountCardSubtitle =>
       'ಹೊಸದಾಗಿ ಬಂದಿದ್ದೀರಾ? ಪಿಕಪ್ ವಿನಂತಿಸಲು ನೋಂದಾಯಿಸಿ';
 
   @override
-  String get login => 'ಲಾಗಿನ್';
-
-  @override
-  String get loginCardSubtitle => 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಮುಂದುವರಿಯಿರಿ';
-
-  @override
-  String get termsNote =>
-      'ಮುಂದುವರಿಯುವ ಮೂಲಕ, ನಮ್ಮ ಗೌಪ್ಯತಾ ನೀತಿ ಮತ್ತು ನಿಯಮಗಳು ಹಾಗೂ ಷರತ್ತುಗಳನ್ನು ನೀವು ಒಪ್ಪುತ್ತೀರಿ';
-
-  @override
-  String get createAccountSubtitle =>
-      'ನಿಮ್ಮ ಮನೆಯಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಪಿಕಪ್‌ಗಾಗಿ ನೋಂದಾಯಿಸಿ';
+  String get createAccountNote =>
+      'ನಿಮ್ಮ ವಿವರಗಳನ್ನು ಖಾತೆ ನಿರ್ವಹಣೆ ಮತ್ತು ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಮಾತ್ರ ಬಳಸಲಾಗುತ್ತದೆ.';
 
   @override
   String get fullName => 'ಪೂರ್ಣ ಹೆಸರು';
@@ -73,15 +77,45 @@ class AppLocalizationsKn extends AppLocalizations {
   String get phonePlaceholder => 'ನಿಮ್ಮ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
 
   @override
-  String get createAccountNote =>
-      'ನಿಮ್ಮ ವಿವರಗಳನ್ನು ಖಾತೆ ನಿರ್ವಹಣೆ ಮತ್ತು ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಮಾತ್ರ ಬಳಸಲಾಗುತ್ತದೆ.';
-
-  @override
-  String get loginSubtitle =>
-      'ಪಿಕಪ್‌ಗಾಗಿ ವಿನಂತಿಸಲು ಅಥವಾ ಅದರ ಸ್ಥಿತಿಯನ್ನು ನೋಡಲು ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
-
-  @override
   String get registeredPlaceholder => 'ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ';
+
+  @override
+  String get password => 'ಪಾಸ್‌ವರ್ಡ್';
+
+  @override
+  String get passwordPlaceholder => 'ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ';
+
+  @override
+  String get usernameRequired => 'ಪೂರ್ಣ ಹೆಸರು ಅಗತ್ಯವಿದೆ';
+
+  @override
+  String get usernameMinLength => 'ಪೂರ್ಣ ಹೆಸರು ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳಿರಬೇಕು';
+
+  @override
+  String get invalidUsername =>
+      'ಹೆಸರು ಅಕ್ಷರಗಳು ಮತ್ತು ಸ್ಪೇಸ್‌ಗಳನ್ನು ಮಾತ್ರ ಹೊಂದಿರಬೇಕು';
+
+  @override
+  String get phoneNumberRequired => 'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಅಗತ್ಯವಿದೆ';
+
+  @override
+  String get invalidPhoneNumber => 'ಮಾನ್ಯವಾದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
+
+  @override
+  String get phoneNumberAlreadyRegistered =>
+      'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ';
+
+  @override
+  String get phoneNumberNotRegistered => 'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನೋಂದಾಯಿಸಲಾಗಿಲ್ಲ';
+
+  @override
+  String get passwordRequired => 'ಪಾಸ್‌ವರ್ಡ್ ಅಗತ್ಯವಿದೆ';
+
+  @override
+  String get passwordMinLength => 'ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳಿರಬೇಕು';
+
+  @override
+  String get incorrectPassword => 'ಪಾಸ್‌ವರ್ಡ್ ಸರಿಯಾಗಿಲ್ಲ';
 
   @override
   String get workerLoginTitle => 'ಕಾರ್ಮಿಕರ ಲಾಗಿನ್';
@@ -97,10 +131,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get workerIdPlaceholder => 'ನಿಮ್ಮ ಕಾರ್ಮಿಕ ಐಡಿ ನಮೂದಿಸಿ';
 
   @override
-  String get password => 'ಪಾಸ್‌ವರ್ಡ್';
-
-  @override
-  String get passwordPlaceholder => 'ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ';
+  String get workerIdRequired => 'ಕಾರ್ಮಿಕ ಐಡಿ ಅಗತ್ಯವಿದೆ';
 
   @override
   String get signIn => 'ಲಾಗಿನ್';
@@ -108,6 +139,10 @@ class AppLocalizationsKn extends AppLocalizations {
   @override
   String get workerNote =>
       'ಪರಿಶೀಲಿಸಲಾದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರು ಮಾತ್ರ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಬಹುದು. ನಿಮ್ಮ ಖಾತೆ ಇನ್ನೂ ಪರಿಶೀಲನೆಯಲ್ಲಿದ್ದರೆ ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String get termsNote =>
+      'ಮುಂದುವರಿಯುವ ಮೂಲಕ, ನಮ್ಮ ಗೌಪ್ಯತಾ ನೀತಿ ಮತ್ತು ನಿಯಮಗಳು ಹಾಗೂ ಷರತ್ತುಗಳನ್ನು ನೀವು ಒಪ್ಪುತ್ತೀರಿ';
 
   @override
   String get homeHeroTitle => 'ಹಸ್ತಾಂತರಿಸಲು ಸಿದ್ಧವೇ?';
@@ -189,6 +224,16 @@ class AppLocalizationsKn extends AppLocalizations {
   String get openSettings => 'ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ';
 
   @override
+  String get pickupRequested => 'ಪಿಕಪ್ ವಿನಂತಿಸಲಾಗಿದೆ';
+
+  @override
+  String get pickupConfirmationMessage =>
+      'ನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಕಾರ್ಮಿಕರನ್ನು ನಿಯೋಜಿಸಿದಾಗ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.';
+
+  @override
+  String get done => 'ಮುಗಿದಿದೆ';
+
+  @override
   String get profile => 'ಪ್ರೊಫೈಲ್';
 
   @override
@@ -202,14 +247,4 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get logOut => 'ಲಾಗ್ ಔಟ್';
-
-  @override
-  String get pickupRequested => 'ಪಿಕಪ್ ವಿನಂತಿಸಲಾಗಿದೆ';
-
-  @override
-  String get pickupConfirmationMessage =>
-      'ನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಕಾರ್ಮಿಕರನ್ನು ನಿಯೋಜಿಸಿದಾಗ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.';
-
-  @override
-  String get done => 'ಮುಗಿದಿದೆ';
 }

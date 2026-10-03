@@ -15,7 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:public_health/assetmaper.dart';
 
 // Questionnaire :
-import 'package:public_health/App/Users/Pickup%20Request%20Flow/questionnaire.dart';
+import 'package:public_health/App/Household/Pickup%20Request%20Flow/questionnaire.dart';
 
 class PhotoPage extends StatefulWidget {
   const PhotoPage({super.key});
