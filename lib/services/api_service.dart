@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -46,6 +47,33 @@ class ApiService {
       Uri.parse('$baseUrl/data/$uid'),
       headers: {'Content-Type': 'application/json'},
     );
+    return jsonDecode(response.body);
+  }
+
+  static Future<Map<String, dynamic>> requestpickup({
+    required String uid,
+    required String time,
+    required ({double latitude, double longitude}) coordinates,
+    required File image,
+    required List<int> qna,
+  }) async {
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/household/requestpickup'),
+    );
+
+    request.fields['userid'] = uid;
+    request.fields['time'] = time;
+    request.fields['latitude'] = coordinates.latitude.toString();
+    request.fields['longitude'] = coordinates.longitude.toString();
+    request.fields['qna'] = qna.join(',');
+
+    request.files.add(await http.MultipartFile.fromPath('image', image.path));
+
+    final streamedResponse = await request.send();
+
+    final response = await http.Response.fromStream(streamedResponse);
+
     return jsonDecode(response.body);
   }
 }
