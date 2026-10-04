@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:public_health/Theme/theme.dart';
 
 // Language :
-import 'package:public_health/Theme/language_switcher.dart';
+import 'package:public_health/Language/language_switcher.dart';
 import 'package:public_health/l10n/app_localizations.dart';
 
 // User :

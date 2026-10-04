@@ -9,6 +9,9 @@ import 'package:public_health/l10n/app_localizations.dart';
 // Validator
 import 'package:public_health/validator/fieldvalidator.dart';
 
+// Worker Home :
+import 'package:public_health/App/Workers/home.dart' as workerhome;
+
 class WorkerLogin extends StatefulWidget {
   const WorkerLogin({super.key});
 
@@ -49,7 +52,10 @@ class _WorkerLoginState extends State<WorkerLogin> {
     });
 
     if (workerIdValidation == null && passwordValidation == null) {
-      // Worker login
+      Navigator.pushReplacement(
+        context,
+        CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
+      );
     }
   }
 
