@@ -15,16 +15,17 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
-  
+
   image_picker: ^1.2.0
   video_player: ^2.10.0
-
+  mapbox_maps_flutter: ^3.0.0
   intl: any
   cupertino_icons: ^1.0.8
   shared_preferences: ^2.5.5
   geolocator: ^14.1.1
   provider: ^6.1.5+1
   http: ^1.6.0
+  lottie: ^3.6.1
 
 dev_dependencies:
   flutter_test:
@@ -34,8 +35,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
   generate: true
 
   assets:
     - assets/images/bucket.png
-    - assets/gifs/confirm.gif
+    - assets/animations/pickupConfirmed.json
