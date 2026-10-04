@@ -198,6 +198,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get continueButton => 'Continue';
 
   @override
+  String get confirmPickup => 'Confirm Pickup';
+
+  @override
   String get locationTitle => 'Let us find you.';
 
   @override
@@ -221,11 +224,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get openSettings => 'Open Settings';
 
   @override
-  String get pickupRequested => 'Pickup Requested';
+  String get confirmPickupRequest => 'Confirm Your Request';
 
   @override
   String get pickupConfirmationMessage =>
-      'We\'ll notify you when a worker is assigned to your pickup.';
+      'Please review the details and confirm your pickup request.';
+
+  @override
+  String get pickupConfirmed => 'Pickup Confirmed';
+
+  @override
+  String get pickupConfirmedMessage =>
+      'Your pickup request has been confirmed successfully.';
+
+  @override
+  String get requesting => 'Requesting...';
 
   @override
   String get done => 'Done';
@@ -244,4 +257,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logOut => 'Log Out';
+
+  @override
+  String get points => 'Points';
+
+  @override
+  String get availablePickups => 'Available Pickups';
 }

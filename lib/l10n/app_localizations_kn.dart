@@ -201,6 +201,9 @@ class AppLocalizationsKn extends AppLocalizations {
   String get continueButton => 'ಮುಂದುವರಿಸಿ';
 
   @override
+  String get confirmPickup => 'ಪಿಕಪ್ ದೃಢೀಕರಿಸಿ';
+
+  @override
   String get locationTitle => 'ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ತಿಳಿಸಿ';
 
   @override
@@ -224,11 +227,21 @@ class AppLocalizationsKn extends AppLocalizations {
   String get openSettings => 'ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ';
 
   @override
-  String get pickupRequested => 'ಪಿಕಪ್ ವಿನಂತಿಸಲಾಗಿದೆ';
+  String get confirmPickupRequest => 'ನಿಮ್ಮ ವಿನಂತಿಯನ್ನು ದೃಢೀಕರಿಸಿ';
 
   @override
   String get pickupConfirmationMessage =>
-      'ನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಕಾರ್ಮಿಕರನ್ನು ನಿಯೋಜಿಸಿದಾಗ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.';
+      'ದಯವಿಟ್ಟು ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ದೃಢೀಕರಿಸಿ.';
+
+  @override
+  String get pickupConfirmed => 'ಪಿಕಪ್ ದೃಢೀಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get pickupConfirmedMessage =>
+      'ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ದೃಢೀಕರಿಸಲಾಗಿದೆ.';
+
+  @override
+  String get requesting => 'ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...';
 
   @override
   String get done => 'ಮುಗಿದಿದೆ';
@@ -247,4 +260,10 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get logOut => 'ಲಾಗ್ ಔಟ್';
+
+  @override
+  String get points => 'ಅಂಕಗಳು';
+
+  @override
+  String get availablePickups => 'ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು';
 }

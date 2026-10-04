@@ -446,6 +446,12 @@ abstract class AppLocalizations {
   /// **'Continue'**
   String get continueButton;
 
+  /// No description provided for @confirmPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Pickup'**
+  String get confirmPickup;
+
   /// No description provided for @locationTitle.
   ///
   /// In en, this message translates to:
@@ -488,17 +494,35 @@ abstract class AppLocalizations {
   /// **'Open Settings'**
   String get openSettings;
 
-  /// No description provided for @pickupRequested.
+  /// No description provided for @confirmPickupRequest.
   ///
   /// In en, this message translates to:
-  /// **'Pickup Requested'**
-  String get pickupRequested;
+  /// **'Confirm Your Request'**
+  String get confirmPickupRequest;
 
   /// No description provided for @pickupConfirmationMessage.
   ///
   /// In en, this message translates to:
-  /// **'We\'ll notify you when a worker is assigned to your pickup.'**
+  /// **'Please review the details and confirm your pickup request.'**
   String get pickupConfirmationMessage;
+
+  /// No description provided for @pickupConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Confirmed'**
+  String get pickupConfirmed;
+
+  /// No description provided for @pickupConfirmedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pickup request has been confirmed successfully.'**
+  String get pickupConfirmedMessage;
+
+  /// No description provided for @requesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Requesting...'**
+  String get requesting;
 
   /// No description provided for @done.
   ///
@@ -535,6 +559,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log Out'**
   String get logOut;
+
+  /// No description provided for @points.
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get points;
+
+  /// No description provided for @availablePickups.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Pickups'**
+  String get availablePickups;
 }
 
 class _AppLocalizationsDelegate
