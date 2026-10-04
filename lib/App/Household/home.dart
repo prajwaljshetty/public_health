@@ -1,18 +1,21 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 
 // Theme
 import 'package:public_health/Theme/theme.dart';
-import 'package:public_health/Theme/language_switcher.dart';
+import 'package:public_health/Language/language_switcher.dart';
 import 'package:public_health/Theme/profileicon.dart';
 
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 
-// Geolocator :
-import 'package:geolocator/geolocator.dart';
-
-// Location Page :
+// Location Page
 import 'package:public_health/App/Household/Pickup%20Request%20Flow/location.dart';
+
+// Provider :
+import 'package:provider/provider.dart';
+import 'package:public_health/Providers/Household/requestpickup.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -23,12 +26,15 @@ class HomePage extends StatelessWidget {
 
     return AppScaffold(
       showBack: false,
-      trailing: const [LanguageSwitcher(), SizedBox(width: 10), ProfileIcon()],
+      trailing: const [
+        LanguageSwitcher(),
+        SizedBox(width: 10),
+        ProfileIcon(role: 'household'),
+      ],
       body: Column(
         children: [
           const SizedBox(height: 60),
 
-          // Hero card
           Container(
             width: double.infinity,
             height: 210,
@@ -67,7 +73,6 @@ class HomePage extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Pickups card (empty state for now)
           Container(
             width: double.infinity,
             height: 180,
@@ -96,6 +101,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
+
           const SizedBox(height: 24),
         ],
       ),
@@ -103,15 +109,16 @@ class HomePage extends StatelessWidget {
         children: [
           AppPrimaryButton(
             text: l10n.requestPickup,
-            onPressed: () async {
-              final position = await Navigator.push<Position>(
+            onPressed: () {
+              final pickuprequestdata = Provider.of<PickupRequestProvider>(
+                context,
+                listen: false,
+              );
+              if (pickuprequestdata.hasActivePickup) return;
+              Navigator.push(
                 context,
                 CupertinoPageRoute(builder: (_) => const LocationPage()),
               );
-              if (position != null) {
-                // Next: confirm pickup screen using
-                // position.latitude and position.longitude
-              }
             },
           ),
           const SizedBox(height: 18),
