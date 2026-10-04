@@ -69,6 +69,8 @@
   "no": "No",
   "next": "Next",
   "continueButton": "Continue",
+  "confirmPickup": "Confirm Pickup",
+  
 
   "locationTitle": "Let us find you.",
   "locationSubtitle": "Enable your location so we can arrange your pickup.",
@@ -78,13 +80,19 @@
   "locationDeniedMessage": "Please allow location access in Settings so we can arrange your pickup.",
   "openSettings": "Open Settings",
 
-  "pickupRequested": "Pickup Requested",
-  "pickupConfirmationMessage": "We'll notify you when a worker is assigned to your pickup.",
+  "confirmPickupRequest": "Confirm Your Request",
+  "pickupConfirmationMessage": "Please review the details and confirm your pickup request.",
+  "pickupConfirmed": "Pickup Confirmed",
+  "pickupConfirmedMessage": "Your pickup request has been confirmed successfully.",
+   "requesting": "Requesting...",
   "done": "Done",
 
   "profile": "Profile",
   "account": "Account",
   "personalInformation": "Personal Information",
   "changePassword": "Change Password",
-  "logOut": "Log Out"
+  "logOut": "Log Out",
+  
+  "points": "Points",
+  "availablePickups": "Available Pickups"
 }

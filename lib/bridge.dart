@@ -13,11 +13,12 @@ import 'package:public_health/App/Workers/home.dart' as workerhome;
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Services :
-import 'package:public_health/services/api_service.dart';
+import 'package:public_health/Services/api_service.dart';
 
 // Provider :
 import 'package:provider/provider.dart';
 import 'package:public_health/Providers/user.dart';
+import 'package:public_health/Providers/Household/requestpickup.dart';
 
 class Bridge extends StatefulWidget {
   const Bridge({super.key});
@@ -36,6 +37,10 @@ class _BridgeState extends State<Bridge> {
   Future<void> checkLogin() async {
     final prefs = await SharedPreferences.getInstance();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final pickuprequestdata = Provider.of<PickupRequestProvider>(
+      context,
+      listen: false,
+    );
 
     final uid = prefs.getString('uid');
 
@@ -60,6 +65,10 @@ class _BridgeState extends State<Bridge> {
         username: userdata['username'],
         phoneno: userdata['phoneno'],
         role: userdata['role'],
+      );
+
+      pickuprequestdata.sethasActivePickup(
+        hasActivePickup: userdata['hasActivePickup'],
       );
 
       if (!mounted) return;
