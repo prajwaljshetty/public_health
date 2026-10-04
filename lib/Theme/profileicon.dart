@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:public_health/Theme/theme.dart';
 
 // Profile :
-import 'package:public_health/App/Household/profile.dart';
+import 'package:public_health/App/Household/profile.dart' as household;
+import 'package:public_health/App/Workers/profile.dart' as worker;
 
 class ProfileIcon extends StatelessWidget {
-  const ProfileIcon({super.key});
+  final String? role;
+  const ProfileIcon({super.key, required String this.role});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,11 @@ class ProfileIcon extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          CupertinoPageRoute(builder: (context) => const ProfilePage()),
+          CupertinoPageRoute(
+            builder: (context) => role == 'household'
+                ? const household.ProfilePage()
+                : worker.ProfilePage(),
+          ),
         );
       },
       child: Stack(

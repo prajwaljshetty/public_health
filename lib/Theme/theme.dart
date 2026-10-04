@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class AppColors {
   static const background = CupertinoColors.white;
+  static const layering = Color.fromARGB(255, 239, 239, 239);
   static const surface = Color(0xFFF5F7F7);
   static const border = Color(0xFFE7ECEB);
   static const accent = Color(0xFF19673F);
@@ -9,6 +10,8 @@ class AppColors {
   static const yellow = Color(0xFFE8E3D0);
   static const textPrimary = CupertinoColors.black;
   static const textSecondary = CupertinoColors.systemGrey;
+  static const primarycoin = Color(0xFFE3B81C);
+  static const secondarycoin = Color(0xFFB8910F);
 }
 
 class AppText {
@@ -77,7 +80,6 @@ class AppScaffold extends StatelessWidget {
           children: [
             Column(
               children: [
-                // FIXED HEADER
                 if (header != null) ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -100,7 +102,6 @@ class AppScaffold extends StatelessWidget {
                   ),
                 ],
 
-                // ONLY BODY SCROLLS
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -113,7 +114,6 @@ class AppScaffold extends StatelessWidget {
                   ),
                 ),
 
-                // FIXED BOTTOM
                 if (bottom != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 22),
@@ -122,7 +122,6 @@ class AppScaffold extends StatelessWidget {
               ],
             ),
 
-            // BACK BUTTON
             if (showBack)
               Positioned(
                 top: 0,
@@ -139,7 +138,6 @@ class AppScaffold extends StatelessWidget {
                 ),
               ),
 
-            // TRAILING BUTTONS
             if (trailing != null)
               Positioned(
                 top: 8,
