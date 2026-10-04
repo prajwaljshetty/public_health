@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:geolocator/geolocator.dart';
 
 // Theme
 import 'package:public_health/Theme/theme.dart';
@@ -9,6 +8,13 @@ import 'package:public_health/l10n/app_localizations.dart';
 
 // Page :
 import 'package:public_health/App/Household/Pickup%20Request%20Flow/photo.dart';
+
+// Location :
+import 'package:geolocator/geolocator.dart';
+
+// Provider :
+import 'package:provider/provider.dart';
+import 'package:public_health/Providers/Household/requestpickup.dart';
 
 class LocationPage extends StatefulWidget {
   const LocationPage({super.key});
@@ -40,14 +46,24 @@ class _LocationPageState extends State<LocationPage> {
         return;
       }
 
-      final position = await Geolocator.getCurrentPosition();
+      final coordinates = await Geolocator.getCurrentPosition();
+
       if (mounted) {
+        final pickuprequestdata = Provider.of<PickupRequestProvider>(
+          context,
+          listen: false,
+        );
+        pickuprequestdata.setLocation(
+          latitude: coordinates.latitude,
+          longitude: coordinates.longitude,
+        );
         Navigator.push(
           context,
           CupertinoPageRoute(builder: (_) => PhotoPage()),
         );
       }
-    } catch (_) {
+    } catch (e) {
+      print('LOCATION ERROR: $e');
       if (mounted) _showDeniedDialog();
     } finally {
       if (mounted) setState(() => _loading = false);

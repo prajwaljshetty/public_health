@@ -9,6 +9,10 @@ import 'package:public_health/l10n/app_localizations.dart';
 // Pickup Confirmation :
 import 'package:public_health/App/Household/Pickup%20Request%20Flow/requestconfirmation.dart';
 
+// Provider :
+import 'package:provider/provider.dart';
+import 'package:public_health/Providers/Household/requestpickup.dart';
+
 class QuestionnairePage extends StatefulWidget {
   const QuestionnairePage({super.key});
 
@@ -19,6 +23,7 @@ class QuestionnairePage extends StatefulWidget {
 class _QuestionnairePageState extends State<QuestionnairePage> {
   int _currentQuestion = 0;
   String? _selectedAnswer;
+  List<int> qna = [0, 0, 0];
 
   void _next(List<String> questions) {
     if (_selectedAnswer == null) return;
@@ -29,9 +34,17 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         _selectedAnswer = null;
       });
     } else {
+      final pickuprequestdata = Provider.of<PickupRequestProvider>(
+        context,
+        listen: false,
+      );
+
+      pickuprequestdata.setQna(qna);
+
+      if (!mounted) return;
       Navigator.push(
         context,
-        CupertinoPageRoute(builder: (_) => PickupConfirmationPage()),
+        CupertinoPageRoute(builder: (_) => const PickupConfirmationPage()),
       );
     }
   }
@@ -126,6 +139,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
                   selected: _selectedAnswer == l10n.yes,
                   onTap: () {
                     setState(() {
+                      qna[_currentQuestion] = 1;
                       _selectedAnswer = l10n.yes;
                     });
                   },
@@ -139,6 +153,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
                   selected: _selectedAnswer == l10n.no,
                   onTap: () {
                     setState(() {
+                      qna[_currentQuestion] = 0;
                       _selectedAnswer = l10n.no;
                     });
                   },

@@ -17,6 +17,10 @@ import 'package:public_health/assetmaper.dart';
 // Questionnaire :
 import 'package:public_health/App/Household/Pickup%20Request%20Flow/questionnaire.dart';
 
+// Provider :
+import 'package:provider/provider.dart';
+import 'package:public_health/Providers/Household/requestpickup.dart';
+
 class PhotoPage extends StatefulWidget {
   const PhotoPage({super.key});
 
@@ -28,6 +32,11 @@ class _PhotoPageState extends State<PhotoPage> {
   XFile? _image;
 
   Future<void> _pickImage() async {
+    final pickuprequestdata = Provider.of<PickupRequestProvider>(
+      context,
+      listen: false,
+    );
+
     final source = await showCupertinoModalPopup<ImageSource>(
       context: context,
       builder: (context) => CupertinoActionSheet(
@@ -58,7 +67,9 @@ class _PhotoPageState extends State<PhotoPage> {
 
     final image = await ImagePicker().pickImage(source: source);
 
-    if (image != null) {
+    if (image != null && mounted) {
+      pickuprequestdata.setImage(File(image.path));
+
       setState(() {
         _image = image;
       });
