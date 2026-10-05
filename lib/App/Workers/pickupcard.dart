@@ -23,9 +23,8 @@ class PickupCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        height: 110,
         margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: AppColors.layering,
           borderRadius: BorderRadius.circular(24),
@@ -37,12 +36,12 @@ class PickupCard extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: AppColors.yellow,
+                color: AppColors.accent,
                 borderRadius: BorderRadius.circular(18),
               ),
               child: const Icon(
                 CupertinoIcons.map,
-                color: AppColors.accent,
+                color: AppColors.yellow,
                 size: 28,
               ),
             ),

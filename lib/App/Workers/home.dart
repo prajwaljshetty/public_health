@@ -1,23 +1,52 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 
 // Theme
 import 'package:public_health/Theme/theme.dart';
-import 'package:public_health/Language/language_switcher.dart';
 import 'package:public_health/Theme/profileicon.dart';
+
+// Assets
+import 'package:public_health/assetmaper.dart';
 
 // Language :
 import 'package:public_health/l10n/app_localizations.dart';
+import 'package:public_health/Language/language_switcher.dart';
 
 // Pickup Card :
 import 'package:public_health/App/Workers/pickupcard.dart';
 
+// Lottie :
+import 'package:lottie/lottie.dart';
+
 // Map :
 import 'package:public_health/App/Workers/map.dart';
 
-class HomePage extends StatelessWidget {
+// Locations :
+import 'package:geolocator/geolocator.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _requestLocation();
+    });
+  }
+
+  Future<void> _requestLocation() async {
+    final Position position = await Geolocator.getCurrentPosition(
+      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
+    );
+    if (!mounted) return;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,53 +76,43 @@ class HomePage extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  const SizedBox(width: 8),
+
+                  Lottie.asset(
+                    AssetMapper.coins,
+                    width: 160,
+                    height: 160,
+                    fit: BoxFit.contain,
+                  ),
+
                   Expanded(
                     child: Container(
                       height: 160,
                       decoration: BoxDecoration(
                         color: AppColors.textPrimary.withAlpha(20),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(24),
                       ),
-                    ),
-                  ),
-
-                  const SizedBox(width: 8),
-
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: AppColors.primarycoin,
-                      borderRadius: BorderRadius.circular(100),
-                      border: BoxBorder.all(
-                        width: 10,
-                        color: AppColors.secondarycoin,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '28',
+                            style: AppText.title.copyWith(
+                              color: AppColors.yellow,
+                              fontSize: 80,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            l10n.points,
+                            style: AppText.title.copyWith(
+                              color: AppColors.yellow,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          '25',
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w500,
-                            height: 1,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-
-                        const SizedBox(height: 5),
-
-                        Text(
-                          l10n.points,
-                          style: AppText.title.copyWith(
-                            color: AppColors.textPrimary,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ],
