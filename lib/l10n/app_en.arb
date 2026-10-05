@@ -94,5 +94,7 @@
   "logOut": "Log Out",
   
   "points": "Points",
-  "availablePickups": "Available Pickups"
+  "availablePickups": "Available Pickups",
+
+  "pickupDetails": "Pickup Details"
 }
