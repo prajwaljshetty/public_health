@@ -94,5 +94,7 @@
   "logOut": "ಲಾಗ್ ಔಟ್",
 
   "points": "ಅಂಕಗಳು",
-  "availablePickups": "ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು"
+  "availablePickups": "ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು",
+
+  "pickupDetails": "ಪಿಕಪ್ ವಿವರಗಳು"
 }

@@ -263,4 +263,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get availablePickups => 'Available Pickups';
+
+  @override
+  String get pickupDetails => 'Pickup Details';
 }

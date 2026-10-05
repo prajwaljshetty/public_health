@@ -266,4 +266,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get availablePickups => 'ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು';
+
+  @override
+  String get pickupDetails => 'ಪಿಕಪ್ ವಿವರಗಳು';
 }

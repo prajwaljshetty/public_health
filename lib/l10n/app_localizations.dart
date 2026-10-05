@@ -571,6 +571,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Available Pickups'**
   String get availablePickups;
+
+  /// No description provided for @pickupDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Details'**
+  String get pickupDetails;
 }
 
 class _AppLocalizationsDelegate
