@@ -21,7 +21,7 @@ import 'package:public_health/Providers/Household/requestpickup.dart';
 import 'package:lottie/lottie.dart';
 
 // Services :
-import 'package:public_health/Services/api_service.dart';
+import 'package:public_health/Services/API/api_service.dart';
 
 class PickupConfirmationPage extends StatefulWidget {
   const PickupConfirmationPage({super.key});
