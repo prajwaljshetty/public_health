@@ -3,6 +3,12 @@ import 'package:flutter/cupertino.dart';
 // Theme
 import 'package:public_health/Theme/theme.dart';
 
+// Assets
+import 'package:public_health/assetmaper.dart';
+
+// Lottie :
+import 'package:lottie/lottie.dart';
+
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 
@@ -118,24 +124,11 @@ class _LocationPageState extends State<LocationPage> {
               children: [
                 Align(
                   alignment: const Alignment(0, 0),
-                  child: Container(
-                    width: 190,
-                    height: 190,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.background, width: 1),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: const Alignment(0, 0.0),
-                  child: Container(
-                    width: 84,
-                    height: 84,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.accent.withValues(alpha: 0.35),
-                    ),
+                  child: Lottie.asset(
+                    AssetMapper.pulse,
+                    width: 180,
+                    height: 180,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Align(

@@ -7,6 +7,12 @@ import 'package:public_health/Theme/theme.dart';
 import 'package:public_health/Language/language_switcher.dart';
 import 'package:public_health/Theme/profileicon.dart';
 
+// Assets
+import 'package:public_health/assetmaper.dart';
+
+// Lottie :
+import 'package:lottie/lottie.dart';
+
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 
@@ -37,7 +43,6 @@ class HomePage extends StatelessWidget {
 
           Container(
             width: double.infinity,
-            height: 210,
             padding: const EdgeInsets.all(22),
             alignment: Alignment.bottomLeft,
             decoration: BoxDecoration(
@@ -48,6 +53,12 @@ class HomePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Lottie.asset(
+                  AssetMapper.box,
+                  width: 160,
+                  height: 160,
+                  fit: BoxFit.contain,
+                ),
                 Text(
                   l10n.homeHeroTitle,
                   style: const TextStyle(
