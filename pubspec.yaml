@@ -39,6 +39,8 @@ flutter:
   generate: true
 
   assets:
-    - assets/images/bucket.png
     - assets/animations/pickupConfirmed.json
     - assets/animations/coins.json
+    - assets/animations/box.json
+    - assets/animations/pulse.json
+    - assets/animations/imagecheck.json
