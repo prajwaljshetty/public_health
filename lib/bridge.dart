@@ -17,7 +17,7 @@ import 'package:public_health/Services/API/api_service.dart';
 
 // Provider :
 import 'package:provider/provider.dart';
-import 'package:public_health/Providers/user.dart';
+import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Household/requestpickup.dart';
 
 class Bridge extends StatefulWidget {

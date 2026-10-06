@@ -1,20 +1,21 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 
-// Language
+// Language :
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:public_health/l10n/app_localizations.dart';
 import 'package:public_health/locale_controller.dart';
 
-// Transition
+// Transition :
 import 'package:public_health/Language/language_transition.dart';
 
-// Bridge
+// Bridge :
 import 'package:public_health/bridge.dart';
 
-// Providers
-import 'package:public_health/Providers/user.dart';
+// Providers :
+import 'package:provider/provider.dart';
+import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Household/requestpickup.dart';
+import 'package:public_health/Providers/Location/location.dart';
 
 // Map :
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
@@ -32,6 +33,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => PickupRequestProvider()),
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
       ],
       child: const MyApp(),
     ),

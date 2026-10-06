@@ -20,9 +20,6 @@ import 'package:lottie/lottie.dart';
 // Map :
 import 'package:public_health/App/Workers/map.dart';
 
-// Locations :
-import 'package:geolocator/geolocator.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -31,23 +28,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _requestLocation();
-    });
-  }
-
-  Future<void> _requestLocation() async {
-    final Position position = await Geolocator.getCurrentPosition(
-      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
-    );
-    if (!mounted) return;
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -153,8 +133,8 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   CupertinoPageRoute(
                                     builder: (_) => PickupMapPage(
-                                      latitude: 12.9141,
-                                      longitude: 74.8560,
+                                      latitude: 13.0688,
+                                      longitude: 74.9936,
                                     ),
                                   ),
                                 );

@@ -1,13 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart' as geo;
 
 // Map :
-import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-
-// Theme :
 import 'package:public_health/Theme/theme.dart';
 
 // Language :
 import 'package:public_health/l10n/app_localizations.dart';
+
+// Provider :
+import 'package:provider/provider.dart';
+import 'package:public_health/Providers/Location/location.dart';
 
 class PickupMapPage extends StatefulWidget {
   final double latitude;
@@ -26,6 +31,15 @@ class PickupMapPage extends StatefulWidget {
 class _PickupMapPageState extends State<PickupMapPage> {
   MapboxMap? _mapboxMap;
 
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      context.read<LocationProvider>().startStreaming();
+    });
+  }
+
   void _showPickupModal() {
     showCupertinoModalPopup(
       context: context,
@@ -33,23 +47,13 @@ class _PickupMapPageState extends State<PickupMapPage> {
         return Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(
-            color: CupertinoColors.white,
+            color: AppColors.background,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: SafeArea(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Handle
-                Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: CupertinoColors.systemGrey4,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-
                 const SizedBox(height: 20),
 
                 // Title
@@ -64,12 +68,16 @@ class _PickupMapPageState extends State<PickupMapPage> {
                 SizedBox(
                   width: double.infinity,
                   child: CupertinoButton.filled(
+                    color: AppColors.accent,
+                    borderRadius: const BorderRadius.all(Radius.circular(24)),
                     onPressed: () {
                       Navigator.pop(context);
-
                       // Accept pickup
                     },
-                    child: const Text('Accept Pickup'),
+                    child: const Text(
+                      'Accept Pickup',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
               ],
@@ -81,18 +89,48 @@ class _PickupMapPageState extends State<PickupMapPage> {
   }
 
   void _moveCamera() {
-    _mapboxMap?.flyTo(
-      CameraOptions(
-        center: Point(coordinates: Position(widget.longitude, widget.latitude)),
-        zoom: 18,
+    if (_mapboxMap == null) return;
+
+    final position = context.read<LocationProvider>().position;
+
+    if (position == null) return;
+
+    final bounds = CoordinateBounds(
+      southwest: Point(
+        coordinates: Position(
+          min(position.longitude, widget.longitude),
+          min(position.latitude, widget.latitude),
+        ),
       ),
-      MapAnimationOptions(duration: 1000),
+      northeast: Point(
+        coordinates: Position(
+          max(position.longitude, widget.longitude),
+          max(position.latitude, widget.latitude),
+        ),
+      ),
+      infiniteBounds: false,
     );
+
+    _mapboxMap!
+        .cameraForCoordinateBounds(
+          bounds,
+          MbxEdgeInsets(top: 320, left: 60, bottom: 300, right: 60),
+          null,
+          null,
+          null,
+          null,
+        )
+        .then((camera) {
+          if (!mounted) return;
+
+          _mapboxMap!.flyTo(camera, MapAnimationOptions(duration: 1000));
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
     return CupertinoPageScaffold(
       child: Stack(
         children: [
@@ -100,19 +138,29 @@ class _PickupMapPageState extends State<PickupMapPage> {
           SizedBox.expand(
             child: MapWidget(
               styleUri: 'mapbox://styles/spotmap-app/cmoa88xof000z01sacg9b4om8',
-
               onMapCreated: (MapboxMap mapboxMap) async {
                 _mapboxMap = mapboxMap;
+
+                await mapboxMap.location.updateSettings(
+                  LocationComponentSettings(
+                    enabled: true,
+                    pulsingEnabled: true,
+                    pulsingColor: AppColors.accent.value,
+                    pulsingMaxRadius: 20,
+                    showAccuracyRing: true,
+                    accuracyRingColor: AppColors.accent.value,
+                    accuracyRingBorderColor: AppColors.accent.value,
+                  ),
+                );
+
                 final point = Point(
                   coordinates: Position(widget.longitude, widget.latitude),
                 );
 
-                // Camera
                 await mapboxMap.setCamera(
                   CameraOptions(center: point, zoom: 18),
                 );
 
-                // Source
                 await mapboxMap.style.addSource(
                   GeoJsonSource(
                     id: 'pickup-source',
@@ -137,7 +185,6 @@ class _PickupMapPageState extends State<PickupMapPage> {
                   ),
                 );
 
-                // Pickup marker
                 await mapboxMap.style.addLayer(
                   CircleLayer(
                     id: 'pickup-layer',
@@ -149,9 +196,13 @@ class _PickupMapPageState extends State<PickupMapPage> {
                   ),
                 );
 
-                // Show modal after map loads
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _showPickupModal();
+                  Future.delayed(const Duration(seconds: 1), () {
+                    if (!mounted) return;
+
+                    _moveCamera();
+                    _showPickupModal();
+                  });
                 });
               },
             ),
@@ -198,7 +249,7 @@ class _PickupMapPageState extends State<PickupMapPage> {
                 ),
                 decoration: BoxDecoration(
                   color: AppColors.accent,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(18),
                   boxShadow: const [
                     BoxShadow(
                       blurRadius: 10,
