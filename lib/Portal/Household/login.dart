@@ -17,7 +17,7 @@ import 'package:public_health/validator/fieldvalidator.dart';
 
 // Provider :
 import 'package:provider/provider.dart';
-import 'package:public_health/Providers/user.dart';
+import 'package:public_health/Providers/User/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {

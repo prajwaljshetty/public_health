@@ -5,14 +5,17 @@ import 'dart:io';
 // Theme
 import 'package:public_health/Theme/theme.dart';
 
+// Assets
+import 'package:public_health/assetmaper.dart';
+
+// Lottie :
+import 'package:lottie/lottie.dart';
+
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 
 // Image Picker :
 import 'package:image_picker/image_picker.dart';
-
-// Assets
-import 'package:public_health/assetmaper.dart';
 
 // Questionnaire :
 import 'package:public_health/App/Household/Pickup%20Request%20Flow/questionnaire.dart';
@@ -110,7 +113,12 @@ class _PhotoPageState extends State<PhotoPage> {
                 Align(
                   alignment: const Alignment(0, 0),
                   child: _image == null
-                      ? Image.asset(AssetMapper.bucket, width: 100)
+                      ? Lottie.asset(
+                          AssetMapper.imagecheck,
+                          width: 180,
+                          height: 180,
+                          fit: BoxFit.contain,
+                        )
                       : ClipRRect(
                           borderRadius: BorderRadius.circular(16),
                           child: Image.file(
