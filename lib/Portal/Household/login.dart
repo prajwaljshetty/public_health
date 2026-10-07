@@ -18,6 +18,8 @@ import 'package:public_health/validator/fieldvalidator.dart';
 // Provider :
 import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
+
+// Shared Preferences
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
@@ -136,15 +138,11 @@ class _LoginState extends State<Login> {
                 final response = await ApiService.login(
                   phoneno: phoneController.text.trim(),
                   password: passwordController.text,
-                  role: 'household',
                 );
                 if (response['status'] == true) {
                   final String uid = response['uid'];
 
-                  final dataResponse = await ApiService.getdata(
-                    uid: uid,
-                    role: 'household',
-                  );
+                  final dataResponse = await ApiService.getdata(uid: uid);
 
                   if (dataResponse['status'] == true) {
                     final userdata = dataResponse['userdata'];

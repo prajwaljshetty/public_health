@@ -269,4 +269,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get pickupDetails => 'ಪಿಕಪ್ ವಿವರಗಳು';
+
+  @override
+  String get workerNotFound => 'ಕಾರ್ಯಕರ್ತರು ಕಂಡುಬಂದಿಲ್ಲ';
 }

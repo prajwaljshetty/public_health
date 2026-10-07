@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart';
 
 // Theme
 import 'package:public_health/Theme/theme.dart';
@@ -169,16 +168,12 @@ class _CreateAccountState extends State<CreateAccount> {
                   username: nameController.text.trim(),
                   phoneno: phoneController.text.trim(),
                   password: passwordController.text,
-                  role: 'household',
                 );
 
                 if (response['status'] == true) {
                   final String uid = response['uid'];
 
-                  final dataResponse = await ApiService.getdata(
-                    uid: uid,
-                    role: 'household',
-                  );
+                  final dataResponse = await ApiService.getdata(uid: uid);
 
                   if (dataResponse['status'] == true) {
                     final userdata = dataResponse['userdata'];
