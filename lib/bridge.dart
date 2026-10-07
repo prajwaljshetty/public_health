@@ -55,7 +55,7 @@ class _BridgeState extends State<Bridge> {
       return;
     }
 
-    final dataResponse = await ApiService.getdata(uid: uid, role: 'household');
+    final dataResponse = await ApiService.getdata(uid: uid);
 
     if (dataResponse['status'] == true) {
       final userdata = dataResponse['userdata'];

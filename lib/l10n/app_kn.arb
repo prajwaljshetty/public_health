@@ -96,5 +96,6 @@
   "points": "ಅಂಕಗಳು",
   "availablePickups": "ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು",
 
-  "pickupDetails": "ಪಿಕಪ್ ವಿವರಗಳು"
+  "pickupDetails": "ಪಿಕಪ್ ವಿವರಗಳು",
+  "workerNotFound": "ಕಾರ್ಯಕರ್ತರು ಕಂಡುಬಂದಿಲ್ಲ"
 }

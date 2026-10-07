@@ -577,6 +577,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pickup Details'**
   String get pickupDetails;
+
+  /// No description provided for @workerNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Worker not found'**
+  String get workerNotFound;
 }
 
 class _AppLocalizationsDelegate

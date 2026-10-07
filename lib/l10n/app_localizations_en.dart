@@ -266,4 +266,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pickupDetails => 'Pickup Details';
+
+  @override
+  String get workerNotFound => 'Worker not found';
 }

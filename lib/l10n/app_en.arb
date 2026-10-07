@@ -96,5 +96,6 @@
   "points": "Points",
   "availablePickups": "Available Pickups",
 
-  "pickupDetails": "Pickup Details"
+  "pickupDetails": "Pickup Details",
+  "workerNotFound": "Worker not found"
 }

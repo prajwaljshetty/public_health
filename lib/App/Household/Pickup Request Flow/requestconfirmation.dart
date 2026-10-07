@@ -74,10 +74,7 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
         qna: pickuprequestdata.qna,
       );
 
-      final dataResponse = await ApiService.getdata(
-        uid: uid,
-        role: 'household',
-      );
+      final dataResponse = await ApiService.getdata(uid: uid);
 
       pickuprequestdata.sethasActivePickup(
         hasActivePickup: dataResponse['userdata']['hasActivePickup'] as bool,
