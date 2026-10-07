@@ -10,14 +10,13 @@ class ApiService {
     required String username,
     required phoneno,
     required String password,
-    required String role,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/$role/create'),
+      Uri.parse('$baseUrl/household/create'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'username': username,
-        'role': role,
+        'role': 'household',
         'phoneno': phoneno,
         'password': password,
       }),
@@ -28,26 +27,18 @@ class ApiService {
   static Future<Map<String, dynamic>> login({
     required String phoneno,
     required String password,
-    required String role,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/$role/login'),
+      Uri.parse('$baseUrl/household/login'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'phoneno': phoneno,
-        'role': role,
-        'password': password,
-      }),
+      body: jsonEncode({'phoneno': phoneno, 'password': password}),
     );
     return jsonDecode(response.body);
   }
 
-  static Future<Map<String, dynamic>> getdata({
-    required String uid,
-    required String role,
-  }) async {
+  static Future<Map<String, dynamic>> getdata({required String uid}) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/$role/data/$uid'),
+      Uri.parse('$baseUrl/household/data/$uid'),
       headers: {'Content-Type': 'application/json'},
     );
     return jsonDecode(response.body);
