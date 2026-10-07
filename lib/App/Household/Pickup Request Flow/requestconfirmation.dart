@@ -21,7 +21,7 @@ import 'package:public_health/Providers/Household/requestpickup.dart';
 import 'package:lottie/lottie.dart';
 
 // Services :
-import 'package:public_health/Services/API/api_service.dart';
+import 'package:public_health/Services/API/Household/api_service.dart';
 
 class PickupConfirmationPage extends StatefulWidget {
   const PickupConfirmationPage({super.key});
@@ -74,7 +74,10 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
         qna: pickuprequestdata.qna,
       );
 
-      final dataResponse = await ApiService.getdata(uid: uid);
+      final dataResponse = await ApiService.getdata(
+        uid: uid,
+        role: 'household',
+      );
 
       pickuprequestdata.sethasActivePickup(
         hasActivePickup: dataResponse['userdata']['hasActivePickup'] as bool,

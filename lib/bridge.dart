@@ -13,7 +13,7 @@ import 'package:public_health/App/Workers/home.dart' as workerhome;
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Services :
-import 'package:public_health/Services/API/api_service.dart';
+import 'package:public_health/Services/API/Household/api_service.dart';
 
 // Provider :
 import 'package:provider/provider.dart';
@@ -55,7 +55,7 @@ class _BridgeState extends State<Bridge> {
       return;
     }
 
-    final dataResponse = await ApiService.getdata(uid: uid);
+    final dataResponse = await ApiService.getdata(uid: uid, role: 'household');
 
     if (dataResponse['status'] == true) {
       final userdata = dataResponse['userdata'];
