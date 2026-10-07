@@ -14,7 +14,7 @@ import 'package:public_health/App/Household/home.dart';
 import 'package:public_health/validator/fieldvalidator.dart';
 
 // Services :
-import 'package:public_health/Services/API/api_service.dart';
+import 'package:public_health/Services/API/Household/api_service.dart';
 
 // Provider :
 import 'package:provider/provider.dart';
@@ -175,7 +175,10 @@ class _CreateAccountState extends State<CreateAccount> {
                 if (response['status'] == true) {
                   final String uid = response['uid'];
 
-                  final dataResponse = await ApiService.getdata(uid: uid);
+                  final dataResponse = await ApiService.getdata(
+                    uid: uid,
+                    role: 'household',
+                  );
 
                   if (dataResponse['status'] == true) {
                     final userdata = dataResponse['userdata'];

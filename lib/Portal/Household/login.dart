@@ -10,7 +10,7 @@ import 'package:public_health/l10n/app_localizations.dart';
 import 'package:public_health/App/Household/home.dart';
 
 // Services :
-import 'package:public_health/Services/API/api_service.dart';
+import 'package:public_health/Services/API/Household/api_service.dart';
 
 // Validator
 import 'package:public_health/validator/fieldvalidator.dart';
@@ -141,7 +141,10 @@ class _LoginState extends State<Login> {
                 if (response['status'] == true) {
                   final String uid = response['uid'];
 
-                  final dataResponse = await ApiService.getdata(uid: uid);
+                  final dataResponse = await ApiService.getdata(
+                    uid: uid,
+                    role: 'household',
+                  );
 
                   if (dataResponse['status'] == true) {
                     final userdata = dataResponse['userdata'];
