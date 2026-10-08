@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+import 'dart:convert';
+
 // Theme
 import 'package:public_health/Theme/theme.dart';
 import 'package:public_health/Theme/profileicon.dart';
@@ -7,18 +9,29 @@ import 'package:public_health/Theme/profileicon.dart';
 // Assets
 import 'package:public_health/assetmaper.dart';
 
-// Language :
+// Language
 import 'package:public_health/l10n/app_localizations.dart';
 import 'package:public_health/Language/language_switcher.dart';
 
-// Pickup Card :
+// Pickup Card
 import 'package:public_health/App/Workers/pickupcard.dart';
 
-// Lottie :
+// Lottie
 import 'package:lottie/lottie.dart';
 
-// Map :
+// API
+import 'package:public_health/Services/API/Workers/api_service.dart';
+
+// Map
 import 'package:public_health/App/Workers/map.dart';
+
+// Geolocator
+import 'package:geolocator/geolocator.dart';
+
+// Provider
+import 'package:provider/provider.dart';
+import 'package:public_health/Providers/User/user.dart';
+import 'package:public_health/Providers/Location/location.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,11 +42,30 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      context.read<LocationProvider>().startStreaming();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    final userid = Provider.of<UserProvider>(context).userid;
+
+    // Get current location from Provider
+    final position = context.watch<LocationProvider>().position;
+
+    if (userid == null) {
+      return const Center(child: CupertinoActivityIndicator());
+    }
+
     return AppScaffold(
       showBack: false,
+
       trailing: const [
         LanguageSwitcher(),
         SizedBox(width: 10),
@@ -44,16 +76,19 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 60),
-          // Points
+
           GestureDetector(
             onTap: () {},
+
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.all(10),
+
               decoration: BoxDecoration(
                 color: AppColors.accent,
                 borderRadius: BorderRadius.circular(40),
               ),
+
               child: Row(
                 children: [
                   const SizedBox(width: 8),
@@ -68,12 +103,15 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: Container(
                       height: 160,
+
                       decoration: BoxDecoration(
                         color: AppColors.textPrimary.withAlpha(20),
                         borderRadius: BorderRadius.circular(24),
                       ),
+
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+
                         children: [
                           Text(
                             '28',
@@ -83,6 +121,7 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+
                           Text(
                             l10n.points,
                             style: AppText.title.copyWith(
@@ -105,57 +144,132 @@ class _HomePageState extends State<HomePage> {
           Text(l10n.availablePickups, style: AppText.label),
 
           const SizedBox(height: 20),
+
           ClipRRect(
             borderRadius: BorderRadius.circular(24),
+
             child: Stack(
               children: [
-                // Your container
                 Container(
                   width: double.infinity,
                   height: 460,
+
                   decoration: BoxDecoration(
                     color: AppColors.background,
                     borderRadius: BorderRadius.circular(24),
                   ),
+
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        for (int i = 0; i <= 15; i++)
-                          if (i == 0)
-                            SizedBox(height: 20)
-                          else
-                            PickupCard(
-                              pickupId: '$i',
-                              time: 'Today, 2:30 PM',
-                              distance: '2.4 km',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (_) => PickupMapPage(
-                                      latitude: 13.0688,
-                                      longitude: 74.9936,
-                                    ),
-                                  ),
-                                );
-                              },
+                    child: StreamBuilder(
+                      stream: ApiService.pickupsStream(userid!).stream,
+
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return SizedBox(
+                            height: 200,
+
+                            child: Center(
+                              child: Text(
+                                'No Available pickups',
+                                style: AppText.indicator,
+                              ),
                             ),
-                      ],
+                          );
+                        }
+
+                        final pickups =
+                            jsonDecode(snapshot.data as String) as List;
+
+                        // Location is not another StreamBuilder.
+                        // It comes directly from LocationProvider.
+                        if (position == null) {
+                          return const SizedBox(
+                            height: 200,
+
+                            child: Center(child: Text('Getting location...')),
+                          );
+                        }
+
+                        return ListView.builder(
+                          shrinkWrap: true,
+
+                          physics: const NeverScrollableScrollPhysics(),
+
+                          itemCount: pickups.length + 1,
+
+                          itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return const SizedBox(height: 20);
+                            }
+
+                            final pickup = pickups[index - 1];
+
+                            final distance = Geolocator.distanceBetween(
+                              position.latitude,
+                              position.longitude,
+
+                              (pickup['coordinates']['latitude'] as num)
+                                  .toDouble(),
+
+                              (pickup['coordinates']['longitude'] as num)
+                                  .toDouble(),
+                            );
+
+                            return AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+
+                              child: PickupCard(
+                                key: ValueKey(pickup['pickupid']),
+
+                                pickupId: pickup['pickupid'],
+
+                                time: pickup['time'],
+
+                                distance:
+                                    '${(distance / 1000).toStringAsFixed(1)} km',
+
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+
+                                    CupertinoPageRoute(
+                                      builder: (_) => PickupMapPage(
+                                        latitude:
+                                            (pickup['coordinates']['latitude']
+                                                    as num)
+                                                .toDouble(),
+
+                                        longitude:
+                                            (pickup['coordinates']['longitude']
+                                                    as num)
+                                                .toDouble(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                 ),
 
-                // Soft top edge
+                // Top fade
                 Positioned(
                   top: -2,
                   left: 0,
                   right: 0,
+
                   child: Container(
                     height: 20,
+
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
+
                         colors: [
                           AppColors.background,
                           AppColors.background.withValues(alpha: 0),
@@ -165,17 +279,20 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                // Soft bottom edge
+                // Bottom fade
                 Positioned(
                   bottom: 0,
                   left: 0,
                   right: 0,
+
                   child: Container(
                     height: 20,
+
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
+
                         colors: [
                           AppColors.background,
                           AppColors.background.withValues(alpha: 0),

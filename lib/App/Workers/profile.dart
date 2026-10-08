@@ -13,6 +13,9 @@ import 'package:public_health/Providers/User/user.dart';
 // Portal :
 import 'package:public_health/Portal/portal.dart';
 
+// API
+import 'package:public_health/Services/API/Workers/api_service.dart';
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -84,6 +87,7 @@ class ProfilePage extends StatelessWidget {
             icon: CupertinoIcons.square_arrow_right,
             title: l10n.logOut,
             onPressed: () async {
+              ApiService.disconnectPickups();
               await userProvider.logout();
 
               if (!context.mounted) return;

@@ -30,6 +30,11 @@ class AppText {
     fontWeight: FontWeight.w600,
     color: AppColors.textPrimary,
   );
+  static const indicator = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textSecondary,
+  );
   static const cardTitle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w700,

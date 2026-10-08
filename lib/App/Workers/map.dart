@@ -34,10 +34,6 @@ class _PickupMapPageState extends State<PickupMapPage> {
   @override
   void initState() {
     super.initState();
-
-    Future.microtask(() {
-      context.read<LocationProvider>().startStreaming();
-    });
   }
 
   void _showPickupModal() {
