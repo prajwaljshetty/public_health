@@ -11,21 +11,21 @@
   "workerSubtitle": "Accept and collect pickup requests",
 
   "welcome": "Welcome",
-  "authSubtitle": "Request safe pickup of your household medical waste",
+  "authSubtitle": "Request a safe pickup for your household medical waste",
   "login": "Log in",
   "loginSubtitle": "Enter your registered phone number to request or track a pickup",
-  "loginCardSubtitle": "Already registered? Continue to your account",
+  "loginCardSubtitle": "Already have an account? Log in to continue",
 
   "createAccount": "Create account",
-  "createAccountSubtitle": "Register to request medical waste pickups from your home",
-  "createAccountCardSubtitle": "New here? Register to request pickups",
-  "createAccountNote": "Your details are used only to manage your account and coordinate pickups.",
+  "createAccountSubtitle": "Register to request medical waste pickup from your home",
+  "createAccountCardSubtitle": "New here? Create an account to request a pickup",
+  "createAccountNote": "Your details are used only to manage your account and arrange pickups.",
 
   "fullName": "Full name",
   "fullNamePlaceholder": "Enter your full name",
   "phoneNumber": "Phone number",
   "phonePlaceholder": "Enter your mobile number",
-  "registeredPlaceholder": "Enter your registered number",
+  "registeredPlaceholder": "Enter your registered phone number",
   "password": "Password",
   "passwordPlaceholder": "Enter your password",
 
@@ -34,8 +34,8 @@
   "invalidUsername": "Name can contain only letters and spaces",
   "phoneNumberRequired": "Phone number is required",
   "invalidPhoneNumber": "Enter a valid phone number",
-  "phoneNumberAlreadyRegistered": "Phone number already registered",
-  "phoneNumberNotRegistered": "Phone number is not registered",
+  "phoneNumberAlreadyRegistered": "This phone number is already registered",
+  "phoneNumberNotRegistered": "This phone number is not registered",
   "passwordRequired": "Password is required",
   "passwordMinLength": "Password must be at least 6 characters",
   "incorrectPassword": "Incorrect password",
@@ -46,14 +46,14 @@
   "workerIdPlaceholder": "Enter your Purasabhe worker ID",
   "workerIdRequired": "Worker ID is required",
   "signIn": "Sign in",
-  "workerNote": "Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending.",
+  "workerNote": "Only verified Purasabhe workers can accept pickup requests. Contact your administrator if you need help with your account.",
 
   "termsNote": "By continuing, you agree to our Privacy Policy and Terms & Conditions",
 
   "homeHeroTitle": "Ready to hand it over?",
   "homeHeroSubtitle": "We'll take it from here.",
   "yourPickups": "Your pickups",
-  "noPickupsYet": "No pickups yet. Your requests will show up here.",
+  "noPickupsYet": "No pickups yet. Your requests will appear here.",
   "requestPickup": "Request Pickup",
 
   "wasteVerification": "Waste Verification",
@@ -63,17 +63,16 @@
   "quickCheck": "Quick Check",
   "quickCheckSubtitle": "A quick safety check.\nHelp us prepare for your pickup.",
   "sharpObjectsQuestion": "Does the waste contain any sharp objects?",
-  "expiredMedicineQuestion": "Does the waste include unused or expired medicine?",
-  "bodyFluidsQuestion": "Does the waste include items that have been in contact with blood or other body fluids?",
+  "expiredMedicineQuestion": "Does the waste contain any unused or expired medicine?",
+  "bodyFluidsQuestion": "Does the waste contain items that have been in contact with blood or other body fluids?",
   "yes": "Yes",
   "no": "No",
   "next": "Next",
   "continueButton": "Continue",
   "confirmPickup": "Confirm Pickup",
-  
 
   "locationTitle": "Let us find you.",
-  "locationSubtitle": "Enable your location so we can arrange your pickup.",
+  "locationSubtitle": "Allow location access so we can arrange your pickup.",
   "allowLocation": "Allow Location",
   "cancel": "Cancel",
   "locationDeniedTitle": "Location access needed",
@@ -84,18 +83,20 @@
   "pickupConfirmationMessage": "Please review the details and confirm your pickup request.",
   "pickupConfirmed": "Pickup Confirmed",
   "pickupConfirmedMessage": "Your pickup request has been confirmed successfully.",
-   "requesting": "Requesting...",
+  "requesting": "Requesting...",
   "done": "Done",
+
+  "availablePickups": "Available Pickups",
+  "pickupDetails": "Pickup Details",
+  "pickupAvailable": "Pickup Available",
+  "noAvailablePickups": "No available pickups",
+  "acceptPickup": "Accept Pickup",
+  "workerNotFound": "Worker not found",
 
   "profile": "Profile",
   "account": "Account",
   "personalInformation": "Personal Information",
   "changePassword": "Change Password",
   "logOut": "Log Out",
-  
-  "points": "Points",
-  "availablePickups": "Available Pickups",
-
-  "pickupDetails": "Pickup Details",
-  "workerNotFound": "Worker not found"
+  "points": "Points"
 }

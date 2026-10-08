@@ -36,7 +36,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authSubtitle =>
-      'Request safe pickup of your household medical waste';
+      'Request a safe pickup for your household medical waste';
 
   @override
   String get login => 'Log in';
@@ -46,23 +46,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'Enter your registered phone number to request or track a pickup';
 
   @override
-  String get loginCardSubtitle =>
-      'Already registered? Continue to your account';
+  String get loginCardSubtitle => 'Already have an account? Log in to continue';
 
   @override
   String get createAccount => 'Create account';
 
   @override
   String get createAccountSubtitle =>
-      'Register to request medical waste pickups from your home';
+      'Register to request medical waste pickup from your home';
 
   @override
   String get createAccountCardSubtitle =>
-      'New here? Register to request pickups';
+      'New here? Create an account to request a pickup';
 
   @override
   String get createAccountNote =>
-      'Your details are used only to manage your account and coordinate pickups.';
+      'Your details are used only to manage your account and arrange pickups.';
 
   @override
   String get fullName => 'Full name';
@@ -77,7 +76,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phonePlaceholder => 'Enter your mobile number';
 
   @override
-  String get registeredPlaceholder => 'Enter your registered number';
+  String get registeredPlaceholder => 'Enter your registered phone number';
 
   @override
   String get password => 'Password';
@@ -101,10 +100,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invalidPhoneNumber => 'Enter a valid phone number';
 
   @override
-  String get phoneNumberAlreadyRegistered => 'Phone number already registered';
+  String get phoneNumberAlreadyRegistered =>
+      'This phone number is already registered';
 
   @override
-  String get phoneNumberNotRegistered => 'Phone number is not registered';
+  String get phoneNumberNotRegistered => 'This phone number is not registered';
 
   @override
   String get passwordRequired => 'Password is required';
@@ -136,7 +136,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workerNote =>
-      'Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending.';
+      'Only verified Purasabhe workers can accept pickup requests. Contact your administrator if you need help with your account.';
 
   @override
   String get termsNote =>
@@ -152,7 +152,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yourPickups => 'Your pickups';
 
   @override
-  String get noPickupsYet => 'No pickups yet. Your requests will show up here.';
+  String get noPickupsYet => 'No pickups yet. Your requests will appear here.';
 
   @override
   String get requestPickup => 'Request Pickup';
@@ -179,11 +179,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expiredMedicineQuestion =>
-      'Does the waste include unused or expired medicine?';
+      'Does the waste contain any unused or expired medicine?';
 
   @override
   String get bodyFluidsQuestion =>
-      'Does the waste include items that have been in contact with blood or other body fluids?';
+      'Does the waste contain items that have been in contact with blood or other body fluids?';
 
   @override
   String get yes => 'Yes';
@@ -205,7 +205,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get locationSubtitle =>
-      'Enable your location so we can arrange your pickup.';
+      'Allow location access so we can arrange your pickup.';
 
   @override
   String get allowLocation => 'Allow Location';
@@ -244,6 +244,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get done => 'Done';
 
   @override
+  String get availablePickups => 'Available Pickups';
+
+  @override
+  String get pickupDetails => 'Pickup Details';
+
+  @override
+  String get pickupAvailable => 'Pickup Available';
+
+  @override
+  String get noAvailablePickups => 'No available pickups';
+
+  @override
+  String get acceptPickup => 'Accept Pickup';
+
+  @override
+  String get workerNotFound => 'Worker not found';
+
+  @override
   String get profile => 'Profile';
 
   @override
@@ -260,13 +278,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get points => 'Points';
-
-  @override
-  String get availablePickups => 'Available Pickups';
-
-  @override
-  String get pickupDetails => 'Pickup Details';
-
-  @override
-  String get workerNotFound => 'Worker not found';
 }

@@ -10,11 +10,11 @@ class AppLocalizationsKn extends AppLocalizations {
   AppLocalizationsKn([String locale = 'kn']) : super(locale);
 
   @override
-  String get portalTitle => 'ಸುರಕ್ಷಿತ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಣೆ';
+  String get portalTitle => 'ಸುರಕ್ಷಿತ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಪಿಕಪ್';
 
   @override
   String get portalSubtitle =>
-      'ಮನೆಗಳಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ಪುರಸಭೆ ಕಾರ್ಮಿಕರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುವ ಸೇವೆ';
+      'ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ಮನೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುವ ಸೇವೆ';
 
   @override
   String get selectRole => 'ಮುಂದುವರಿಯಲು ನಿಮ್ಮ ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ';
@@ -29,8 +29,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get worker => 'ಪುರಸಭೆ ಕಾರ್ಮಿಕ';
 
   @override
-  String get workerSubtitle =>
-      'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಿಸಿ';
+  String get workerSubtitle => 'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಸಂಗ್ರಹಿಸಿ';
 
   @override
   String get welcome => 'ಸ್ವಾಗತ';
@@ -44,10 +43,10 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get loginSubtitle =>
-      'ಪಿಕಪ್‌ಗಾಗಿ ವಿನಂತಿಸಲು ಅಥವಾ ಅದರ ಸ್ಥಿತಿಯನ್ನು ನೋಡಲು ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
+      'ಪಿಕಪ್ ವಿನಂತಿಸಲು ಅಥವಾ ಅದರ ಸ್ಥಿತಿಯನ್ನು ನೋಡಲು ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
 
   @override
-  String get loginCardSubtitle => 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಮುಂದುವರಿಯಿರಿ';
+  String get loginCardSubtitle => 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಮುಂದುವರಿಯಲು ಲಾಗಿನ್ ಮಾಡಿ';
 
   @override
   String get createAccount => 'ಖಾತೆ ರಚಿಸಿ';
@@ -58,7 +57,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get createAccountCardSubtitle =>
-      'ಹೊಸದಾಗಿ ಬಂದಿದ್ದೀರಾ? ಪಿಕಪ್ ವಿನಂತಿಸಲು ನೋಂದಾಯಿಸಿ';
+      'ಹೊಸದಾಗಿ ಬಂದಿದ್ದೀರಾ? ಪಿಕಪ್ ವಿನಂತಿಸಲು ಖಾತೆ ರಚಿಸಿ';
 
   @override
   String get createAccountNote =>
@@ -77,7 +76,8 @@ class AppLocalizationsKn extends AppLocalizations {
   String get phonePlaceholder => 'ನಿಮ್ಮ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
 
   @override
-  String get registeredPlaceholder => 'ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ';
+  String get registeredPlaceholder =>
+      'ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
 
   @override
   String get password => 'ಪಾಸ್‌ವರ್ಡ್';
@@ -103,10 +103,10 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get phoneNumberAlreadyRegistered =>
-      'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ';
+      'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ';
 
   @override
-  String get phoneNumberNotRegistered => 'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನೋಂದಾಯಿಸಲಾಗಿಲ್ಲ';
+  String get phoneNumberNotRegistered => 'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನೋಂದಾಯಿಸಿಲ್ಲ';
 
   @override
   String get passwordRequired => 'ಪಾಸ್‌ವರ್ಡ್ ಅಗತ್ಯವಿದೆ';
@@ -115,7 +115,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get passwordMinLength => 'ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳಿರಬೇಕು';
 
   @override
-  String get incorrectPassword => 'ಪಾಸ್‌ವರ್ಡ್ ಸರಿಯಾಗಿಲ್ಲ';
+  String get incorrectPassword => 'ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ';
 
   @override
   String get workerLoginTitle => 'ಕಾರ್ಮಿಕರ ಲಾಗಿನ್';
@@ -128,7 +128,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get workerId => 'ಕಾರ್ಮಿಕ ಐಡಿ';
 
   @override
-  String get workerIdPlaceholder => 'ನಿಮ್ಮ ಕಾರ್ಮಿಕ ಐಡಿ ನಮೂದಿಸಿ';
+  String get workerIdPlaceholder => 'ನಿಮ್ಮ ಪುರಸಭೆ ಕಾರ್ಮಿಕ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ';
 
   @override
   String get workerIdRequired => 'ಕಾರ್ಮಿಕ ಐಡಿ ಅಗತ್ಯವಿದೆ';
@@ -138,7 +138,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get workerNote =>
-      'ಪರಿಶೀಲಿಸಲಾದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರು ಮಾತ್ರ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಬಹುದು. ನಿಮ್ಮ ಖಾತೆ ಇನ್ನೂ ಪರಿಶೀಲನೆಯಲ್ಲಿದ್ದರೆ ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+      'ಪರಿಶೀಲಿಸಿದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರು ಮಾತ್ರ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಬಹುದು. ಖಾತೆಗೆ ಸಂಬಂಧಿಸಿದ ಸಹಾಯಕ್ಕಾಗಿ ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.';
 
   @override
   String get termsNote =>
@@ -155,7 +155,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get noPickupsYet =>
-      'ಇನ್ನೂ ಯಾವುದೇ ಪಿಕಪ್‌ಗಳಿಲ್ಲ. ನೀವು ಮಾಡುವ ವಿನಂತಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
+      'ಇನ್ನೂ ಯಾವುದೇ ಪಿಕಪ್‌ಗಳಿಲ್ಲ. ನಿಮ್ಮ ವಿನಂತಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
 
   @override
   String get requestPickup => 'ಪಿಕಪ್ ವಿನಂತಿಸಿ';
@@ -186,7 +186,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get bodyFluidsQuestion =>
-      'ತ್ಯಾಜ್ಯವು ರಕ್ತ ಅಥವಾ ಇತರ ದೇಹದ ದ್ರವಗಳ ಸಂಪರ್ಕಕ್ಕೆ ಬಂದ ವಸ್ತುಗಳನ್ನು ಹೊಂದಿದೆಯೇ?';
+      'ತ್ಯಾಜ್ಯದಲ್ಲಿ ರಕ್ತ ಅಥವಾ ಇತರ ದೇಹದ ದ್ರವಗಳ ಸಂಪರ್ಕಕ್ಕೆ ಬಂದ ವಸ್ತುಗಳಿವೆಯೇ?';
 
   @override
   String get yes => 'ಹೌದು';
@@ -208,16 +208,16 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get locationSubtitle =>
-      'ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ.';
+      'ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ನಿಮ್ಮ ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ನೀಡಿ.';
 
   @override
-  String get allowLocation => 'ಸ್ಥಳಕ್ಕೆ ಅನುಮತಿಸಿ';
+  String get allowLocation => 'ಸ್ಥಳಕ್ಕೆ ಅನುಮತಿ ನೀಡಿ';
 
   @override
   String get cancel => 'ರದ್ದುಮಾಡಿ';
 
   @override
-  String get locationDeniedTitle => 'ಸ್ಥಳದ ಅನುಮತಿ ಬೇಕಾಗಿದೆ';
+  String get locationDeniedTitle => 'ಸ್ಥಳದ ಅನುಮತಿ ಅಗತ್ಯವಿದೆ';
 
   @override
   String get locationDeniedMessage =>
@@ -247,6 +247,24 @@ class AppLocalizationsKn extends AppLocalizations {
   String get done => 'ಮುಗಿದಿದೆ';
 
   @override
+  String get availablePickups => 'ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು';
+
+  @override
+  String get pickupDetails => 'ಪಿಕಪ್ ವಿವರಗಳು';
+
+  @override
+  String get pickupAvailable => 'ಪಿಕಪ್ ಲಭ್ಯವಿದೆ';
+
+  @override
+  String get noAvailablePickups => 'ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು ಇಲ್ಲ';
+
+  @override
+  String get acceptPickup => 'ಪಿಕಪ್ ಸ್ವೀಕರಿಸಿ';
+
+  @override
+  String get workerNotFound => 'ಕಾರ್ಮಿಕರು ಕಂಡುಬಂದಿಲ್ಲ';
+
+  @override
   String get profile => 'ಪ್ರೊಫೈಲ್';
 
   @override
@@ -263,13 +281,4 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get points => 'ಅಂಕಗಳು';
-
-  @override
-  String get availablePickups => 'ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು';
-
-  @override
-  String get pickupDetails => 'ಪಿಕಪ್ ವಿವರಗಳು';
-
-  @override
-  String get workerNotFound => 'ಕಾರ್ಯಕರ್ತರು ಕಂಡುಬಂದಿಲ್ಲ';
 }

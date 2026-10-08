@@ -149,7 +149,7 @@ abstract class AppLocalizations {
   /// No description provided for @authSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Request safe pickup of your household medical waste'**
+  /// **'Request a safe pickup for your household medical waste'**
   String get authSubtitle;
 
   /// No description provided for @login.
@@ -167,7 +167,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginCardSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Already registered? Continue to your account'**
+  /// **'Already have an account? Log in to continue'**
   String get loginCardSubtitle;
 
   /// No description provided for @createAccount.
@@ -179,19 +179,19 @@ abstract class AppLocalizations {
   /// No description provided for @createAccountSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Register to request medical waste pickups from your home'**
+  /// **'Register to request medical waste pickup from your home'**
   String get createAccountSubtitle;
 
   /// No description provided for @createAccountCardSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'New here? Register to request pickups'**
+  /// **'New here? Create an account to request a pickup'**
   String get createAccountCardSubtitle;
 
   /// No description provided for @createAccountNote.
   ///
   /// In en, this message translates to:
-  /// **'Your details are used only to manage your account and coordinate pickups.'**
+  /// **'Your details are used only to manage your account and arrange pickups.'**
   String get createAccountNote;
 
   /// No description provided for @fullName.
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @registeredPlaceholder.
   ///
   /// In en, this message translates to:
-  /// **'Enter your registered number'**
+  /// **'Enter your registered phone number'**
   String get registeredPlaceholder;
 
   /// No description provided for @password.
@@ -269,13 +269,13 @@ abstract class AppLocalizations {
   /// No description provided for @phoneNumberAlreadyRegistered.
   ///
   /// In en, this message translates to:
-  /// **'Phone number already registered'**
+  /// **'This phone number is already registered'**
   String get phoneNumberAlreadyRegistered;
 
   /// No description provided for @phoneNumberNotRegistered.
   ///
   /// In en, this message translates to:
-  /// **'Phone number is not registered'**
+  /// **'This phone number is not registered'**
   String get phoneNumberNotRegistered;
 
   /// No description provided for @passwordRequired.
@@ -335,7 +335,7 @@ abstract class AppLocalizations {
   /// No description provided for @workerNote.
   ///
   /// In en, this message translates to:
-  /// **'Only workers verified by Purasabhe can accept pickups. Contact your administrator if your account is pending.'**
+  /// **'Only verified Purasabhe workers can accept pickup requests. Contact your administrator if you need help with your account.'**
   String get workerNote;
 
   /// No description provided for @termsNote.
@@ -365,7 +365,7 @@ abstract class AppLocalizations {
   /// No description provided for @noPickupsYet.
   ///
   /// In en, this message translates to:
-  /// **'No pickups yet. Your requests will show up here.'**
+  /// **'No pickups yet. Your requests will appear here.'**
   String get noPickupsYet;
 
   /// No description provided for @requestPickup.
@@ -413,13 +413,13 @@ abstract class AppLocalizations {
   /// No description provided for @expiredMedicineQuestion.
   ///
   /// In en, this message translates to:
-  /// **'Does the waste include unused or expired medicine?'**
+  /// **'Does the waste contain any unused or expired medicine?'**
   String get expiredMedicineQuestion;
 
   /// No description provided for @bodyFluidsQuestion.
   ///
   /// In en, this message translates to:
-  /// **'Does the waste include items that have been in contact with blood or other body fluids?'**
+  /// **'Does the waste contain items that have been in contact with blood or other body fluids?'**
   String get bodyFluidsQuestion;
 
   /// No description provided for @yes.
@@ -461,7 +461,7 @@ abstract class AppLocalizations {
   /// No description provided for @locationSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enable your location so we can arrange your pickup.'**
+  /// **'Allow location access so we can arrange your pickup.'**
   String get locationSubtitle;
 
   /// No description provided for @allowLocation.
@@ -530,6 +530,42 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get done;
 
+  /// No description provided for @availablePickups.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Pickups'**
+  String get availablePickups;
+
+  /// No description provided for @pickupDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Details'**
+  String get pickupDetails;
+
+  /// No description provided for @pickupAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Available'**
+  String get pickupAvailable;
+
+  /// No description provided for @noAvailablePickups.
+  ///
+  /// In en, this message translates to:
+  /// **'No available pickups'**
+  String get noAvailablePickups;
+
+  /// No description provided for @acceptPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept Pickup'**
+  String get acceptPickup;
+
+  /// No description provided for @workerNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Worker not found'**
+  String get workerNotFound;
+
   /// No description provided for @profile.
   ///
   /// In en, this message translates to:
@@ -565,24 +601,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Points'**
   String get points;
-
-  /// No description provided for @availablePickups.
-  ///
-  /// In en, this message translates to:
-  /// **'Available Pickups'**
-  String get availablePickups;
-
-  /// No description provided for @pickupDetails.
-  ///
-  /// In en, this message translates to:
-  /// **'Pickup Details'**
-  String get pickupDetails;
-
-  /// No description provided for @workerNotFound.
-  ///
-  /// In en, this message translates to:
-  /// **'Worker not found'**
-  String get workerNotFound;
 }
 
 class _AppLocalizationsDelegate
