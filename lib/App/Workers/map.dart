@@ -31,12 +31,8 @@ class PickupMapPage extends StatefulWidget {
 class _PickupMapPageState extends State<PickupMapPage> {
   MapboxMap? _mapboxMap;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void _showPickupModal() {
+    final l10n = AppLocalizations.of(context)!;
     showCupertinoModalPopup(
       context: context,
       builder: (context) {
@@ -53,8 +49,8 @@ class _PickupMapPageState extends State<PickupMapPage> {
                 const SizedBox(height: 20),
 
                 // Title
-                const Text(
-                  'Pickup Available',
+                Text(
+                  l10n.pickupAvailable,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
 
@@ -70,8 +66,8 @@ class _PickupMapPageState extends State<PickupMapPage> {
                       Navigator.pop(context);
                       // Accept pickup
                     },
-                    child: const Text(
-                      'Accept Pickup',
+                    child: Text(
+                      l10n.acceptPickup,
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -90,6 +86,28 @@ class _PickupMapPageState extends State<PickupMapPage> {
     final position = context.read<LocationProvider>().position;
 
     if (position == null) return;
+
+    final distance = geo.Geolocator.distanceBetween(
+      position.latitude,
+      position.longitude,
+      widget.latitude,
+      widget.longitude,
+    );
+
+    // Same / very close location
+    if (distance < 100) {
+      _mapboxMap!.flyTo(
+        CameraOptions(
+          center: Point(
+            coordinates: Position(widget.longitude, widget.latitude),
+          ),
+          zoom: 17,
+        ),
+        MapAnimationOptions(duration: 1000),
+      );
+
+      return;
+    }
 
     final bounds = CoordinateBounds(
       southwest: Point(
