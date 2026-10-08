@@ -41,13 +41,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Stream? _pickupStream;
+
   @override
   void initState() {
     super.initState();
 
     Future.microtask(() {
+      final userid = context.read<UserProvider>().userid;
+
+      if (userid != null) {
+        _pickupStream = ApiService.pickupsStream(userid).stream;
+      }
+
       context.read<LocationProvider>().startStreaming();
+
+      if (mounted) {
+        setState(() {});
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    ApiService.disconnectPickups();
+    super.dispose();
   }
 
   @override
@@ -161,7 +179,7 @@ class _HomePageState extends State<HomePage> {
 
                   child: SingleChildScrollView(
                     child: StreamBuilder(
-                      stream: ApiService.pickupsStream(userid!).stream,
+                      stream: _pickupStream,
 
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
@@ -170,7 +188,7 @@ class _HomePageState extends State<HomePage> {
 
                             child: Center(
                               child: Text(
-                                'No Available pickups',
+                                l10n.noAvailablePickups,
                                 style: AppText.indicator,
                               ),
                             ),
@@ -220,25 +238,21 @@ class _HomePageState extends State<HomePage> {
 
                               child: PickupCard(
                                 key: ValueKey(pickup['pickupid']),
-
                                 pickupId: pickup['pickupid'],
-
+                                username: pickup['username'],
                                 time: pickup['time'],
-
-                                distance:
-                                    '${(distance / 1000).toStringAsFixed(1)} km',
-
+                                distance: distance,
+                                qna: List<int>.from(pickup['qna']),
+                                imageUrl: '',
                                 onTap: () {
                                   Navigator.push(
                                     context,
-
                                     CupertinoPageRoute(
                                       builder: (_) => PickupMapPage(
                                         latitude:
                                             (pickup['coordinates']['latitude']
                                                     as num)
                                                 .toDouble(),
-
                                         longitude:
                                             (pickup['coordinates']['longitude']
                                                     as num)

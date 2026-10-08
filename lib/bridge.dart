@@ -13,7 +13,9 @@ import 'package:public_health/App/Workers/home.dart' as workerhome;
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Services :
-import 'package:public_health/Services/API/Household/api_service.dart';
+import 'package:public_health/Services/API/Household/api_service.dart'
+    as household;
+import 'package:public_health/Services/API/Workers/api_service.dart' as worker;
 
 // Provider :
 import 'package:provider/provider.dart';
@@ -36,8 +38,10 @@ class _BridgeState extends State<Bridge> {
 
   Future<void> checkLogin() async {
     final prefs = await SharedPreferences.getInstance();
+
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final pickuprequestdata = Provider.of<PickupRequestProvider>(
+
+    final pickupRequestProvider = Provider.of<PickupRequestProvider>(
       context,
       listen: false,
     );
@@ -45,56 +49,64 @@ class _BridgeState extends State<Bridge> {
     final uid = prefs.getString('uid');
 
     if (uid == null) {
+      goToPortal();
+      return;
+    }
+
+    final householdResponse = await household.ApiService.getdata(uid: uid);
+
+    if (householdResponse['status'] == true) {
+      final householdData = householdResponse['userdata'];
+
+      await userProvider.setUser(
+        userid: householdData['userid'],
+        username: householdData['username'],
+        phoneno: householdData['phoneno'],
+        role: householdData['role'],
+      );
+
+      pickupRequestProvider.sethasActivePickup(
+        hasActivePickup: householdData['hasActivePickup'],
+      );
+
       if (!mounted) return;
 
       Navigator.pushReplacement(
         context,
-        CupertinoPageRoute(builder: (_) => const Portal()),
+        CupertinoPageRoute(builder: (_) => const householdhome.HomePage()),
       );
 
       return;
     }
 
-    final dataResponse = await ApiService.getdata(uid: uid);
+    final workerResponse = await worker.ApiService.getdata(uid: uid);
 
-    if (dataResponse['status'] == true) {
-      final userdata = dataResponse['userdata'];
+    if (workerResponse['status'] == true) {
+      final workerData = workerResponse['userdata'];
 
       await userProvider.setUser(
-        userid: userdata['userid'],
-        username: userdata['username'],
-        phoneno: userdata['phoneno'],
-        role: userdata['role'],
-      );
-
-      pickuprequestdata.sethasActivePickup(
-        hasActivePickup: userdata['hasActivePickup'],
+        userid: workerData['userid'],
+        username: workerData['username'],
+        phoneno: workerData['phoneno'],
+        role: workerData['role'],
       );
 
       if (!mounted) return;
 
-      if (userdata['role'] == 'household') {
-        Navigator.pushReplacement(
-          context,
-          CupertinoPageRoute(builder: (_) => const householdhome.HomePage()),
-        );
+      Navigator.pushReplacement(
+        context,
+        CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
+      );
 
-        return;
-      }
-
-      if (userdata['role'] == 'worker') {
-        Navigator.pushReplacement(
-          context,
-          CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
-        );
-
-        return;
-      }
+      return;
     }
 
-    // UID exists locally but user is not valid anymore.
     await prefs.remove('uid');
 
+    goToPortal();
+  }
+
+  void goToPortal() {
     if (!mounted) return;
 
     Navigator.pushReplacement(
