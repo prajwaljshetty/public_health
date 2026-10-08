@@ -6,6 +6,8 @@ class AppColors {
   static const surface = Color(0xFFF5F7F7);
   static const border = Color(0xFFE7ECEB);
   static const accent = Color(0xFF19673F);
+  static const activegreen = CupertinoColors.activeGreen;
+  static const activeblue = CupertinoColors.activeBlue;
   static const accentSoft = Color(0xFFE2F1E8);
   static const yellow = Color(0xFFE8E3D0);
   static const textPrimary = CupertinoColors.black;
