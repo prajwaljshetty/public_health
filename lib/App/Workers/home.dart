@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
 
                         children: [
                           Text(
-                            '28',
+                            '0',
                             style: AppText.title.copyWith(
                               color: AppColors.yellow,
                               fontSize: 80,
