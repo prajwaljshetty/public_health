@@ -39,7 +39,7 @@ class _PickupMapPageState extends State<PickupMapPage> {
         return Container(
           padding: const EdgeInsets.all(20),
           decoration: const BoxDecoration(
-            color: AppColors.background,
+            color: AppColors.backgroundwhite,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: SafeArea(
@@ -141,6 +141,47 @@ class _PickupMapPageState extends State<PickupMapPage> {
         });
   }
 
+  Future<void> _configurePickupMarker() async {
+    final mapboxMap = _mapboxMap;
+    if (mapboxMap == null) return;
+
+    await mapboxMap.style.addSource(
+      GeoJsonSource(
+        id: 'pickup-source',
+        data:
+            '''
+      {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                ${widget.longitude},
+                ${widget.latitude}
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      }
+      ''',
+      ),
+    );
+
+    await mapboxMap.style.addLayer(
+      CircleLayer(
+        id: 'pickup-layer',
+        sourceId: 'pickup-source',
+        circleColor: AppColors.accent.value,
+        circleRadius: 10,
+        circleStrokeColor: CupertinoColors.white.value,
+        circleStrokeWidth: 3,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -152,6 +193,7 @@ class _PickupMapPageState extends State<PickupMapPage> {
           SizedBox.expand(
             child: MapWidget(
               styleUri: 'mapbox://styles/spotmap-app/cmoa88xof000z01sacg9b4om8',
+
               onMapCreated: (MapboxMap mapboxMap) async {
                 _mapboxMap = mapboxMap;
 
@@ -160,64 +202,38 @@ class _PickupMapPageState extends State<PickupMapPage> {
                     enabled: true,
                     pulsingEnabled: true,
                     pulsingColor: AppColors.accent.value,
-                    pulsingMaxRadius: 20,
-                    showAccuracyRing: true,
-                    accuracyRingColor: AppColors.accent.value,
-                    accuracyRingBorderColor: AppColors.accent.value,
+                    pulsingMaxRadius: 30,
                   ),
-                );
-
-                final point = Point(
-                  coordinates: Position(widget.longitude, widget.latitude),
                 );
 
                 await mapboxMap.setCamera(
-                  CameraOptions(center: point, zoom: 18),
-                );
-
-                await mapboxMap.style.addSource(
-                  GeoJsonSource(
-                    id: 'pickup-source',
-                    data:
-                        '''
-                    {
-                      "type": "FeatureCollection",
-                      "features": [
-                        {
-                          "type": "Feature",
-                          "geometry": {
-                            "type": "Point",
-                            "coordinates": [
-                              ${widget.longitude},
-                              ${widget.latitude}
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                    ''',
+                  CameraOptions(
+                    center: Point(
+                      coordinates: Position(widget.longitude, widget.latitude),
+                    ),
+                    zoom: 18,
                   ),
                 );
+              },
 
-                await mapboxMap.style.addLayer(
-                  CircleLayer(
-                    id: 'pickup-layer',
-                    sourceId: 'pickup-source',
-                    circleColor: AppColors.accent.value,
-                    circleRadius: 10,
-                    circleStrokeColor: CupertinoColors.white.value,
-                    circleStrokeWidth: 3,
-                  ),
-                );
+              onStyleLoadedListener: (_) async {
+                try {
+                  await _configurePickupMarker();
 
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Future.delayed(const Duration(seconds: 1), () {
-                    if (!mounted) return;
+                  if (!mounted) return;
 
-                    _moveCamera();
-                    _showPickupModal();
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Future.delayed(const Duration(seconds: 1), () {
+                      if (!mounted) return;
+
+                      _moveCamera();
+                      _showPickupModal();
+                    });
                   });
-                });
+                } catch (error, stackTrace) {
+                  debugPrint('Failed to add pickup marker: $error');
+                  debugPrintStack(stackTrace: stackTrace);
+                }
               },
             ),
           ),
@@ -235,7 +251,7 @@ class _PickupMapPageState extends State<PickupMapPage> {
                 width: 42,
                 height: 42,
                 decoration: BoxDecoration(
-                  color: CupertinoColors.white,
+                  color: AppColors.backgroundwhite,
                   borderRadius: BorderRadius.circular(21),
                 ),
                 child: const Icon(

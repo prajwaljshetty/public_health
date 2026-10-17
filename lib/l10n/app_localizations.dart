@@ -107,13 +107,13 @@ abstract class AppLocalizations {
   /// No description provided for @portalSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'A Purasabhe service connecting households with verified workers for safe collection of medical waste'**
+  /// **'A Purasabhe service connecting households with verified workers for the safe collection of medical waste.'**
   String get portalSubtitle;
 
   /// No description provided for @selectRole.
   ///
   /// In en, this message translates to:
-  /// **'Please select your role to continue'**
+  /// **'Choose your role to get started.'**
   String get selectRole;
 
   /// No description provided for @household.
@@ -125,7 +125,7 @@ abstract class AppLocalizations {
   /// No description provided for @householdSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Request a medical waste pickup'**
+  /// **'Arrange a safe medical waste pickup from your home.'**
   String get householdSubtitle;
 
   /// No description provided for @worker.
@@ -137,7 +137,7 @@ abstract class AppLocalizations {
   /// No description provided for @workerSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Accept and collect pickup requests'**
+  /// **'View, accept, and complete pickup requests.'**
   String get workerSubtitle;
 
   /// No description provided for @welcome.
@@ -149,55 +149,55 @@ abstract class AppLocalizations {
   /// No description provided for @authSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Request a safe pickup for your household medical waste'**
+  /// **'Arrange a safe and convenient pickup for your household\'s medical waste.'**
   String get authSubtitle;
 
   /// No description provided for @login.
   ///
   /// In en, this message translates to:
-  /// **'Log in'**
+  /// **'Log In'**
   String get login;
 
   /// No description provided for @loginSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Enter your registered phone number to request or track a pickup'**
+  /// **'Enter your registered phone number to request a pickup or track an existing request.'**
   String get loginSubtitle;
 
   /// No description provided for @loginCardSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Already have an account? Log in to continue'**
+  /// **'Already have an account? Log in to continue.'**
   String get loginCardSubtitle;
 
   /// No description provided for @createAccount.
   ///
   /// In en, this message translates to:
-  /// **'Create account'**
+  /// **'Create Account'**
   String get createAccount;
 
   /// No description provided for @createAccountSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Register to request medical waste pickup from your home'**
+  /// **'Register your household to arrange safe medical waste pickups.'**
   String get createAccountSubtitle;
 
   /// No description provided for @createAccountCardSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'New here? Create an account to request a pickup'**
+  /// **'New to the service? Create an account to get started.'**
   String get createAccountCardSubtitle;
 
   /// No description provided for @createAccountNote.
   ///
   /// In en, this message translates to:
-  /// **'Your details are used only to manage your account and arrange pickups.'**
+  /// **'Your details are used only to manage your account and coordinate pickups.'**
   String get createAccountNote;
 
   /// No description provided for @fullName.
   ///
   /// In en, this message translates to:
-  /// **'Full name'**
+  /// **'Full Name'**
   String get fullName;
 
   /// No description provided for @fullNamePlaceholder.
@@ -209,7 +209,7 @@ abstract class AppLocalizations {
   /// No description provided for @phoneNumber.
   ///
   /// In en, this message translates to:
-  /// **'Phone number'**
+  /// **'Phone Number'**
   String get phoneNumber;
 
   /// No description provided for @phonePlaceholder.
@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @registeredPlaceholder.
   ///
   /// In en, this message translates to:
-  /// **'Enter your registered phone number'**
+  /// **'Enter your registered mobile number'**
   String get registeredPlaceholder;
 
   /// No description provided for @password.
@@ -239,73 +239,73 @@ abstract class AppLocalizations {
   /// No description provided for @usernameRequired.
   ///
   /// In en, this message translates to:
-  /// **'Full name is required'**
+  /// **'Please enter your full name.'**
   String get usernameRequired;
 
   /// No description provided for @usernameMinLength.
   ///
   /// In en, this message translates to:
-  /// **'Full name must be at least 3 characters'**
+  /// **'Your name must contain at least 3 characters.'**
   String get usernameMinLength;
 
   /// No description provided for @invalidUsername.
   ///
   /// In en, this message translates to:
-  /// **'Name can contain only letters and spaces'**
+  /// **'Use only letters and spaces in your name.'**
   String get invalidUsername;
 
   /// No description provided for @phoneNumberRequired.
   ///
   /// In en, this message translates to:
-  /// **'Phone number is required'**
+  /// **'Please enter your phone number.'**
   String get phoneNumberRequired;
 
   /// No description provided for @invalidPhoneNumber.
   ///
   /// In en, this message translates to:
-  /// **'Enter a valid phone number'**
+  /// **'Please enter a valid phone number.'**
   String get invalidPhoneNumber;
 
   /// No description provided for @phoneNumberAlreadyRegistered.
   ///
   /// In en, this message translates to:
-  /// **'This phone number is already registered'**
+  /// **'This phone number is already registered.'**
   String get phoneNumberAlreadyRegistered;
 
   /// No description provided for @phoneNumberNotRegistered.
   ///
   /// In en, this message translates to:
-  /// **'This phone number is not registered'**
+  /// **'No account was found for this phone number.'**
   String get phoneNumberNotRegistered;
 
   /// No description provided for @passwordRequired.
   ///
   /// In en, this message translates to:
-  /// **'Password is required'**
+  /// **'Please enter your password.'**
   String get passwordRequired;
 
   /// No description provided for @passwordMinLength.
   ///
   /// In en, this message translates to:
-  /// **'Password must be at least 6 characters'**
+  /// **'Your password must contain at least 6 characters.'**
   String get passwordMinLength;
 
   /// No description provided for @incorrectPassword.
   ///
   /// In en, this message translates to:
-  /// **'Incorrect password'**
+  /// **'The password you entered is incorrect.'**
   String get incorrectPassword;
 
   /// No description provided for @workerLoginTitle.
   ///
   /// In en, this message translates to:
-  /// **'Worker login'**
+  /// **'Worker Login'**
   String get workerLoginTitle;
 
   /// No description provided for @workerLoginSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Sign in with your Purasabhe worker ID to view and accept pickup requests'**
+  /// **'Sign in with your Purasabhe worker ID to view and accept pickup requests.'**
   String get workerLoginSubtitle;
 
   /// No description provided for @workerId.
@@ -323,55 +323,73 @@ abstract class AppLocalizations {
   /// No description provided for @workerIdRequired.
   ///
   /// In en, this message translates to:
-  /// **'Worker ID is required'**
+  /// **'Please enter your worker ID.'**
   String get workerIdRequired;
 
   /// No description provided for @signIn.
   ///
   /// In en, this message translates to:
-  /// **'Sign in'**
+  /// **'Sign In'**
   String get signIn;
 
   /// No description provided for @workerNote.
   ///
   /// In en, this message translates to:
-  /// **'Only verified Purasabhe workers can accept pickup requests. Contact your administrator if you need help with your account.'**
+  /// **'Only verified Purasabhe workers can accept pickup requests. Contact your administrator if you need help accessing your account.'**
   String get workerNote;
 
   /// No description provided for @termsNote.
   ///
   /// In en, this message translates to:
-  /// **'By continuing, you agree to our Privacy Policy and Terms & Conditions'**
+  /// **'By continuing, you agree to our Privacy Policy and Terms & Conditions.'**
   String get termsNote;
 
-  /// No description provided for @homeHeroTitle.
+  /// No description provided for @householdHeroTitle.
   ///
   /// In en, this message translates to:
   /// **'Ready to hand it over?'**
-  String get homeHeroTitle;
+  String get householdHeroTitle;
 
-  /// No description provided for @homeHeroSubtitle.
+  /// No description provided for @householdHeroSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'We\'ll take it from here.'**
-  String get homeHeroSubtitle;
+  /// **'We\'ll take care of the rest.'**
+  String get householdHeroSubtitle;
 
-  /// No description provided for @yourPickups.
+  /// No description provided for @householdPickups.
   ///
   /// In en, this message translates to:
-  /// **'Your pickups'**
-  String get yourPickups;
+  /// **'Your Pickups'**
+  String get householdPickups;
+
+  /// No description provided for @workerHeroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to collect?'**
+  String get workerHeroTitle;
+
+  /// No description provided for @workerHeroSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your next pickup is waiting.'**
+  String get workerHeroSubtitle;
+
+  /// No description provided for @workerPickups.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Pending Pickups'**
+  String get workerPickups;
 
   /// No description provided for @noPickupsYet.
   ///
   /// In en, this message translates to:
-  /// **'No pickups yet. Your requests will appear here.'**
+  /// **'No pickups yet. Your requests will appear here once you make one.'**
   String get noPickupsYet;
 
   /// No description provided for @requestPickup.
   ///
   /// In en, this message translates to:
-  /// **'Request Pickup'**
+  /// **'Request a Pickup'**
   String get requestPickup;
 
   /// No description provided for @wasteVerification.
@@ -383,7 +401,7 @@ abstract class AppLocalizations {
   /// No description provided for @wasteVerificationSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Show us what you\'re handing over'**
+  /// **'Help us understand the waste you\'re handing over.'**
   String get wasteVerificationSubtitle;
 
   /// No description provided for @addPhoto.
@@ -395,31 +413,31 @@ abstract class AppLocalizations {
   /// No description provided for @quickCheck.
   ///
   /// In en, this message translates to:
-  /// **'Quick Check'**
+  /// **'Quick Safety Check'**
   String get quickCheck;
 
   /// No description provided for @quickCheckSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'A quick safety check.\nHelp us prepare for your pickup.'**
+  /// **'Just a few quick questions to help us prepare for your pickup.\nYour answers help workers handle the waste safely.'**
   String get quickCheckSubtitle;
 
   /// No description provided for @sharpObjectsQuestion.
   ///
   /// In en, this message translates to:
-  /// **'Does the waste contain any sharp objects?'**
+  /// **'Does the waste contain any sharp objects, such as needles or blades?'**
   String get sharpObjectsQuestion;
 
   /// No description provided for @expiredMedicineQuestion.
   ///
   /// In en, this message translates to:
-  /// **'Does the waste contain any unused or expired medicine?'**
+  /// **'Does the waste contain unused or expired medicines?'**
   String get expiredMedicineQuestion;
 
   /// No description provided for @bodyFluidsQuestion.
   ///
   /// In en, this message translates to:
-  /// **'Does the waste contain items that have been in contact with blood or other body fluids?'**
+  /// **'Does the waste include items that have come into contact with blood or other body fluids?'**
   String get bodyFluidsQuestion;
 
   /// No description provided for @yes.
@@ -461,13 +479,13 @@ abstract class AppLocalizations {
   /// No description provided for @locationSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Allow location access so we can arrange your pickup.'**
+  /// **'Allow location access so we can arrange your pickup at the right place.'**
   String get locationSubtitle;
 
   /// No description provided for @allowLocation.
   ///
   /// In en, this message translates to:
-  /// **'Allow Location'**
+  /// **'Allow Location Access'**
   String get allowLocation;
 
   /// No description provided for @cancel.
@@ -479,13 +497,13 @@ abstract class AppLocalizations {
   /// No description provided for @locationDeniedTitle.
   ///
   /// In en, this message translates to:
-  /// **'Location access needed'**
+  /// **'Location Access Required'**
   String get locationDeniedTitle;
 
   /// No description provided for @locationDeniedMessage.
   ///
   /// In en, this message translates to:
-  /// **'Please allow location access in Settings so we can arrange your pickup.'**
+  /// **'Enable location access in your device settings so we can arrange your pickup.'**
   String get locationDeniedMessage;
 
   /// No description provided for @openSettings.
@@ -497,31 +515,31 @@ abstract class AppLocalizations {
   /// No description provided for @confirmPickupRequest.
   ///
   /// In en, this message translates to:
-  /// **'Confirm Your Request'**
+  /// **'Confirm Your Pickup Request'**
   String get confirmPickupRequest;
 
   /// No description provided for @pickupConfirmationMessage.
   ///
   /// In en, this message translates to:
-  /// **'Please review the details and confirm your pickup request.'**
+  /// **'Review your request details before confirming your pickup.'**
   String get pickupConfirmationMessage;
 
   /// No description provided for @pickupConfirmed.
   ///
   /// In en, this message translates to:
-  /// **'Pickup Confirmed'**
+  /// **'Pickup Requested Successfully'**
   String get pickupConfirmed;
 
   /// No description provided for @pickupConfirmedMessage.
   ///
   /// In en, this message translates to:
-  /// **'Your pickup request has been confirmed successfully.'**
+  /// **'Your pickup request has been submitted successfully.'**
   String get pickupConfirmedMessage;
 
   /// No description provided for @requesting.
   ///
   /// In en, this message translates to:
-  /// **'Requesting...'**
+  /// **'Submitting Request...'**
   String get requesting;
 
   /// No description provided for @done.
@@ -533,7 +551,7 @@ abstract class AppLocalizations {
   /// No description provided for @availablePickups.
   ///
   /// In en, this message translates to:
-  /// **'Available Pickups'**
+  /// **'Today\'s Pending Pickups'**
   String get availablePickups;
 
   /// No description provided for @pickupDetails.
@@ -551,7 +569,7 @@ abstract class AppLocalizations {
   /// No description provided for @noAvailablePickups.
   ///
   /// In en, this message translates to:
-  /// **'No available pickups'**
+  /// **'No pickup requests are available right now.'**
   String get noAvailablePickups;
 
   /// No description provided for @acceptPickup.
@@ -563,7 +581,7 @@ abstract class AppLocalizations {
   /// No description provided for @workerNotFound.
   ///
   /// In en, this message translates to:
-  /// **'Worker not found'**
+  /// **'Worker account not found.'**
   String get workerNotFound;
 
   /// No description provided for @profile.
@@ -601,6 +619,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Points'**
   String get points;
+
+  /// No description provided for @walletTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Wallet'**
+  String get walletTitle;
+
+  /// No description provided for @walletSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your points and rewards, all in one place.'**
+  String get walletSubtitle;
+
+  /// No description provided for @walletTotalBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Points'**
+  String get walletTotalBalance;
+
+  /// No description provided for @walletEarnPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Earn Points'**
+  String get walletEarnPoints;
+
+  /// No description provided for @walletEarnPointsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Take part in safe medical waste collection and earn points as you contribute to a cleaner, healthier community. Rewards may be available in the future.'**
+  String get walletEarnPointsDescription;
+
+  /// No description provided for @pickupRequestedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Requested'**
+  String get pickupRequestedTitle;
+
+  /// No description provided for @pickupRequestedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your request has been submitted.'**
+  String get pickupRequestedSubtitle;
+
+  /// No description provided for @verifyYourPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Your Pickup'**
+  String get verifyYourPickup;
+
+  /// No description provided for @pickupQrInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'When your collection worker arrives, generate your QR code and show it to them to verify the pickup and confirm the handover.'**
+  String get pickupQrInstructions;
+
+  /// No description provided for @generateQrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate QR Code'**
+  String get generateQrCode;
+
+  /// No description provided for @requestDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Details'**
+  String get requestDetails;
+
+  /// No description provided for @recipientLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient'**
+  String get recipientLabel;
+
+  /// No description provided for @pickupIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup ID'**
+  String get pickupIdLabel;
+
+  /// No description provided for @requestedTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested Time'**
+  String get requestedTimeLabel;
+
+  /// No description provided for @pickupIdCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup ID copied'**
+  String get pickupIdCopied;
+
+  /// No description provided for @okButton.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get okButton;
+
+  /// No description provided for @householdRecipient.
+  ///
+  /// In en, this message translates to:
+  /// **'Household'**
+  String get householdRecipient;
+
+  /// No description provided for @unavailableValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get unavailableValue;
+
+  /// No description provided for @notAvailableValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available'**
+  String get notAvailableValue;
 }
 
 class _AppLocalizationsDelegate

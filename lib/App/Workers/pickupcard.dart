@@ -58,9 +58,9 @@ class PickupCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 14),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: AppColors.backgroundwhite,
           borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: AppColors.textPrimary, width: 1),
+          border: Border.all(color: AppColors.backgroundblack, width: 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

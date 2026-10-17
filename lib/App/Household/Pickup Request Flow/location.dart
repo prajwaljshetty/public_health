@@ -13,7 +13,7 @@ import 'package:lottie/lottie.dart';
 import 'package:public_health/l10n/app_localizations.dart';
 
 // Page :
-import 'package:public_health/App/Household/Pickup%20Request%20Flow/photo.dart';
+import 'package:public_health/App/Household/Pickup%20Request%20Flow/questionnaire.dart';
 
 // Location :
 import 'package:geolocator/geolocator.dart';
@@ -65,7 +65,7 @@ class _LocationPageState extends State<LocationPage> {
         );
         Navigator.push(
           context,
-          CupertinoPageRoute(builder: (_) => PhotoPage()),
+          CupertinoPageRoute(builder: (_) => QuestionnairePage()),
         );
       }
     } catch (e) {

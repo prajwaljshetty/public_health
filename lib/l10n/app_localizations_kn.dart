@@ -14,50 +14,52 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get portalSubtitle =>
-      'ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ಮನೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುವ ಸೇವೆ';
+      'ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ಮನೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುವ ಸೇವೆ.';
 
   @override
-  String get selectRole => 'ಮುಂದುವರಿಯಲು ನಿಮ್ಮ ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ';
+  String get selectRole => 'ಮುಂದುವರಿಯಲು ನಿಮ್ಮ ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ.';
 
   @override
   String get household => 'ಮನೆ';
 
   @override
-  String get householdSubtitle => 'ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಪಿಕಪ್‌ಗೆ ವಿನಂತಿಸಿ';
+  String get householdSubtitle =>
+      'ನಿಮ್ಮ ಮನೆಯಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ವಿನಂತಿಸಿ.';
 
   @override
   String get worker => 'ಪುರಸಭೆ ಕಾರ್ಮಿಕ';
 
   @override
-  String get workerSubtitle => 'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಸಂಗ್ರಹಿಸಿ';
+  String get workerSubtitle =>
+      'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ವೀಕ್ಷಿಸಿ, ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಪೂರ್ಣಗೊಳಿಸಿ.';
 
   @override
   String get welcome => 'ಸ್ವಾಗತ';
 
   @override
   String get authSubtitle =>
-      'ನಿಮ್ಮ ಮನೆಯ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಪಿಕಪ್ ಮಾಡಿಸಲು ವಿನಂತಿಸಿ';
+      'ನಿಮ್ಮ ಮನೆಯ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ವಿನಂತಿಸಿ.';
 
   @override
   String get login => 'ಲಾಗಿನ್';
 
   @override
   String get loginSubtitle =>
-      'ಪಿಕಪ್ ವಿನಂತಿಸಲು ಅಥವಾ ಅದರ ಸ್ಥಿತಿಯನ್ನು ನೋಡಲು ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
+      'ಪಿಕಪ್ ವಿನಂತಿಸಲು ಅಥವಾ ಈಗಾಗಲೇ ಸಲ್ಲಿಸಿದ ವಿನಂತಿಯ ಸ್ಥಿತಿಯನ್ನು ತಿಳಿಯಲು ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.';
 
   @override
-  String get loginCardSubtitle => 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಮುಂದುವರಿಯಲು ಲಾಗಿನ್ ಮಾಡಿ';
+  String get loginCardSubtitle => 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಮುಂದುವರಿಯಲು ಲಾಗಿನ್ ಮಾಡಿ.';
 
   @override
   String get createAccount => 'ಖಾತೆ ರಚಿಸಿ';
 
   @override
   String get createAccountSubtitle =>
-      'ನಿಮ್ಮ ಮನೆಯಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಪಿಕಪ್‌ಗಾಗಿ ನೋಂದಾಯಿಸಿ';
+      'ನಿಮ್ಮ ಮನೆಯಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ನೋಂದಾಯಿಸಿ.';
 
   @override
   String get createAccountCardSubtitle =>
-      'ಹೊಸದಾಗಿ ಬಂದಿದ್ದೀರಾ? ಪಿಕಪ್ ವಿನಂತಿಸಲು ಖಾತೆ ರಚಿಸಿ';
+      'ಈ ಸೇವೆಗೆ ಹೊಸಬರೇ? ಪ್ರಾರಂಭಿಸಲು ಖಾತೆ ರಚಿಸಿ.';
 
   @override
   String get createAccountNote =>
@@ -86,43 +88,48 @@ class AppLocalizationsKn extends AppLocalizations {
   String get passwordPlaceholder => 'ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ';
 
   @override
-  String get usernameRequired => 'ಪೂರ್ಣ ಹೆಸರು ಅಗತ್ಯವಿದೆ';
+  String get usernameRequired => 'ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.';
 
   @override
-  String get usernameMinLength => 'ಪೂರ್ಣ ಹೆಸರು ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳಿರಬೇಕು';
+  String get usernameMinLength =>
+      'ನಿಮ್ಮ ಹೆಸರು ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳನ್ನು ಹೊಂದಿರಬೇಕು.';
 
   @override
   String get invalidUsername =>
-      'ಹೆಸರು ಅಕ್ಷರಗಳು ಮತ್ತು ಸ್ಪೇಸ್‌ಗಳನ್ನು ಮಾತ್ರ ಹೊಂದಿರಬೇಕು';
+      'ಹೆಸರಿನಲ್ಲಿ ಅಕ್ಷರಗಳು ಮತ್ತು ಖಾಲಿ ಜಾಗಗಳನ್ನು ಮಾತ್ರ ಬಳಸಿ.';
 
   @override
-  String get phoneNumberRequired => 'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಅಗತ್ಯವಿದೆ';
+  String get phoneNumberRequired =>
+      'ದಯವಿಟ್ಟು ನಿಮ್ಮ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.';
 
   @override
-  String get invalidPhoneNumber => 'ಮಾನ್ಯವಾದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
+  String get invalidPhoneNumber =>
+      'ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.';
 
   @override
   String get phoneNumberAlreadyRegistered =>
-      'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ';
+      'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ.';
 
   @override
-  String get phoneNumberNotRegistered => 'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನೋಂದಾಯಿಸಿಲ್ಲ';
+  String get phoneNumberNotRegistered =>
+      'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಗೆ ಯಾವುದೇ ಖಾತೆ ಕಂಡುಬಂದಿಲ್ಲ.';
 
   @override
-  String get passwordRequired => 'ಪಾಸ್‌ವರ್ಡ್ ಅಗತ್ಯವಿದೆ';
+  String get passwordRequired => 'ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.';
 
   @override
-  String get passwordMinLength => 'ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳಿರಬೇಕು';
+  String get passwordMinLength =>
+      'ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳನ್ನು ಹೊಂದಿರಬೇಕು.';
 
   @override
-  String get incorrectPassword => 'ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ';
+  String get incorrectPassword => 'ನೀವು ನಮೂದಿಸಿದ ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ.';
 
   @override
   String get workerLoginTitle => 'ಕಾರ್ಮಿಕರ ಲಾಗಿನ್';
 
   @override
   String get workerLoginSubtitle =>
-      'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ನೋಡಲು ಮತ್ತು ಸ್ವೀಕರಿಸಲು ನಿಮ್ಮ ಪುರಸಭೆ ಕಾರ್ಮಿಕ ಐಡಿಯಿಂದ ಲಾಗಿನ್ ಮಾಡಿ';
+      'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ವೀಕ್ಷಿಸಲು ಮತ್ತು ಸ್ವೀಕರಿಸಲು ನಿಮ್ಮ ಪುರಸಭೆ ಕಾರ್ಮಿಕ ಐಡಿಯೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಿ.';
 
   @override
   String get workerId => 'ಕಾರ್ಮಿಕ ಐಡಿ';
@@ -131,31 +138,40 @@ class AppLocalizationsKn extends AppLocalizations {
   String get workerIdPlaceholder => 'ನಿಮ್ಮ ಪುರಸಭೆ ಕಾರ್ಮಿಕ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ';
 
   @override
-  String get workerIdRequired => 'ಕಾರ್ಮಿಕ ಐಡಿ ಅಗತ್ಯವಿದೆ';
+  String get workerIdRequired => 'ದಯವಿಟ್ಟು ನಿಮ್ಮ ಕಾರ್ಮಿಕ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ.';
 
   @override
-  String get signIn => 'ಲಾಗಿನ್';
+  String get signIn => 'ಲಾಗಿನ್ ಮಾಡಿ';
 
   @override
   String get workerNote =>
-      'ಪರಿಶೀಲಿಸಿದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರು ಮಾತ್ರ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಬಹುದು. ಖಾತೆಗೆ ಸಂಬಂಧಿಸಿದ ಸಹಾಯಕ್ಕಾಗಿ ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+      'ಪರಿಶೀಲಿಸಲಾದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರು ಮಾತ್ರ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಬಹುದು. ನಿಮ್ಮ ಖಾತೆಗೆ ಸಂಬಂಧಿಸಿದ ಸಹಾಯಕ್ಕಾಗಿ ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.';
 
   @override
   String get termsNote =>
-      'ಮುಂದುವರಿಯುವ ಮೂಲಕ, ನಮ್ಮ ಗೌಪ್ಯತಾ ನೀತಿ ಮತ್ತು ನಿಯಮಗಳು ಹಾಗೂ ಷರತ್ತುಗಳನ್ನು ನೀವು ಒಪ್ಪುತ್ತೀರಿ';
+      'ಮುಂದುವರಿಯುವ ಮೂಲಕ, ನಮ್ಮ ಗೌಪ್ಯತಾ ನೀತಿ ಮತ್ತು ನಿಯಮಗಳು ಹಾಗೂ ಷರತ್ತುಗಳನ್ನು ನೀವು ಒಪ್ಪುತ್ತೀರಿ.';
 
   @override
-  String get homeHeroTitle => 'ಹಸ್ತಾಂತರಿಸಲು ಸಿದ್ಧವೇ?';
+  String get householdHeroTitle => 'ತ್ಯಾಜ್ಯ ಹಸ್ತಾಂತರಿಸಲು ಸಿದ್ಧರಿದ್ದೀರಾ?';
 
   @override
-  String get homeHeroSubtitle => 'ಮುಂದಿನದನ್ನು ನಾವು ನೋಡಿಕೊಳ್ಳುತ್ತೇವೆ.';
+  String get householdHeroSubtitle => 'ಉಳಿದದ್ದನ್ನು ನಾವು ನೋಡಿಕೊಳ್ಳುತ್ತೇವೆ.';
 
   @override
-  String get yourPickups => 'ನಿಮ್ಮ ಪಿಕಪ್‌ಗಳು';
+  String get householdPickups => 'ನಿಮ್ಮ ಪಿಕಪ್‌ಗಳು';
+
+  @override
+  String get workerHeroTitle => 'ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಿಸಲು ಸಿದ್ಧರಿದ್ದೀರಾ?';
+
+  @override
+  String get workerHeroSubtitle => 'ನಿಮ್ಮ ಮುಂದಿನ ಪಿಕಪ್ ನಿಮಗಾಗಿ ಕಾಯುತ್ತಿದೆ.';
+
+  @override
+  String get workerPickups => 'ಇಂದಿನ ಬಾಕಿ ಇರುವ ಪಿಕಪ್‌ಗಳು';
 
   @override
   String get noPickupsYet =>
-      'ಇನ್ನೂ ಯಾವುದೇ ಪಿಕಪ್‌ಗಳಿಲ್ಲ. ನಿಮ್ಮ ವಿನಂತಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
+      'ಇನ್ನೂ ಯಾವುದೇ ಪಿಕಪ್‌ಗಳಿಲ್ಲ. ನೀವು ವಿನಂತಿಸಿದ ನಂತರ ಅವು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
 
   @override
   String get requestPickup => 'ಪಿಕಪ್ ವಿನಂತಿಸಿ';
@@ -165,20 +181,21 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get wasteVerificationSubtitle =>
-      'ನೀವು ಹಸ್ತಾಂತರಿಸುವ ತ್ಯಾಜ್ಯವನ್ನು ನಮಗೆ ತೋರಿಸಿ';
+      'ನೀವು ಹಸ್ತಾಂತರಿಸುವ ತ್ಯಾಜ್ಯದ ಬಗ್ಗೆ ನಮಗೆ ತಿಳಿಸಿ.';
 
   @override
   String get addPhoto => 'ಫೋಟೋ ಸೇರಿಸಿ';
 
   @override
-  String get quickCheck => 'ತ್ವರಿತ ಪರಿಶೀಲನೆ';
+  String get quickCheck => 'ತ್ವರಿತ ಸುರಕ್ಷತಾ ಪರಿಶೀಲನೆ';
 
   @override
   String get quickCheckSubtitle =>
-      'ಒಂದು ಸಣ್ಣ ಸುರಕ್ಷತಾ ಪರಿಶೀಲನೆ.\nನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಸಿದ್ಧರಾಗಲು ನಮಗೆ ಸಹಾಯ ಮಾಡಿ.';
+      'ನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಸಿದ್ಧರಾಗಲು ಕೆಲವು ತ್ವರಿತ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸಿ.\nನಿಮ್ಮ ಉತ್ತರಗಳು ಕಾರ್ಮಿಕರು ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ನಿರ್ವಹಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತವೆ.';
 
   @override
-  String get sharpObjectsQuestion => 'ತ್ಯಾಜ್ಯದಲ್ಲಿ ಯಾವುದೇ ಚೂಪಾದ ವಸ್ತುಗಳಿವೆಯೇ?';
+  String get sharpObjectsQuestion =>
+      'ತ್ಯಾಜ್ಯದಲ್ಲಿ ಸೂಜಿಗಳು ಅಥವಾ ಬ್ಲೇಡ್‌ಗಳಂತಹ ಚೂಪಾದ ವಸ್ತುಗಳಿವೆಯೇ?';
 
   @override
   String get expiredMedicineQuestion =>
@@ -204,14 +221,14 @@ class AppLocalizationsKn extends AppLocalizations {
   String get confirmPickup => 'ಪಿಕಪ್ ದೃಢೀಕರಿಸಿ';
 
   @override
-  String get locationTitle => 'ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ತಿಳಿಸಿ';
+  String get locationTitle => 'ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ತಿಳಿಸಿ.';
 
   @override
   String get locationSubtitle =>
-      'ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ನಿಮ್ಮ ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ನೀಡಿ.';
+      'ನಿಮ್ಮ ಪಿಕಪ್ ಅನ್ನು ಸರಿಯಾದ ಸ್ಥಳದಲ್ಲಿ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ನೀಡಿ.';
 
   @override
-  String get allowLocation => 'ಸ್ಥಳಕ್ಕೆ ಅನುಮತಿ ನೀಡಿ';
+  String get allowLocation => 'ಸ್ಥಳದ ಅನುಮತಿ ನೀಡಿ';
 
   @override
   String get cancel => 'ರದ್ದುಮಾಡಿ';
@@ -221,33 +238,33 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get locationDeniedMessage =>
-      'ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ನೀಡಿ.';
+      'ನಿಮ್ಮ ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಸಾಧನದ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ.';
 
   @override
-  String get openSettings => 'ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ';
+  String get openSettings => 'ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ';
 
   @override
-  String get confirmPickupRequest => 'ನಿಮ್ಮ ವಿನಂತಿಯನ್ನು ದೃಢೀಕರಿಸಿ';
+  String get confirmPickupRequest => 'ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ದೃಢೀಕರಿಸಿ';
 
   @override
   String get pickupConfirmationMessage =>
-      'ದಯವಿಟ್ಟು ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ದೃಢೀಕರಿಸಿ.';
+      'ಪಿಕಪ್ ದೃಢೀಕರಿಸುವ ಮೊದಲು ನಿಮ್ಮ ವಿನಂತಿಯ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.';
 
   @override
-  String get pickupConfirmed => 'ಪಿಕಪ್ ದೃಢೀಕರಿಸಲಾಗಿದೆ';
+  String get pickupConfirmed => 'ಪಿಕಪ್ ವಿನಂತಿ ಯಶಸ್ವಿಯಾಗಿದೆ';
 
   @override
   String get pickupConfirmedMessage =>
-      'ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ದೃಢೀಕರಿಸಲಾಗಿದೆ.';
+      'ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ.';
 
   @override
-  String get requesting => 'ವಿನಂತಿಸಲಾಗುತ್ತಿದೆ...';
+  String get requesting => 'ವಿನಂತಿಯನ್ನು ಸಲ್ಲಿಸಲಾಗುತ್ತಿದೆ...';
 
   @override
   String get done => 'ಮುಗಿದಿದೆ';
 
   @override
-  String get availablePickups => 'ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು';
+  String get availablePickups => 'ಇಂದಿನ ಬಾಕಿ ಇರುವ ಪಿಕಪ್‌ಗಳು';
 
   @override
   String get pickupDetails => 'ಪಿಕಪ್ ವಿವರಗಳು';
@@ -256,13 +273,13 @@ class AppLocalizationsKn extends AppLocalizations {
   String get pickupAvailable => 'ಪಿಕಪ್ ಲಭ್ಯವಿದೆ';
 
   @override
-  String get noAvailablePickups => 'ಲಭ್ಯವಿರುವ ಪಿಕಪ್‌ಗಳು ಇಲ್ಲ';
+  String get noAvailablePickups => 'ಪ್ರಸ್ತುತ ಯಾವುದೇ ಪಿಕಪ್ ವಿನಂತಿಗಳು ಲಭ್ಯವಿಲ್ಲ.';
 
   @override
   String get acceptPickup => 'ಪಿಕಪ್ ಸ್ವೀಕರಿಸಿ';
 
   @override
-  String get workerNotFound => 'ಕಾರ್ಮಿಕರು ಕಂಡುಬಂದಿಲ್ಲ';
+  String get workerNotFound => 'ಕಾರ್ಮಿಕರ ಖಾತೆ ಕಂಡುಬಂದಿಲ್ಲ.';
 
   @override
   String get profile => 'ಪ್ರೊಫೈಲ್';
@@ -281,4 +298,64 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get points => 'ಅಂಕಗಳು';
+
+  @override
+  String get walletTitle => 'ನನ್ನ ವಾಲೆಟ್';
+
+  @override
+  String get walletSubtitle =>
+      'ನಿಮ್ಮ ಅಂಕಗಳು ಮತ್ತು ಬಹುಮಾನಗಳನ್ನು ಒಂದೇ ಸ್ಥಳದಲ್ಲಿ ನೋಡಿ.';
+
+  @override
+  String get walletTotalBalance => 'ಒಟ್ಟು ಅಂಕಗಳು';
+
+  @override
+  String get walletEarnPoints => 'ಅಂಕಗಳನ್ನು ಗಳಿಸಿ';
+
+  @override
+  String get walletEarnPointsDescription =>
+      'ಸುರಕ್ಷಿತ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಣೆಯಲ್ಲಿ ಭಾಗವಹಿಸಿ ಅಂಕಗಳನ್ನು ಗಳಿಸಿ. ಸ್ವಚ್ಛ ಮತ್ತು ಆರೋಗ್ಯಕರ ಸಮುದಾಯ ನಿರ್ಮಾಣಕ್ಕೆ ನಿಮ್ಮ ಕೊಡುಗೆ ನೀಡಿ. ಭವಿಷ್ಯದಲ್ಲಿ ಬಹುಮಾನಗಳು ಲಭ್ಯವಾಗಬಹುದು.';
+
+  @override
+  String get pickupRequestedTitle => 'ಪಿಕಪ್ ವಿನಂತಿಸಲಾಗಿದೆ';
+
+  @override
+  String get pickupRequestedSubtitle => 'ವಿನಂತಿ ಸಲ್ಲಿಸಲಾಗಿದೆ.';
+
+  @override
+  String get verifyYourPickup => 'ಪಿಕಪ್ ದೃಢೀಕರಣ';
+
+  @override
+  String get pickupQrInstructions =>
+      'ಕಾರ್ಮಿಕರು ಬಂದಾಗ QR ಕೋಡ್ ರಚಿಸಿ, ಪಿಕಪ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಅವರಿಗೆ ತೋರಿಸಿ.';
+
+  @override
+  String get generateQrCode => 'QR ಕೋಡ್ ರಚಿಸಿ';
+
+  @override
+  String get requestDetails => 'ವಿನಂತಿಯ ವಿವರಗಳು';
+
+  @override
+  String get recipientLabel => 'ಸ್ವೀಕರಿಸುವವರು';
+
+  @override
+  String get pickupIdLabel => 'ಪಿಕಪ್ ಐಡಿ';
+
+  @override
+  String get requestedTimeLabel => 'ವಿನಂತಿಸಿದ ಸಮಯ';
+
+  @override
+  String get pickupIdCopied => 'ಪಿಕಪ್ ಐಡಿ ನಕಲಿಸಲಾಗಿದೆ';
+
+  @override
+  String get okButton => 'ಸರಿ';
+
+  @override
+  String get householdRecipient => 'ಮನೆ';
+
+  @override
+  String get unavailableValue => 'ಲಭ್ಯವಿಲ್ಲ';
+
+  @override
+  String get notAvailableValue => 'ಲಭ್ಯವಿಲ್ಲ';
 }

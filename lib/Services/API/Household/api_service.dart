@@ -47,26 +47,22 @@ class ApiService {
     required String uid,
     required String time,
     required ({double latitude, double longitude}) coordinates,
-    required File image,
     required List<int> qna,
   }) async {
-    final request = http.MultipartRequest(
-      'POST',
+    final response = await http.post(
       Uri.parse('$baseUrl/household/requestpickup'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'userid': uid,
+        'time': time,
+        'coordinate': {
+          'latitude': coordinates.latitude,
+          'longitude': coordinates.longitude,
+        },
+        'qna': qna,
+      }),
     );
 
-    request.fields['userid'] = uid;
-    request.fields['time'] = time;
-    request.fields['latitude'] = coordinates.latitude.toString();
-    request.fields['longitude'] = coordinates.longitude.toString();
-    request.fields['qna'] = qna.join(',');
-
-    request.files.add(await http.MultipartFile.fromPath('image', image.path));
-
-    final streamedResponse = await request.send();
-
-    final response = await http.Response.fromStream(streamedResponse);
-
-    return jsonDecode(response.body);
+    return jsonDecode(response.body) as Map<String, dynamic>;
   }
 }

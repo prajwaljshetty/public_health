@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
 class AppColors {
-  static const background = CupertinoColors.white;
+  static const backgroundwhite = CupertinoColors.white;
+  static const backgroundblack = CupertinoColors.black;
   static const layering = Color.fromARGB(255, 239, 239, 239);
   static const surface = Color(0xFFF5F7F7);
-  static const border = Color(0xFFE7ECEB);
+  static const border = CupertinoColors.black;
   static const accent = Color(0xFF19673F);
   static const activegreen = CupertinoColors.activeGreen;
   static const activeblue = CupertinoColors.activeBlue;
@@ -44,6 +45,7 @@ class AppText {
   );
   static const cardSubtitle = TextStyle(
     fontSize: 13,
+    fontWeight: FontWeight.w600,
     color: AppColors.textSecondary,
   );
   static const caption = TextStyle(
@@ -79,7 +81,7 @@ class AppScaffold extends StatelessWidget {
     final keyboard = MediaQuery.viewInsetsOf(context).bottom;
 
     return CupertinoPageScaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.backgroundwhite,
       resizeToAvoidBottomInset: false,
       child: SafeArea(
         bottom: keyboard == 0,
@@ -101,8 +103,8 @@ class AppScaffold extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          AppColors.background,
-                          AppColors.background.withOpacity(0),
+                          AppColors.backgroundwhite,
+                          AppColors.backgroundwhite.withOpacity(0),
                         ],
                       ),
                     ),
@@ -182,7 +184,7 @@ class AppOptionCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 17),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(color: AppColors.border),
         ),
         child: Row(
@@ -194,7 +196,7 @@ class AppOptionCard extends StatelessWidget {
                 color: AppColors.accent,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(icon, color: AppColors.background, size: 26),
+              child: Icon(icon, color: AppColors.backgroundwhite, size: 26),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -314,7 +316,7 @@ class AppSecondaryButton extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 18),
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: AppColors.backgroundwhite,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: AppColors.border, width: 1.5),
         ),

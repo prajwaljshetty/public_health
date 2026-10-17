@@ -27,6 +27,7 @@ dependencies:
   http: ^1.6.0
   web_socket_channel: ^3.0.3
   lottie: ^3.6.1
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -45,3 +46,4 @@ flutter:
     - assets/animations/box.json
     - assets/animations/pulse.json
     - assets/animations/imagecheck.json
+    - assets/animations/garbagetruck.json

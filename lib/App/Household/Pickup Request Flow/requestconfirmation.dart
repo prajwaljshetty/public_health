@@ -70,9 +70,10 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
         uid: uid!,
         time: pickuprequestdata.time!,
         coordinates: pickuprequestdata.coordinates!,
-        image: pickuprequestdata.image!,
         qna: pickuprequestdata.qna,
       );
+
+      pickuprequestdata.setpickupid(pickupid: pickupResponse['pickupid']);
 
       final dataResponse = await ApiService.getdata(uid: uid);
 
@@ -104,12 +105,12 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
 
       body: Column(
         children: [
-          const SizedBox(height: 100),
+          const SizedBox(height: 200),
 
           if (_confirmed)
             SizedBox(
-              width: 180,
-              height: 180,
+              width: 120,
+              height: 120,
               child: Lottie.asset(
                 AssetMapper.pickupConfirmed,
                 controller: _controller,
@@ -120,7 +121,7 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
               ),
             )
           else
-            const SizedBox(height: 180),
+            const SizedBox(height: 120),
 
           const SizedBox(height: 24),
 

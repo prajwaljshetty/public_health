@@ -95,73 +95,52 @@ class _HomePageState extends State<HomePage> {
         children: [
           const SizedBox(height: 60),
 
-          GestureDetector(
-            onTap: () {},
-
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(10),
-
-              decoration: BoxDecoration(
-                color: AppColors.accent,
-                borderRadius: BorderRadius.circular(40),
-              ),
-
-              child: Row(
-                children: [
-                  const SizedBox(width: 8),
-
-                  Lottie.asset(
-                    AssetMapper.coins,
-                    width: 160,
-                    height: 160,
-                    fit: BoxFit.contain,
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(22),
+            alignment: Alignment.bottomLeft,
+            decoration: BoxDecoration(
+              color: AppColors.yellow,
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Lottie.asset(
+                  AssetMapper.garbagetruck,
+                  width: 160,
+                  height: 160,
+                  fit: BoxFit.contain,
+                ),
+                Text(
+                  l10n.workerHeroTitle,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.4,
+                    height: 1.2,
+                    color: AppColors.textPrimary,
                   ),
-
-                  Expanded(
-                    child: Container(
-                      height: 160,
-
-                      decoration: BoxDecoration(
-                        color: AppColors.textPrimary.withAlpha(20),
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-
-                        children: [
-                          Text(
-                            '0',
-                            style: AppText.title.copyWith(
-                              color: AppColors.yellow,
-                              fontSize: 80,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-
-                          Text(
-                            l10n.points,
-                            style: AppText.title.copyWith(
-                              color: AppColors.yellow,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  l10n.workerHeroSubtitle,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.accent,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
-          const SizedBox(height: 40),
+          const SizedBox(height: 60),
 
           Text(l10n.availablePickups, style: AppText.label),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 0),
 
           ClipRRect(
             borderRadius: BorderRadius.circular(24),
@@ -173,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                   height: 460,
 
                   decoration: BoxDecoration(
-                    color: AppColors.background,
+                    color: AppColors.backgroundwhite,
                     borderRadius: BorderRadius.circular(24),
                   ),
 
@@ -198,8 +177,6 @@ class _HomePageState extends State<HomePage> {
                         final pickups =
                             jsonDecode(snapshot.data as String) as List;
 
-                        // Location is not another StreamBuilder.
-                        // It comes directly from LocationProvider.
                         if (position == null) {
                           return const SizedBox(
                             height: 200,
@@ -285,8 +262,8 @@ class _HomePageState extends State<HomePage> {
                         end: Alignment.bottomCenter,
 
                         colors: [
-                          AppColors.background,
-                          AppColors.background.withValues(alpha: 0),
+                          AppColors.backgroundwhite,
+                          AppColors.backgroundwhite.withValues(alpha: 0),
                         ],
                       ),
                     ),
@@ -308,8 +285,8 @@ class _HomePageState extends State<HomePage> {
                         end: Alignment.topCenter,
 
                         colors: [
-                          AppColors.background,
-                          AppColors.background.withValues(alpha: 0),
+                          AppColors.backgroundwhite,
+                          AppColors.backgroundwhite.withValues(alpha: 0),
                         ],
                       ),
                     ),

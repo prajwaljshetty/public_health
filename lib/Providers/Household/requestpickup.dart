@@ -6,7 +6,6 @@ class PickupRequestProvider extends ChangeNotifier {
   String? pickupid;
   String? time;
   ({double latitude, double longitude})? coordinates;
-  File? image;
   List<int> qna = [];
   bool hasActivePickup = false;
 
@@ -26,11 +25,6 @@ class PickupRequestProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setImage(File image) {
-    this.image = image;
-    notifyListeners();
-  }
-
   void setQna(List<int> qna) {
     this.qna = qna;
     notifyListeners();
@@ -44,7 +38,6 @@ class PickupRequestProvider extends ChangeNotifier {
   void clearPickup() {
     time = null;
     coordinates = null;
-    image = null;
     qna = [];
 
     notifyListeners();
