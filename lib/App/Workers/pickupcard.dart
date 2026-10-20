@@ -74,7 +74,7 @@ class PickupCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppText.cardTitle.copyWith(
                       fontSize: 18,
-                      color: AppColors.accent,
+                      color: AppColors.backgroundblack,
                     ),
                   ),
                 ),
@@ -97,7 +97,7 @@ class PickupCard extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.surface,
+                    color: AppColors.yellow.withAlpha(10),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
@@ -142,9 +142,9 @@ class PickupCard extends StatelessWidget {
                 const Spacer(),
 
                 const Icon(
-                  CupertinoIcons.paperplane_fill,
-                  size: 13,
-                  color: AppColors.activeblue,
+                  CupertinoIcons.location_fill,
+                  size: 24,
+                  color: AppColors.accent,
                 ),
 
                 const SizedBox(width: 8),
@@ -153,7 +153,7 @@ class PickupCard extends StatelessWidget {
                   formattedDistance,
                   style: AppText.cardSubtitle.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: AppColors.activeblue,
+                    color: AppColors.accent,
                   ),
                 ),
               ],

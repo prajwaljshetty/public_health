@@ -183,7 +183,7 @@ class AppOptionCard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 17),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: AppColors.backgroundwhite,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(color: AppColors.border),
         ),
@@ -256,6 +256,7 @@ class AppTextField extends StatelessWidget {
             keyboardType: keyboardType,
             obscureText: obscureText,
             autocorrect: !obscureText,
+            cursorColor: AppColors.accent,
             enableSuggestions: !obscureText,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             decoration: const BoxDecoration(color: CupertinoColors.transparent),
@@ -271,18 +272,22 @@ class AppTextField extends StatelessWidget {
 class AppPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final bool isLoading;
+  final String loadingText;
 
   const AppPrimaryButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.isLoading = false,
+    this.loadingText = "",
   });
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 18),
@@ -291,7 +296,20 @@ class AppPrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         alignment: Alignment.center,
-        child: Text(text, style: AppText.button),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(isLoading ? loadingText : text, style: AppText.button),
+            if (isLoading) ...[
+              const SizedBox(width: 8),
+              const CupertinoActivityIndicator(
+                radius: 8,
+                color: CupertinoColors.white,
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

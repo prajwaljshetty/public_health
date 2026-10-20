@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
 
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(22),
+            padding: const EdgeInsets.fromLTRB(22, 0, 22, 22),
             alignment: Alignment.bottomLeft,
             decoration: BoxDecoration(
               color: AppColors.yellow,
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Lottie.asset(
-                  AssetMapper.garbagetruck,
+                  AssetMapper.box,
                   width: 160,
                   height: 160,
                   fit: BoxFit.contain,
@@ -149,8 +149,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Container(
                   width: double.infinity,
-                  height: 460,
-
+                  height: 390,
                   decoration: BoxDecoration(
                     color: AppColors.backgroundwhite,
                     borderRadius: BorderRadius.circular(24),
@@ -216,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                               child: PickupCard(
                                 key: ValueKey(pickup['pickupid']),
                                 pickupId: pickup['pickupid'],
-                                username: pickup['username'],
+                                username: pickup['user_name'],
                                 time: pickup['time'],
                                 distance: distance,
                                 qna: List<int>.from(pickup['qna']),
@@ -255,12 +254,10 @@ class _HomePageState extends State<HomePage> {
 
                   child: Container(
                     height: 20,
-
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-
                         colors: [
                           AppColors.backgroundwhite,
                           AppColors.backgroundwhite.withValues(alpha: 0),
@@ -278,7 +275,6 @@ class _HomePageState extends State<HomePage> {
 
                   child: Container(
                     height: 20,
-
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.bottomCenter,

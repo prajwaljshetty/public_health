@@ -52,7 +52,7 @@ class PickupQrPage extends StatelessWidget {
           // 1. Request details receipt
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: AppColors.backgroundwhite,
               borderRadius: BorderRadius.circular(24),
@@ -62,7 +62,7 @@ class PickupQrPage extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.layering.withAlpha(80),
+                color: AppColors.yellow,
                 borderRadius: BorderRadius.circular(18),
               ),
               child: Column(
@@ -81,13 +81,14 @@ class PickupQrPage extends StatelessWidget {
                   const _DashedDivider(),
                   const SizedBox(height: 12),
 
-                  // Pickup ID with copy button
                   Row(
                     children: [
                       Expanded(
                         child: Text(
                           l10n.pickupIdLabel,
-                          style: AppText.cardSubtitle,
+                          style: (AppText.cardSubtitle).copyWith(
+                            color: AppColors.accent,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -98,7 +99,7 @@ class PickupQrPage extends StatelessWidget {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.accentSoft,
+                            color: AppColors.backgroundblack.withAlpha(10),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
@@ -110,7 +111,7 @@ class PickupQrPage extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: AppText.cardSubtitle.copyWith(
                                     fontSize: 12,
-                                    color: AppColors.accent,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ),
@@ -149,7 +150,8 @@ class PickupQrPage extends StatelessWidget {
                                 child: const Icon(
                                   CupertinoIcons.doc_on_doc,
                                   size: 14,
-                                  color: AppColors.accent,
+                                  color: AppColors.textPrimary,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
@@ -262,7 +264,13 @@ class PickupQrPage extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(flex: 2, child: Text(label, style: AppText.cardSubtitle)),
+        Expanded(
+          flex: 2,
+          child: Text(
+            label,
+            style: (AppText.cardSubtitle).copyWith(color: AppColors.accent),
+          ),
+        ),
         const SizedBox(width: 12),
         Expanded(
           flex: 3,
@@ -296,7 +304,7 @@ class _DashedDivider extends StatelessWidget {
               width: dashWidth,
               height: 1,
               margin: const EdgeInsets.only(right: dashSpace),
-              color: AppColors.backgroundblack.withAlpha(50),
+              color: AppColors.backgroundblack,
             ),
           ),
         );

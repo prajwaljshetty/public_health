@@ -121,6 +121,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get incorrectPassword => 'The password you entered is incorrect.';
 
   @override
+  String get loggingIn => 'Logging in';
+
+  @override
+  String get pleaseWait => 'Please wait';
+
+  @override
+  String get loginFailed => 'Login failed. Please try again.';
+
+  @override
+  String get networkError => 'Unable to connect to the server.';
+
+  @override
+  String get invalidServerResponse =>
+      'Invalid response received from the server.';
+
+  @override
+  String get sessionExpired => 'Your session has expired. Please log in again.';
+
+  @override
+  String get unableToLoadAccount => 'Unable to load your account.';
+
+  @override
+  String get unableToLoadPickupDetails => 'Unable to load pickup details.';
+
+  @override
+  String get accountCreationFailed => 'Account creation failed.';
+
+  @override
   String get workerLoginTitle => 'Worker Login';
 
   @override
@@ -254,7 +282,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your pickup request has been submitted successfully.';
 
   @override
-  String get requesting => 'Submitting Request...';
+  String get requesting => 'Submitting Request';
 
   @override
   String get done => 'Done';

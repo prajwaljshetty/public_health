@@ -125,6 +125,36 @@ class AppLocalizationsKn extends AppLocalizations {
   String get incorrectPassword => 'ನೀವು ನಮೂದಿಸಿದ ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ.';
 
   @override
+  String get loggingIn => 'ಲಾಗಿನ್ ಆಗಲಾಗುತ್ತಿದೆ';
+
+  @override
+  String get pleaseWait => 'ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ';
+
+  @override
+  String get loginFailed => 'ಲಾಗಿನ್ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get networkError => 'ಸರ್ವರ್‌ಗೆ ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.';
+
+  @override
+  String get invalidServerResponse => 'ಸರ್ವರ್‌ನಿಂದ ಅಮಾನ್ಯ ಪ್ರತಿಕ್ರಿಯೆ ಬಂದಿದೆ.';
+
+  @override
+  String get sessionExpired =>
+      'ನಿಮ್ಮ ಸೆಷನ್ ಅವಧಿ ಮುಗಿದಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಲಾಗಿನ್ ಮಾಡಿ.';
+
+  @override
+  String get unableToLoadAccount =>
+      'ನಿಮ್ಮ ಖಾತೆಯ ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.';
+
+  @override
+  String get unableToLoadPickupDetails =>
+      'ಪಿಕಪ್ ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.';
+
+  @override
+  String get accountCreationFailed => 'ಖಾತೆ ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.';
+
+  @override
   String get workerLoginTitle => 'ಕಾರ್ಮಿಕರ ಲಾಗಿನ್';
 
   @override
@@ -258,7 +288,7 @@ class AppLocalizationsKn extends AppLocalizations {
       'ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ.';
 
   @override
-  String get requesting => 'ವಿನಂತಿಯನ್ನು ಸಲ್ಲಿಸಲಾಗುತ್ತಿದೆ...';
+  String get requesting => 'ವಿನಂತಿಯನ್ನು ಸಲ್ಲಿಸಲಾಗುತ್ತಿದೆ';
 
   @override
   String get done => 'ಮುಗಿದಿದೆ';

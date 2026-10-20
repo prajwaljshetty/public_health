@@ -296,17 +296,21 @@ class HomePage extends StatelessWidget {
       ),
       bottom: Column(
         children: [
-          AppPrimaryButton(
-            text: l10n.requestPickup,
-            onPressed: () {
-              if (pickuprequestdata.hasActivePickup) return;
-              Navigator.push(
-                context,
-                CupertinoPageRoute(builder: (_) => const LocationPage()),
-              );
-            },
-          ),
-          const SizedBox(height: 18),
+          if (!pickuprequestdata.hasActivePickup) ...[
+            AppPrimaryButton(
+              text: l10n.requestPickup,
+              onPressed: () {
+                if (pickuprequestdata.hasActivePickup) return;
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (_) => const LocationPage()),
+                );
+              },
+            ),
+            const SizedBox(height: 18),
+          ] else ...[
+            SizedBox(height: 5),
+          ],
         ],
       ),
     );

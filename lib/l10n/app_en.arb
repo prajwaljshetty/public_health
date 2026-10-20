@@ -40,6 +40,16 @@
   "passwordMinLength": "Your password must contain at least 6 characters.",
   "incorrectPassword": "The password you entered is incorrect.",
 
+  "loggingIn": "Logging in",
+  "pleaseWait": "Please wait",
+  "loginFailed": "Login failed. Please try again.",
+  "networkError": "Unable to connect to the server.",
+  "invalidServerResponse": "Invalid response received from the server.",
+  "sessionExpired": "Your session has expired. Please log in again.",
+  "unableToLoadAccount": "Unable to load your account.",
+  "unableToLoadPickupDetails": "Unable to load pickup details.",
+  "accountCreationFailed": "Account creation failed.",
+
   "workerLoginTitle": "Worker Login",
   "workerLoginSubtitle": "Sign in with your Purasabhe worker ID to view and accept pickup requests.",
   "workerId": "Worker ID",
@@ -88,7 +98,7 @@
   "pickupConfirmationMessage": "Review your request details before confirming your pickup.",
   "pickupConfirmed": "Pickup Requested Successfully",
   "pickupConfirmedMessage": "Your pickup request has been submitted successfully.",
-  "requesting": "Submitting Request...",
+  "requesting": "Submitting Request",
   "done": "Done",
 
   "availablePickups": "Today's Pending Pickups",
@@ -117,13 +127,13 @@
   "pickupQrInstructions": "When your collection worker arrives, generate your QR code and show it to them to verify the pickup and confirm the handover.",
   "generateQrCode": "Generate QR Code",
 
-    "requestDetails": "Request Details",
-    "recipientLabel": "Recipient",
-    "pickupIdLabel": "Pickup ID",
-    "requestedTimeLabel": "Requested Time",
-    "pickupIdCopied": "Pickup ID copied",
-    "okButton": "OK",
-    "householdRecipient": "Household",
-    "unavailableValue": "Unavailable",
-    "notAvailableValue": "Not available"
+  "requestDetails": "Request Details",
+  "recipientLabel": "Recipient",
+  "pickupIdLabel": "Pickup ID",
+  "requestedTimeLabel": "Requested Time",
+  "pickupIdCopied": "Pickup ID copied",
+  "okButton": "OK",
+  "householdRecipient": "Household",
+  "unavailableValue": "Unavailable",
+  "notAvailableValue": "Not available"
 }

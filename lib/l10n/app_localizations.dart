@@ -296,6 +296,60 @@ abstract class AppLocalizations {
   /// **'The password you entered is incorrect.'**
   String get incorrectPassword;
 
+  /// No description provided for @loggingIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Logging in'**
+  String get loggingIn;
+
+  /// No description provided for @pleaseWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait'**
+  String get pleaseWait;
+
+  /// No description provided for @loginFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed. Please try again.'**
+  String get loginFailed;
+
+  /// No description provided for @networkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to connect to the server.'**
+  String get networkError;
+
+  /// No description provided for @invalidServerResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid response received from the server.'**
+  String get invalidServerResponse;
+
+  /// No description provided for @sessionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has expired. Please log in again.'**
+  String get sessionExpired;
+
+  /// No description provided for @unableToLoadAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load your account.'**
+  String get unableToLoadAccount;
+
+  /// No description provided for @unableToLoadPickupDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load pickup details.'**
+  String get unableToLoadPickupDetails;
+
+  /// No description provided for @accountCreationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Account creation failed.'**
+  String get accountCreationFailed;
+
   /// No description provided for @workerLoginTitle.
   ///
   /// In en, this message translates to:
@@ -539,7 +593,7 @@ abstract class AppLocalizations {
   /// No description provided for @requesting.
   ///
   /// In en, this message translates to:
-  /// **'Submitting Request...'**
+  /// **'Submitting Request'**
   String get requesting;
 
   /// No description provided for @done.
