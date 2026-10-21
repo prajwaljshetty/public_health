@@ -6,6 +6,9 @@ import 'package:public_health/Theme/theme.dart';
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 
+// Fallback :
+import 'package:public_health/Fallback/serverdown.dart';
+
 // Services :
 import 'package:public_health/Services/API/Workers/api_service.dart';
 
@@ -36,6 +39,9 @@ class _WorkerLoginState extends State<WorkerLogin> {
   String? workerIdError;
   String? passwordError;
 
+  // Server Error handling :
+  bool isServerDownPageOpen = false;
+
   @override
   void dispose() {
     workerIdController.dispose();
@@ -64,10 +70,79 @@ class _WorkerLoginState extends State<WorkerLogin> {
     return workerIdValidation == null && passwordValidation == null;
   }
 
+  Future<void> requestLogin(AppLocalizations l10n) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      if (validateForm()) {
+        final response = await ApiService.login(
+          workerid: workerIdController.text.trim(),
+          password: passwordController.text,
+        );
+        if (response['status'] == true) {
+          final String uid = response['uid'];
+
+          final dataResponse = await ApiService.getdata(uid: uid);
+
+          if (dataResponse['status'] == true) {
+            final userdata = dataResponse['userdata'];
+
+            userProvider.setUser(
+              userid: userdata['userid'],
+              username: userdata['username'],
+              phoneno: userdata['phoneno'],
+              role: userdata['role'],
+            );
+
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString('uid', uid);
+
+            if (!mounted) return;
+
+            Navigator.pushReplacement(
+              context,
+              CupertinoPageRoute(builder: (_) => const HomePage()),
+            );
+          }
+        } else {
+          setState(() {
+            switch (response['message']) {
+              case 'USER_NOT_FOUND':
+                workerIdError = l10n.workerNotFound;
+                break;
+
+              case 'INCORRECT_PASSWORD':
+                passwordError = l10n.incorrectPassword;
+                break;
+
+              default:
+                workerIdError = response['message'];
+            }
+          });
+        }
+      }
+    } catch (e) {
+      if (!mounted || isServerDownPageOpen) return;
+
+      isServerDownPageOpen = true;
+
+      await Navigator.push(
+        context,
+        CupertinoPageRoute(
+          builder: (serverDownContext) => ServerDownPage(
+            onReload: () {
+              Navigator.of(serverDownContext).pop();
+            },
+          ),
+        ),
+      );
+
+      isServerDownPageOpen = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     return AppScaffold(
       body: Column(
@@ -130,56 +205,8 @@ class _WorkerLoginState extends State<WorkerLogin> {
           const SizedBox(height: 10),
 
           AppPrimaryButton(
-            text: l10n.signIn,
-            onPressed: () async {
-              if (validateForm()) {
-                final response = await ApiService.login(
-                  workerid: workerIdController.text.trim(),
-                  password: passwordController.text,
-                );
-                if (response['status'] == true) {
-                  final String uid = response['uid'];
-
-                  final dataResponse = await ApiService.getdata(uid: uid);
-
-                  if (dataResponse['status'] == true) {
-                    final userdata = dataResponse['userdata'];
-
-                    userProvider.setUser(
-                      userid: userdata['userid'],
-                      username: userdata['username'],
-                      phoneno: userdata['phoneno'],
-                      role: userdata['role'],
-                    );
-
-                    final prefs = await SharedPreferences.getInstance();
-                    await prefs.setString('uid', uid);
-
-                    if (!mounted) return;
-
-                    Navigator.pushReplacement(
-                      context,
-                      CupertinoPageRoute(builder: (_) => const HomePage()),
-                    );
-                  }
-                } else {
-                  setState(() {
-                    switch (response['message']) {
-                      case 'USER_NOT_FOUND':
-                        workerIdError = l10n.workerNotFound;
-                        break;
-
-                      case 'INCORRECT_PASSWORD':
-                        passwordError = l10n.incorrectPassword;
-                        break;
-
-                      default:
-                        workerIdError = response['message'];
-                    }
-                  });
-                }
-              }
-            },
+            text: l10n.login,
+            onPressed: () => requestLogin(l10n),
           ),
 
           const SizedBox(height: 10),

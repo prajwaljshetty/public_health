@@ -5,4 +5,5 @@ class AssetMapper {
   static String box = 'assets/animations/box.json';
   static String pulse = 'assets/animations/pulse.json';
   static String imagecheck = 'assets/animations/imagecheck.json';
+  static String garbagetruck = 'assets/animations/garbagetruck.json';
 }

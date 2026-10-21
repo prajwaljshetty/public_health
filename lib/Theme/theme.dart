@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
 class AppColors {
-  static const background = CupertinoColors.white;
+  static const backgroundwhite = CupertinoColors.white;
+  static const backgroundblack = CupertinoColors.black;
   static const layering = Color.fromARGB(255, 239, 239, 239);
   static const surface = Color(0xFFF5F7F7);
-  static const border = Color(0xFFE7ECEB);
+  static const border = CupertinoColors.black;
   static const accent = Color(0xFF19673F);
+  static const activegreen = CupertinoColors.activeGreen;
+  static const activeblue = CupertinoColors.activeBlue;
   static const accentSoft = Color(0xFFE2F1E8);
   static const yellow = Color(0xFFE8E3D0);
   static const textPrimary = CupertinoColors.black;
@@ -42,6 +45,7 @@ class AppText {
   );
   static const cardSubtitle = TextStyle(
     fontSize: 13,
+    fontWeight: FontWeight.w600,
     color: AppColors.textSecondary,
   );
   static const caption = TextStyle(
@@ -77,7 +81,7 @@ class AppScaffold extends StatelessWidget {
     final keyboard = MediaQuery.viewInsetsOf(context).bottom;
 
     return CupertinoPageScaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.backgroundwhite,
       resizeToAvoidBottomInset: false,
       child: SafeArea(
         bottom: keyboard == 0,
@@ -99,8 +103,8 @@ class AppScaffold extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          AppColors.background,
-                          AppColors.background.withOpacity(0),
+                          AppColors.backgroundwhite,
+                          AppColors.backgroundwhite.withOpacity(0),
                         ],
                       ),
                     ),
@@ -179,8 +183,8 @@ class AppOptionCard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 17),
         decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(20),
+          color: AppColors.backgroundwhite,
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(color: AppColors.border),
         ),
         child: Row(
@@ -192,7 +196,7 @@ class AppOptionCard extends StatelessWidget {
                 color: AppColors.accent,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(icon, color: AppColors.background, size: 26),
+              child: Icon(icon, color: AppColors.backgroundwhite, size: 26),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -252,6 +256,7 @@ class AppTextField extends StatelessWidget {
             keyboardType: keyboardType,
             obscureText: obscureText,
             autocorrect: !obscureText,
+            cursorColor: AppColors.accent,
             enableSuggestions: !obscureText,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             decoration: const BoxDecoration(color: CupertinoColors.transparent),
@@ -267,18 +272,22 @@ class AppTextField extends StatelessWidget {
 class AppPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final bool isLoading;
+  final String loadingText;
 
   const AppPrimaryButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.isLoading = false,
+    this.loadingText = "",
   });
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 18),
@@ -287,7 +296,20 @@ class AppPrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         alignment: Alignment.center,
-        child: Text(text, style: AppText.button),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(isLoading ? loadingText : text, style: AppText.button),
+            if (isLoading) ...[
+              const SizedBox(width: 8),
+              const CupertinoActivityIndicator(
+                radius: 8,
+                color: CupertinoColors.white,
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }
@@ -312,7 +334,7 @@ class AppSecondaryButton extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 18),
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: AppColors.backgroundwhite,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: AppColors.border, width: 1.5),
         ),

@@ -1,21 +1,21 @@
 import 'package:flutter/cupertino.dart';
 
-// Portal :
+// Portal
 import 'package:public_health/Portal/portal.dart';
 
-// User Home :
+// Home pages
 import 'package:public_health/App/Household/home.dart' as householdhome;
-
-// Worker Home :
 import 'package:public_health/App/Workers/home.dart' as workerhome;
 
-// Local Storage :
-import 'package:shared_preferences/shared_preferences.dart';
+// Fallback
+import 'package:public_health/Fallback/serverdown.dart';
 
-// Services :
-import 'package:public_health/Services/API/Household/api_service.dart';
+// Services
+import 'package:public_health/Services/API/Household/api_service.dart'
+    as household;
+import 'package:public_health/Services/API/Workers/api_service.dart' as worker;
 
-// Provider :
+// Providers
 import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Household/requestpickup.dart';
@@ -28,6 +28,9 @@ class Bridge extends StatefulWidget {
 }
 
 class _BridgeState extends State<Bridge> {
+  bool _checking = true;
+  bool _serverDown = false;
+
   @override
   void initState() {
     super.initState();
@@ -35,66 +38,131 @@ class _BridgeState extends State<Bridge> {
   }
 
   Future<void> checkLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final pickuprequestdata = Provider.of<PickupRequestProvider>(
-      context,
-      listen: false,
-    );
+    if (!mounted) return;
 
-    final uid = prefs.getString('uid');
+    setState(() {
+      _checking = true;
+      _serverDown = false;
+    });
 
-    if (uid == null) {
-      if (!mounted) return;
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-      Navigator.pushReplacement(
+      final pickupProvider = Provider.of<PickupRequestProvider>(
         context,
-        CupertinoPageRoute(builder: (_) => const Portal()),
+        listen: false,
       );
 
-      return;
-    }
-
-    final dataResponse = await ApiService.getdata(uid: uid);
-
-    if (dataResponse['status'] == true) {
-      final userdata = dataResponse['userdata'];
-
-      await userProvider.setUser(
-        userid: userdata['userid'],
-        username: userdata['username'],
-        phoneno: userdata['phoneno'],
-        role: userdata['role'],
-      );
-
-      pickuprequestdata.sethasActivePickup(
-        hasActivePickup: userdata['hasActivePickup'],
-      );
+      await userProvider.initialize();
 
       if (!mounted) return;
 
-      if (userdata['role'] == 'household') {
-        Navigator.pushReplacement(
-          context,
-          CupertinoPageRoute(builder: (_) => const householdhome.HomePage()),
-        );
+      final uid = userProvider.userid;
+      final accessToken = userProvider.accesstoken;
+      final refreshToken = userProvider.refreshtoken;
 
+      if (uid == null && accessToken == null && refreshToken == null) {
+        goToPortal();
         return;
       }
 
-      if (userdata['role'] == 'worker') {
-        Navigator.pushReplacement(
-          context,
-          CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
+      if (accessToken != null && accessToken.isNotEmpty) {
+        final householdResponse = await household.ApiService.getdata(
+          userprovider: userProvider,
+          pickuprequestprovider: pickupProvider,
         );
 
+        if (!mounted) return;
+
+        if (householdResponse['status'] == true) {
+          Navigator.pushReplacement(
+            context,
+            CupertinoPageRoute(builder: (_) => const householdhome.HomePage()),
+          );
+          return;
+        }
+
+        final code = householdResponse['code'];
+
+        if (code == 'NETWORK_ERROR' ||
+            code == 'HTTP_ERROR' ||
+            code == 'INVALID_RESPONSE') {
+          showServerDown();
+          return;
+        }
+
+        if (code == 'AUTH_REQUIRED' || code == 'REFRESH_FAILED') {
+          await userProvider.logout();
+          goToPortal();
+          return;
+        }
+
+        showServerDown();
         return;
+      }
+
+      // E part UID use malthondhund
+      if (uid != null && uid.isNotEmpty) {
+        final workerResponse = await worker.ApiService.getdata(uid: uid);
+
+        if (!mounted) return;
+
+        if (workerResponse['status'] == true) {
+          final workerData = workerResponse['userdata'];
+
+          await userProvider.setUser(
+            userid: workerData['userid'],
+            username: workerData['username'],
+            phoneno: workerData['phoneno'],
+            role: workerData['role'],
+          );
+
+          if (!mounted) return;
+
+          Navigator.pushReplacement(
+            context,
+            CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
+          );
+          return;
+        }
+
+        final code = workerResponse['code'];
+
+        if (code == 'NETWORK_ERROR' ||
+            code == 'HTTP_ERROR' ||
+            code == 'INVALID_RESPONSE') {
+          showServerDown();
+          return;
+        }
+      }
+
+      // No valid session remains.
+      await userProvider.logout();
+
+      if (!mounted) return;
+      goToPortal();
+    } catch (e) {
+      if (!mounted) return;
+      showServerDown();
+    } finally {
+      if (mounted) {
+        setState(() {
+          _checking = false;
+        });
       }
     }
+  }
 
-    // UID exists locally but user is not valid anymore.
-    await prefs.remove('uid');
+  void showServerDown() {
+    if (!mounted) return;
 
+    setState(() {
+      _checking = false;
+      _serverDown = true;
+    });
+  }
+
+  void goToPortal() {
     if (!mounted) return;
 
     Navigator.pushReplacement(
@@ -105,6 +173,10 @@ class _BridgeState extends State<Bridge> {
 
   @override
   Widget build(BuildContext context) {
+    if (_serverDown) {
+      return ServerDownPage(onReload: checkLogin);
+    }
+
     return const CupertinoPageScaffold(
       child: Center(child: CupertinoActivityIndicator()),
     );

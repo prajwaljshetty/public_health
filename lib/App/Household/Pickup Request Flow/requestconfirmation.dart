@@ -53,34 +53,64 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
   }
 
   Future<void> _confirmPickup() async {
+    if (_loading) return;
+
+    setState(() {
+      _loading = true;
+      _errorMessage = null;
+    });
+
     try {
-      setState(() {
-        _loading = true;
-        _errorMessage = null;
-      });
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-      final uid = Provider.of<UserProvider>(context, listen: false).userid;
-
-      final pickuprequestdata = Provider.of<PickupRequestProvider>(
+      final pickupProvider = Provider.of<PickupRequestProvider>(
         context,
         listen: false,
       );
-      pickuprequestdata.setTime(DateTime.now().toString());
+
+      // Set the request time.
+      pickupProvider.setTime(DateTime.now().toIso8601String());
+
+      // Submit the pickup request using the access token.
       final pickupResponse = await ApiService.requestpickup(
-        uid: uid!,
-        time: pickuprequestdata.time!,
-        coordinates: pickuprequestdata.coordinates!,
-        image: pickuprequestdata.image!,
-        qna: pickuprequestdata.qna,
-      );
-
-      final dataResponse = await ApiService.getdata(uid: uid);
-
-      pickuprequestdata.sethasActivePickup(
-        hasActivePickup: dataResponse['userdata']['hasActivePickup'] as bool,
+        userprovider: userProvider,
+        time: pickupProvider.time!,
+        coordinates: pickupProvider.coordinates!,
+        qna: pickupProvider.qna,
       );
 
       if (!mounted) return;
+
+      if (pickupResponse['status'] != true) {
+        setState(() {
+          _loading = false;
+          _errorMessage =
+              pickupResponse['message'] ??
+              'Unable to request pickup. Please try again.';
+        });
+        return;
+      }
+
+      // Save the returned pickup ID.
+      pickupProvider.setpickupid(pickupid: pickupResponse['pickupid']);
+
+      // Refresh household data and active-pickup state.
+      final dataResponse = await ApiService.getdata(
+        userprovider: userProvider,
+        pickuprequestprovider: pickupProvider,
+      );
+
+      if (!mounted) return;
+
+      if (dataResponse['status'] != true) {
+        setState(() {
+          _loading = false;
+          _errorMessage =
+              'Pickup requested, but refreshing your account failed. '
+              'Please return home and refresh your data.';
+        });
+        return;
+      }
 
       setState(() {
         _loading = false;
@@ -88,6 +118,7 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
       });
     } catch (e) {
       if (!mounted) return;
+
       setState(() {
         _loading = false;
         _errorMessage = 'Unable to request pickup. Please try again.';
@@ -104,12 +135,12 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
 
       body: Column(
         children: [
-          const SizedBox(height: 100),
+          const SizedBox(height: 200),
 
           if (_confirmed)
             SizedBox(
-              width: 180,
-              height: 180,
+              width: 120,
+              height: 120,
               child: Lottie.asset(
                 AssetMapper.pickupConfirmed,
                 controller: _controller,
@@ -120,7 +151,7 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
               ),
             )
           else
-            const SizedBox(height: 180),
+            const SizedBox(height: 120),
 
           const SizedBox(height: 24),
 
@@ -191,7 +222,9 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
         children: [
           if (!_confirmed) ...[
             AppPrimaryButton(
-              text: _loading ? l10n.requesting : l10n.confirmPickup,
+              isLoading: _loading,
+              text: l10n.confirmPickup,
+              loadingText: l10n.requesting,
               onPressed: () {
                 if (!_loading) {
                   _confirmPickup();
