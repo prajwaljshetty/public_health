@@ -388,4 +388,14 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get notAvailableValue => 'ಲಭ್ಯವಿಲ್ಲ';
+
+  @override
+  String get pickupConfirmationPending => 'ಎಲ್ಲವೂ ಸಿದ್ಧವಾಗಿದೆ!';
+
+  @override
+  String get pickupConfirmationPendingMessage =>
+      'ನಿಮ್ಮ ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಣೆಯ ವಿನಂತಿಯನ್ನು ಕಳುಹಿಸಲಾಗಿದೆ. ಅದು ಖಚಿತವಾದ ತಕ್ಷಣ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.';
+
+  @override
+  String get waitingForPickupConfirmation => 'ನಿಮಗೆ ಮಾಹಿತಿ ನೀಡುತ್ತೇವೆ';
 }

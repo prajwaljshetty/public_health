@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 // Theme
 import 'package:public_health/Theme/theme.dart';
@@ -37,8 +38,9 @@ class HomePage extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final pickuprequestdata = Provider.of<PickupRequestProvider>(
       context,
-      listen: false,
+      listen: true,
     );
+
     return AppScaffold(
       showBack: false,
       trailing: [
@@ -123,7 +125,107 @@ class HomePage extends StatelessWidget {
             ),
             child: Row(
               children: [
-                if (pickuprequestdata.hasActivePickup) ...[
+                if (pickuprequestdata.pickupStatus == 'requested') ...[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 44,
+                              height: 44,
+                              decoration: BoxDecoration(
+                                color: AppColors.accent,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: const Icon(
+                                CupertinoIcons.clock,
+                                color: AppColors.surface,
+                                size: 24,
+                              ),
+                            ),
+
+                            const SizedBox(width: 12),
+
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    l10n.pickupRequestedTitle,
+                                    style: AppText.cardTitle,
+                                  ),
+
+                                  const SizedBox(height: 4),
+
+                                  Text(
+                                    l10n.pickupRequestedSubtitle,
+                                    style: AppText.cardSubtitle,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 18),
+
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(18),
+                          decoration: BoxDecoration(
+                            color: AppColors.layering,
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(width: 1),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  color: AppColors.yellow,
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                child: const Icon(
+                                  CupertinoIcons.bell,
+                                  size: 23,
+                                  color: AppColors.accent,
+                                ),
+                              ),
+
+                              const SizedBox(width: 14),
+
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      l10n.pickupConfirmationPending,
+                                      style: AppText.cardTitle,
+                                    ),
+
+                                    const SizedBox(height: 6),
+
+                                    Text(
+                                      l10n.pickupConfirmationPendingMessage,
+                                      style: AppText.cardSubtitle.copyWith(
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ] else if (pickuprequestdata.pickupStatus == 'assigned') ...[
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,12 +238,12 @@ class HomePage extends StatelessWidget {
                               width: 44,
                               height: 44,
                               decoration: BoxDecoration(
-                                color: AppColors.accent.withAlpha(20),
-                                borderRadius: BorderRadius.circular(14),
+                                color: AppColors.accent,
+                                borderRadius: BorderRadius.circular(16),
                               ),
                               child: const Icon(
-                                CupertinoIcons.checkmark_circle_fill,
-                                color: AppColors.accent,
+                                CupertinoIcons.check_mark,
+                                color: AppColors.surface,
                                 size: 24,
                               ),
                             ),
@@ -177,23 +279,19 @@ class HomePage extends StatelessWidget {
 
                         const SizedBox(height: 18),
 
-                        // QR verification instructions
                         Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: AppColors.accent.withAlpha(12),
+                            color: AppColors.layering,
                             borderRadius: BorderRadius.circular(18),
+                            border: BoxBorder.all(width: 1),
                           ),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                CupertinoIcons.qrcode,
-                                color: AppColors.accent,
-                                size: 30,
-                              ),
 
+                            children: [
                               const SizedBox(width: 12),
 
                               Expanded(
@@ -209,10 +307,17 @@ class HomePage extends StatelessWidget {
 
                                     Text(
                                       l10n.pickupQrInstructions,
-                                      style: AppText.cardSubtitle,
+                                      style: AppText.cardSubtitle.copyWith(
+                                        color: AppColors.textSecondary,
+                                      ),
                                     ),
                                   ],
                                 ),
+                              ),
+                              const Icon(
+                                CupertinoIcons.qrcode,
+                                size: 64,
+                                color: AppColors.textPrimary,
                               ),
                             ],
                           ),
@@ -220,7 +325,6 @@ class HomePage extends StatelessWidget {
 
                         const SizedBox(height: 16),
 
-                        // Generate QR button
                         SizedBox(
                           width: double.infinity,
                           child: CupertinoButton(
@@ -261,15 +365,7 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-
-                  // Leading QR icon
-                  const Icon(
-                    CupertinoIcons.qrcode,
-                    size: 64,
-                    color: AppColors.textPrimary,
-                  ),
                 ] else ...[
-                  // Title and subtitle
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,11 +392,11 @@ class HomePage extends StatelessWidget {
       ),
       bottom: Column(
         children: [
-          if (!pickuprequestdata.hasActivePickup) ...[
+          if (pickuprequestdata.pickupStatus == "idle") ...[
             AppPrimaryButton(
               text: l10n.requestPickup,
               onPressed: () {
-                if (pickuprequestdata.hasActivePickup) return;
+                if (pickuprequestdata.pickupStatus != "idle") return;
                 Navigator.push(
                   context,
                   CupertinoPageRoute(builder: (_) => const LocationPage()),

@@ -135,5 +135,9 @@
   "okButton": "ಸರಿ",
   "householdRecipient": "ಮನೆ",
   "unavailableValue": "ಲಭ್ಯವಿಲ್ಲ",
-  "notAvailableValue": "ಲಭ್ಯವಿಲ್ಲ"
+  "notAvailableValue": "ಲಭ್ಯವಿಲ್ಲ",
+
+  "pickupConfirmationPending": "ಎಲ್ಲವೂ ಸಿದ್ಧವಾಗಿದೆ!",
+  "pickupConfirmationPendingMessage": "ನಿಮ್ಮ ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಣೆಯ ವಿನಂತಿಯನ್ನು ಕಳುಹಿಸಲಾಗಿದೆ. ಅದು ಖಚಿತವಾದ ತಕ್ಷಣ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.",
+  "waitingForPickupConfirmation": "ನಿಮಗೆ ಮಾಹಿತಿ ನೀಡುತ್ತೇವೆ"
 }

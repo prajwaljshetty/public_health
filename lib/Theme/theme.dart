@@ -193,10 +193,10 @@ class AppOptionCard extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: AppColors.accent,
+                color: AppColors.layering,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(icon, color: AppColors.backgroundwhite, size: 26),
+              child: Icon(icon, color: AppColors.accent, size: 26),
             ),
             const SizedBox(width: 16),
             Expanded(

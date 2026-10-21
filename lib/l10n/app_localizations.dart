@@ -787,6 +787,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not available'**
   String get notAvailableValue;
+
+  /// No description provided for @pickupConfirmationPending.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re All Set!'**
+  String get pickupConfirmationPending;
+
+  /// No description provided for @pickupConfirmationPendingMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pickup is requested. We\'ll let you know when it\'s confirmed.'**
+  String get pickupConfirmationPendingMessage;
+
+  /// No description provided for @waitingForPickupConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll keep you updated'**
+  String get waitingForPickupConfirmation;
 }
 
 class _AppLocalizationsDelegate

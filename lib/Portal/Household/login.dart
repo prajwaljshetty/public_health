@@ -9,16 +9,16 @@ import 'package:public_health/l10n/app_localizations.dart';
 // Home
 import 'package:public_health/App/Household/home.dart';
 
-// Fallback :
+// Fallback
 import 'package:public_health/Fallback/serverdown.dart';
 
-// Services :
+// Services
 import 'package:public_health/Services/API/Household/api_service.dart';
 
 // Validator
 import 'package:public_health/validator/fieldvalidator.dart';
 
-// Provider :
+// Providers
 import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Household/requestpickup.dart';
@@ -37,10 +37,7 @@ class _LoginState extends State<Login> {
   String? phoneError;
   String? passwordError;
 
-  // Server Error handling :
   bool isServerDownPageOpen = false;
-
-  // Loading :
   bool _isLoading = false;
 
   @override
@@ -68,11 +65,7 @@ class _LoginState extends State<Login> {
       passwordError = passwordValidation;
     });
 
-    if (phoneValidation == null && passwordValidation == null) {
-      return true;
-    }
-
-    return false;
+    return phoneValidation == null && passwordValidation == null;
   }
 
   Future<void> requestLogin(AppLocalizations l10n) async {
@@ -87,6 +80,8 @@ class _LoginState extends State<Login> {
 
     setState(() {
       _isLoading = true;
+      phoneError = null;
+      passwordError = null;
     });
 
     try {
@@ -147,24 +142,33 @@ class _LoginState extends State<Login> {
         return;
       }
 
-      if (requestProvider.hasActivePickup) {
-        final pickupResponse = await ApiService.getpickupdata(
+      final pickupResponse = await ApiService.getpickupdata(
+        userprovider: userProvider,
+        pickuprequestprovider: requestProvider,
+      );
+
+      if (!mounted) return;
+
+      if (pickupResponse['status'] != true) {
+        setState(() {
+          phoneError = l10n.unableToLoadPickupDetails;
+        });
+
+        return;
+      }
+
+      final hasActivePickup =
+          requestProvider.pickupid != null &&
+          requestProvider.pickupStatus != 'idle';
+
+      if (hasActivePickup) {
+        await ApiService.pickupstatusstream(
           userprovider: userProvider,
           pickuprequestprovider: requestProvider,
         );
 
         if (!mounted) return;
-
-        if (pickupResponse['status'] != true) {
-          setState(() {
-            phoneError = l10n.unableToLoadPickupDetails;
-          });
-
-          return;
-        }
       }
-
-      if (!mounted) return;
 
       Navigator.pushReplacement(
         context,

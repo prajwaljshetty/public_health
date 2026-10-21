@@ -68,12 +68,11 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
         listen: false,
       );
 
-      // Set the request time.
       pickupProvider.setTime(DateTime.now().toIso8601String());
 
-      // Submit the pickup request using the access token.
       final pickupResponse = await ApiService.requestpickup(
         userprovider: userProvider,
+        pickupRequestProvider: pickupProvider,
         time: pickupProvider.time!,
         coordinates: pickupProvider.coordinates!,
         qna: pickupProvider.qna,
@@ -91,11 +90,14 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
         return;
       }
 
-      // Save the returned pickup ID.
       pickupProvider.setpickupid(pickupid: pickupResponse['pickupid']);
 
-      // Refresh household data and active-pickup state.
       final dataResponse = await ApiService.getdata(
+        userprovider: userProvider,
+        pickuprequestprovider: pickupProvider,
+      );
+
+      await ApiService.pickupstatusstream(
         userprovider: userProvider,
         pickuprequestprovider: pickupProvider,
       );
