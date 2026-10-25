@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          const SizedBox(height: 60),
+          const SizedBox(height: 30),
 
           Text(l10n.availablePickups, style: AppText.label),
 
@@ -219,12 +219,16 @@ class _HomePageState extends State<HomePage> {
                                 time: pickup['time'],
                                 distance: distance,
                                 qna: List<int>.from(pickup['qna']),
-                                imageUrl: '',
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     CupertinoPageRoute(
                                       builder: (_) => PickupMapPage(
+                                        pickupId: pickup['pickupid'],
+                                        username: pickup['user_name'],
+                                        time: pickup['time'],
+                                        distance: distance,
+                                        qna: List<int>.from(pickup['qna']),
                                         latitude:
                                             (pickup['coordinates']['latitude']
                                                     as num)

@@ -10,7 +10,6 @@ class PickupCard extends StatelessWidget {
   final String time;
   final double distance;
   final List<int> qna;
-  final String imageUrl;
   final VoidCallback onTap;
 
   const PickupCard({
@@ -20,7 +19,6 @@ class PickupCard extends StatelessWidget {
     required this.time,
     required this.distance,
     required this.qna,
-    required this.imageUrl,
     required this.onTap,
   });
 
@@ -74,7 +72,7 @@ class PickupCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppText.cardTitle.copyWith(
                       fontSize: 18,
-                      color: AppColors.backgroundblack,
+                      color: AppColors.accent,
                     ),
                   ),
                 ),
@@ -142,9 +140,9 @@ class PickupCard extends StatelessWidget {
                 const Spacer(),
 
                 const Icon(
-                  CupertinoIcons.location_fill,
+                  CupertinoIcons.map,
                   size: 24,
-                  color: AppColors.accent,
+                  color: AppColors.activeblue,
                 ),
 
                 const SizedBox(width: 8),

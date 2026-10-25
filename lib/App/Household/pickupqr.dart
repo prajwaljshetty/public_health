@@ -78,7 +78,7 @@ class PickupQrPage extends StatelessWidget {
                   _detailItem(label: l10n.recipientLabel, value: recipientName),
 
                   const SizedBox(height: 12),
-                  const _DashedDivider(),
+                  const AppDashedDivider(),
                   const SizedBox(height: 12),
 
                   Row(
@@ -162,7 +162,7 @@ class PickupQrPage extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 12),
-                  const _DashedDivider(),
+                  const AppDashedDivider(),
                   const SizedBox(height: 12),
 
                   _detailItem(
@@ -281,34 +281,6 @@ class PickupQrPage extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _DashedDivider extends StatelessWidget {
-  const _DashedDivider();
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        const dashWidth = 5.0;
-        const dashSpace = 4.0;
-
-        final count = (constraints.maxWidth / (dashWidth + dashSpace)).floor();
-
-        return Row(
-          children: List.generate(
-            count,
-            (index) => Container(
-              width: dashWidth,
-              height: 1,
-              margin: const EdgeInsets.only(right: dashSpace),
-              color: AppColors.backgroundblack,
-            ),
-          ),
-        );
-      },
     );
   }
 }

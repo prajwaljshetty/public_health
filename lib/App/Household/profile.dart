@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   child: const Icon(
                     CupertinoIcons.person_fill,
-                    size: 45,
+                    size: 55,
                     color: AppColors.accent,
                   ),
                 ),

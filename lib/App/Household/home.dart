@@ -142,7 +142,7 @@ class HomePage extends StatelessWidget {
                               ),
                               child: const Icon(
                                 CupertinoIcons.clock,
-                                color: AppColors.surface,
+                                color: AppColors.backgroundwhite,
                                 size: 24,
                               ),
                             ),
@@ -176,7 +176,7 @@ class HomePage extends StatelessWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.all(18),
                           decoration: BoxDecoration(
-                            color: AppColors.layering,
+                            color: AppColors.backgroundwhite,
                             borderRadius: BorderRadius.circular(18),
                             border: Border.all(width: 1),
                           ),
@@ -243,7 +243,7 @@ class HomePage extends StatelessWidget {
                               ),
                               child: const Icon(
                                 CupertinoIcons.check_mark,
-                                color: AppColors.surface,
+                                color: AppColors.backgroundwhite,
                                 size: 24,
                               ),
                             ),
@@ -283,7 +283,7 @@ class HomePage extends StatelessWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: AppColors.layering,
+                            color: AppColors.backgroundwhite,
                             borderRadius: BorderRadius.circular(18),
                             border: BoxBorder.all(width: 1),
                           ),
@@ -317,7 +317,7 @@ class HomePage extends StatelessWidget {
                               const Icon(
                                 CupertinoIcons.qrcode,
                                 size: 64,
-                                color: AppColors.textPrimary,
+                                color: AppColors.accent,
                               ),
                             ],
                           ),

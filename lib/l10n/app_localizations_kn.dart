@@ -182,7 +182,7 @@ class AppLocalizationsKn extends AppLocalizations {
       'ಮುಂದುವರಿಯುವ ಮೂಲಕ, ನಮ್ಮ ಗೌಪ್ಯತಾ ನೀತಿ ಮತ್ತು ನಿಯಮಗಳು ಹಾಗೂ ಷರತ್ತುಗಳನ್ನು ನೀವು ಒಪ್ಪುತ್ತೀರಿ.';
 
   @override
-  String get householdHeroTitle => 'ತ್ಯಾಜ್ಯ ಹಸ್ತಾಂತರಿಸಲು ಸಿದ್ಧರಿದ್ದೀರಾ?';
+  String get householdHeroTitle => 'ತ್ಯಾಜ್ಯ ನೀಡಲು ಸಿದ್ಧರಿದ್ದೀರಾ?';
 
   @override
   String get householdHeroSubtitle => 'ಉಳಿದದ್ದನ್ನು ನಾವು ನೋಡಿಕೊಳ್ಳುತ್ತೇವೆ.';
@@ -191,7 +191,7 @@ class AppLocalizationsKn extends AppLocalizations {
   String get householdPickups => 'ನಿಮ್ಮ ಪಿಕಪ್‌ಗಳು';
 
   @override
-  String get workerHeroTitle => 'ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಿಸಲು ಸಿದ್ಧರಿದ್ದೀರಾ?';
+  String get workerHeroTitle => 'ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಕ್ಕೆ ಸಿದ್ಧರಿದ್ದೀರಾ?';
 
   @override
   String get workerHeroSubtitle => 'ನಿಮ್ಮ ಮುಂದಿನ ಪಿಕಪ್ ನಿಮಗಾಗಿ ಕಾಯುತ್ತಿದೆ.';
