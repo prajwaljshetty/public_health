@@ -1,47 +1,52 @@
 # public_health
 
-### Care, coordinated.
+`SERVER` / Backend infrastructure
 
-A mobile application for connecting households and field workers through a more organized, location-aware pickup experience.
+# Where the workflow becomes a system.
 
-Less friction between a request and the people responsible for it. A clearer view of what's happening, where it matters.
+The backend for `public_health`.
 
----
-
-### One workflow. Two perspectives.
-
-**01 / Household**
-
-A dedicated mobile experience for accessing household features and submitting pickup requests.
-
-**02 / Field operations**
-
-A worker-focused interface for viewing pickup information and coordinating work on the ground.
-
-**03 / Location**
-
-Map-based interfaces that bring geographic context into everyday pickup workflows.
-
-**04 / Live state**
-
-Real-time communication that helps keep pickup information current as operations progress.
+A Python-based service connecting household operations, pickup workflows, persistent state, and real-time communication — built around a simple idea: every interaction should have a defined path, and every update should reach the right place.
 
 ---
 
-### Built with intent.
+### System layers
 
-| | |
-|---|---|
-| Mobile experience | Flutter · Dart |
-| Interface architecture | Cupertino · Provider |
-| Maps | Mapbox |
-| Cloud integration | Firebase |
+**01  /  REQUEST**
 
-The application is developed with an emphasis on a consistent interface, clearly separated responsibilities, and a mobile experience that remains focused on the task at hand.
+FastAPI provides the interface between the mobile application and backend operations, with dedicated routes for household registration, authentication, and data access.
+
+**02  /  IDENTITY**
+
+Access and refresh tokens support authenticated sessions and controlled access to protected resources.
+
+**03  /  PERSISTENCE**
+
+Firebase stores application data and pickup-related state, providing the foundation for ongoing operations.
+
+**04  /  REAL-TIME**
+
+WebSocket connections provide a channel for communicating pickup status changes to connected clients.
 
 ---
 
-<text color="secondary" size="sm">MOBILE ENGINEERING · PUBLIC HEALTH TECHNOLOGY</text>
+### The toolchain
 
-*Thoughtfully built. Grounded in real-world workflows.*
+`Python`　`FastAPI`　`Firebase`　`JWT`　`WebSockets`
+
+---
+
+### Engineering, beneath the interface.
+
+The interesting problems live between the endpoints.
+
+How does a client recover an authenticated session? How does a state change propagate to a connected user? How should API boundaries, persistent data, and asynchronous communication work together?
+
+This project is where those questions become implementation.
+
+---
+
+<text color="secondary" size="sm">BACKEND SYSTEMS  /  MOBILE INFRASTRUCTURE  /  REAL-TIME DATA</text>
+
+*Built to connect the moving parts.*
 
