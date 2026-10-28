@@ -170,9 +170,10 @@ class _LoginState extends State<Login> {
         if (!mounted) return;
       }
 
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
         CupertinoPageRoute(builder: (_) => const HomePage()),
+        (route) => false,
       );
     } catch (e) {
       if (!mounted || isServerDownPageOpen) return;

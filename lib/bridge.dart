@@ -109,8 +109,42 @@ class _BridgeState extends State<Bridge> {
           return;
         }
 
-        // 6. Handle household session errors.
-        final code = householdResponse['code'];
+        // Handle household session errors.
+        var code = householdResponse['code'];
+
+        if (code == 'NETWORK_ERROR' ||
+            code == 'HTTP_ERROR' ||
+            code == 'INVALID_RESPONSE') {
+          showServerDown();
+          return;
+        }
+
+        if (code == 'AUTH_REQUIRED' || code == 'REFRESH_FAILED') {
+          await userProvider.logout();
+
+          if (!mounted) return;
+
+          goToPortal();
+          return;
+        }
+
+        // Check the worker session.
+        final workerResponse = await worker.ApiService.getdata(
+          userprovider: userProvider,
+        );
+
+        if (!mounted) return;
+
+        if (workerResponse['status'] == true) {
+          Navigator.pushReplacement(
+            context,
+            CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
+          );
+
+          return;
+        }
+
+        code = workerResponse['code'];
 
         if (code == 'NETWORK_ERROR' ||
             code == 'HTTP_ERROR' ||
@@ -132,44 +166,7 @@ class _BridgeState extends State<Bridge> {
         return;
       }
 
-      // 7. Check the worker session.
-      if (hasUserId) {
-        final workerResponse = await worker.ApiService.getdata(uid: uid);
-
-        if (!mounted) return;
-
-        if (workerResponse['status'] == true) {
-          final workerData = workerResponse['userdata'];
-
-          await userProvider.setUser(
-            userid: workerData['userid'],
-            username: workerData['username'],
-            phoneno: workerData['phoneno'],
-            role: workerData['role'],
-          );
-
-          if (!mounted) return;
-
-          Navigator.pushReplacement(
-            context,
-            CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
-          );
-
-          return;
-        }
-
-        // 8. Handle worker request errors.
-        final code = workerResponse['code'];
-
-        if (code == 'NETWORK_ERROR' ||
-            code == 'HTTP_ERROR' ||
-            code == 'INVALID_RESPONSE') {
-          showServerDown();
-          return;
-        }
-      }
-
-      // 9. No valid session remains.
+      // No access token remains.
       await userProvider.logout();
 
       if (!mounted) return;
