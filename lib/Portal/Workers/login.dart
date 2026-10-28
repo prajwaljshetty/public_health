@@ -39,8 +39,8 @@ class _WorkerLoginState extends State<WorkerLogin> {
   String? workerIdError;
   String? passwordError;
 
-  // Server Error handling :
   bool isServerDownPageOpen = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -71,55 +71,53 @@ class _WorkerLoginState extends State<WorkerLogin> {
   }
 
   Future<void> requestLogin(AppLocalizations l10n) async {
+    if (_isLoading || !validateForm()) return;
+
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    setState(() {
+      _isLoading = true;
+      workerIdError = null;
+      passwordError = null;
+    });
+
     try {
-      if (validateForm()) {
-        final response = await ApiService.login(
-          workerid: workerIdController.text.trim(),
-          password: passwordController.text,
-        );
-        if (response['status'] == true) {
-          final String uid = response['uid'];
+      final loginResponse = await ApiService.login(
+        workerid: workerIdController.text.trim(),
+        password: passwordController.text,
+        userprovider: userProvider,
+      );
 
-          final dataResponse = await ApiService.getdata(uid: uid);
+      if (!mounted) return;
 
-          if (dataResponse['status'] == true) {
-            final userdata = dataResponse['userdata'];
+      if (loginResponse['status'] != true) {
+        setState(() {
+          switch (loginResponse['code']) {
+            case 'USER_NOT_FOUND':
+              workerIdError = l10n.workerNotFound;
+              break;
 
-            userProvider.setUser(
-              userid: userdata['userid'],
-              username: userdata['username'],
-              phoneno: userdata['phoneno'],
-              role: userdata['role'],
-            );
+            case 'INCORRECT_PASSWORD':
+              passwordError = l10n.incorrectPassword;
+              break;
 
-            final prefs = await SharedPreferences.getInstance();
-            await prefs.setString('uid', uid);
+            case 'NETWORK_ERROR':
+              workerIdError = l10n.networkError;
+              break;
 
-            if (!mounted) return;
+            case 'INVALID_RESPONSE':
+              workerIdError = l10n.invalidServerResponse;
+              break;
 
-            Navigator.pushReplacement(
-              context,
-              CupertinoPageRoute(builder: (_) => const HomePage()),
-            );
+            default:
+              workerIdError = l10n.loginFailed;
           }
-        } else {
-          setState(() {
-            switch (response['message']) {
-              case 'USER_NOT_FOUND':
-                workerIdError = l10n.workerNotFound;
-                break;
+        });
 
-              case 'INCORRECT_PASSWORD':
-                passwordError = l10n.incorrectPassword;
-                break;
-
-              default:
-                workerIdError = response['message'];
-            }
-          });
-        }
+        return;
       }
+
+      final dataResponse = await ApiService.getdata(userprovider: userProvider);
     } catch (e) {
       if (!mounted || isServerDownPageOpen) return;
 
@@ -137,6 +135,11 @@ class _WorkerLoginState extends State<WorkerLogin> {
       );
 
       isServerDownPageOpen = false;
+    } finally {
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -206,6 +209,8 @@ class _WorkerLoginState extends State<WorkerLogin> {
 
           AppPrimaryButton(
             text: l10n.login,
+            isLoading: _isLoading,
+            loadingText: l10n.loggingIn,
             onPressed: () => requestLogin(l10n),
           ),
 

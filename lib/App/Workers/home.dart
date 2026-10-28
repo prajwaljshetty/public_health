@@ -47,18 +47,18 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    Future.microtask(() {
-      final userid = context.read<UserProvider>().userid;
+    Future.microtask(() async {
+      final userprovider = context.read<UserProvider>();
 
-      if (userid != null) {
-        _pickupStream = ApiService.pickupsStream(userid).stream;
-      }
+      final channel = await ApiService.pickupsStream(
+        userprovider: userprovider,
+      );
+
+      if (!mounted || channel == null) return;
+
+      _pickupStream = channel.stream;
 
       context.read<LocationProvider>().startStreaming();
-
-      if (mounted) {
-        setState(() {});
-      }
     });
   }
 

@@ -81,146 +81,133 @@ class _PickupMapPageState extends State<PickupMapPage> {
 
                 const SizedBox(height: 22),
 
-                // Receipt outer card
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.backgroundwhite,
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: AppColors.border, width: 1.5),
+                    color: AppColors.yellow,
+                    borderRadius: BorderRadius.circular(19),
                   ),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: AppColors.yellow,
-                      borderRadius: BorderRadius.circular(19),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Receipt title
-                        Text(
-                          l10n.requestDetails,
-                          style: AppText.cardTitle.copyWith(fontSize: 16),
-                        ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Receipt title
+                      Text(
+                        l10n.requestDetails,
+                        style: AppText.cardTitle.copyWith(fontSize: 16),
+                      ),
 
-                        const SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
-                        // Recipient
-                        _receiptDetail(
-                          label: l10n.recipientLabel,
-                          value: recipientName,
-                        ),
+                      // Recipient
+                      _receiptDetail(
+                        label: l10n.recipientLabel,
+                        value: recipientName,
+                      ),
 
-                        const SizedBox(height: 12),
-                        const AppDashedDivider(),
-                        const SizedBox(height: 12),
+                      const SizedBox(height: 12),
+                      const AppDashedDivider(),
+                      const SizedBox(height: 12),
 
-                        // Pickup ID with copy button
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                l10n.pickupIdLabel,
-                                style: AppText.cardSubtitle.copyWith(
-                                  color: AppColors.accent,
-                                ),
+                      // Pickup ID with copy button
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              l10n.pickupIdLabel,
+                              style: AppText.cardSubtitle.copyWith(
+                                color: AppColors.accent,
                               ),
                             ),
-                            const SizedBox(width: 8),
+                          ),
+                          const SizedBox(width: 8),
 
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 9,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.backgroundblack.withAlpha(10),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      shortPickupId,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppText.cardSubtitle.copyWith(
-                                        fontSize: 12,
-                                        color: AppColors.textPrimary,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    minimumSize: ui.Size.zero,
-                                    onPressed: () async {
-                                      await Clipboard.setData(
-                                        ClipboardData(text: widget.pickupId),
-                                      );
-
-                                      if (!context.mounted) return;
-
-                                      showCupertinoDialog<void>(
-                                        context: context,
-                                        builder: (dialogContext) =>
-                                            CupertinoAlertDialog(
-                                              content: Text(
-                                                l10n.pickupIdCopied,
-                                              ),
-                                              actions: [
-                                                CupertinoDialogAction(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                        dialogContext,
-                                                      ),
-                                                  child: Text(l10n.okButton),
-                                                ),
-                                              ],
-                                            ),
-                                      );
-                                    },
-                                    child: const Icon(
-                                      CupertinoIcons.doc_on_doc,
-                                      size: 14,
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 9,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.backgroundblack.withAlpha(10),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    shortPickupId,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppText.cardSubtitle.copyWith(
+                                      fontSize: 12,
                                       color: AppColors.textPrimary,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                const SizedBox(width: 5),
+                                CupertinoButton(
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: ui.Size.zero,
+                                  onPressed: () async {
+                                    await Clipboard.setData(
+                                      ClipboardData(text: widget.pickupId),
+                                    );
+
+                                    if (!context.mounted) return;
+
+                                    showCupertinoDialog<void>(
+                                      context: context,
+                                      builder: (dialogContext) =>
+                                          CupertinoAlertDialog(
+                                            content: Text(l10n.pickupIdCopied),
+                                            actions: [
+                                              CupertinoDialogAction(
+                                                onPressed: () => Navigator.pop(
+                                                  dialogContext,
+                                                ),
+                                                child: Text(l10n.okButton),
+                                              ),
+                                            ],
+                                          ),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    CupertinoIcons.doc_on_doc,
+                                    size: 14,
+                                    color: AppColors.textPrimary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
+                      ),
 
-                        const SizedBox(height: 12),
-                        const AppDashedDivider(),
-                        const SizedBox(height: 12),
+                      const SizedBox(height: 12),
+                      const AppDashedDivider(),
+                      const SizedBox(height: 12),
 
-                        // Pickup time
-                        _receiptDetail(
-                          label: l10n.requestedTimeLabel,
-                          value: pickupTime,
-                        ),
+                      // Pickup time
+                      _receiptDetail(
+                        label: l10n.requestedTimeLabel,
+                        value: pickupTime,
+                      ),
 
-                        const SizedBox(height: 12),
-                        const AppDashedDivider(),
-                        const SizedBox(height: 12),
+                      const SizedBox(height: 12),
+                      const AppDashedDivider(),
+                      const SizedBox(height: 12),
 
-                        // Distance
-                        _receiptDetail(
-                          label: 'Distance',
-                          value: '${widget.distance.toStringAsFixed(2)} km',
-                        ),
+                      // Distance
+                      _receiptDetail(
+                        label: 'Distance',
+                        value: '${widget.distance.toStringAsFixed(2)} km',
+                      ),
 
-                        const SizedBox(height: 18),
-                      ],
-                    ),
+                      const SizedBox(height: 18),
+                    ],
                   ),
                 ),
 
@@ -268,34 +255,12 @@ class _PickupMapPageState extends State<PickupMapPage> {
     );
   }
 
-  void _moveCamera() {
-    if (_mapboxMap == null) return;
+  Future<void> _moveCamera() async {
+    final mapboxMap = _mapboxMap;
+    if (mapboxMap == null) return;
 
     final position = context.read<LocationProvider>().position;
-
     if (position == null) return;
-
-    final distance = geo.Geolocator.distanceBetween(
-      position.latitude,
-      position.longitude,
-      widget.latitude,
-      widget.longitude,
-    );
-
-    // Same / very close location
-    if (distance < 100) {
-      _mapboxMap!.flyTo(
-        CameraOptions(
-          center: Point(
-            coordinates: Position(widget.longitude, widget.latitude),
-          ),
-          zoom: 17,
-        ),
-        MapAnimationOptions(duration: 1000),
-      );
-
-      return;
-    }
 
     final bounds = CoordinateBounds(
       southwest: Point(
@@ -313,20 +278,31 @@ class _PickupMapPageState extends State<PickupMapPage> {
       infiniteBounds: false,
     );
 
-    _mapboxMap!
-        .cameraForCoordinateBounds(
-          bounds,
-          MbxEdgeInsets(top: 320, left: 60, bottom: 300, right: 60),
-          null,
-          null,
-          null,
-          null,
-        )
-        .then((camera) {
-          if (!mounted) return;
+    final camera = await mapboxMap.cameraForCoordinateBounds(
+      bounds,
+      MbxEdgeInsets(
+        top: 140,
+        left: 100,
+        bottom: MediaQuery.sizeOf(context).height * 0.55,
+        right: 100,
+      ),
+      null,
+      null,
+      null,
+      null,
+    );
 
-          _mapboxMap!.flyTo(camera, MapAnimationOptions(duration: 1000));
-        });
+    if (!mounted || _mapboxMap == null) return;
+
+    await mapboxMap.flyTo(
+      CameraOptions(
+        center: camera.center,
+        zoom: (camera.zoom ?? 12).clamp(3.0, 18.0),
+        bearing: camera.bearing,
+        pitch: 0,
+      ),
+      MapAnimationOptions(duration: 1000),
+    );
   }
 
   Future<void> _configurePickupMarker() async {
@@ -479,7 +455,7 @@ class _PickupMapPageState extends State<PickupMapPage> {
                 child: Text(
                   l10n.pickupDetails,
                   style: TextStyle(
-                    color: AppColors.yellow,
+                    color: AppColors.backgroundwhite,
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                   ),
