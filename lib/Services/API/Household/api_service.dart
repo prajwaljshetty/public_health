@@ -6,7 +6,7 @@ import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Household/requestpickup.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://10.:8000';
+  static const String baseUrl = 'http://10.239.245.28:8000';
 
   static Future<Map<String, dynamic>> create({
     required String username,

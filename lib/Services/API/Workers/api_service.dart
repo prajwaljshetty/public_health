@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ApiService {
-  static const String httpBaseUrl = 'http://127.0.0.1:8000';
-  static const String webSocketBaseUrl = 'ws://127.0.0.1:8000';
+  static const String httpBaseUrl = 'http://10.239.245.28:8000';
+  static const String webSocketBaseUrl = 'ws://10.239.245.28:8000';
   static WebSocketChannel? pickupChannel;
 
   static Future<Map<String, dynamic>> login({
