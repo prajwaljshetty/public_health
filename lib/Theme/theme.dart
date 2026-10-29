@@ -104,7 +104,7 @@ class AppScaffold extends StatelessWidget {
                         end: Alignment.bottomCenter,
                         colors: [
                           AppColors.backgroundwhite,
-                          AppColors.backgroundwhite.withOpacity(0),
+                          AppColors.backgroundwhite.withValues(alpha: 0),
                         ],
                       ),
                     ),

@@ -23,7 +23,6 @@ import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
 
 // Shared Preferences
-import 'package:shared_preferences/shared_preferences.dart';
 
 class WorkerLogin extends StatefulWidget {
   const WorkerLogin({super.key});
@@ -118,6 +117,18 @@ class _WorkerLoginState extends State<WorkerLogin> {
       }
 
       final dataResponse = await ApiService.getdata(userprovider: userProvider);
+
+      if (dataResponse['status'] != true) {
+        if (!mounted) return;
+
+        return;
+      }
+
+      await Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(builder: (_) => const HomePage()),
+        (route) => false,
+      );
     } catch (e) {
       if (!mounted || isServerDownPageOpen) return;
 

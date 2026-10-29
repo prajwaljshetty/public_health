@@ -338,9 +338,9 @@ class _PickupMapPageState extends State<PickupMapPage> {
       CircleLayer(
         id: 'pickup-layer',
         sourceId: 'pickup-source',
-        circleColor: AppColors.accent.value,
+        circleColor: AppColors.accent.toARGB32(),
         circleRadius: 10,
-        circleStrokeColor: CupertinoColors.white.value,
+        circleStrokeColor: CupertinoColors.white.toARGB32(),
         circleStrokeWidth: 3,
       ),
     );
@@ -365,7 +365,7 @@ class _PickupMapPageState extends State<PickupMapPage> {
                   LocationComponentSettings(
                     enabled: true,
                     pulsingEnabled: true,
-                    pulsingColor: AppColors.accent.value,
+                    pulsingColor: AppColors.accent.toARGB32(),
                     pulsingMaxRadius: 30,
                   ),
                 );

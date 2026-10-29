@@ -125,13 +125,13 @@ class PickupCard extends StatelessWidget {
 
                       CupertinoButton(
                         padding: EdgeInsets.zero,
-                        minSize: 18,
                         onPressed: copyPickupId,
                         child: const Icon(
                           CupertinoIcons.doc_on_doc,
                           size: 13,
                           color: AppColors.textSecondary,
                         ),
+                        minimumSize: Size(18, 18),
                       ),
                     ],
                   ),
