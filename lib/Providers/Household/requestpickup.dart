@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 
 class PickupRequestProvider extends ChangeNotifier {
@@ -7,15 +5,15 @@ class PickupRequestProvider extends ChangeNotifier {
   String? time;
   ({double latitude, double longitude})? coordinates;
   List<int> qna = [];
-  bool hasActivePickup = false;
+  String pickupStatus = "idle";
 
   void setpickupid({required String pickupid}) {
     this.pickupid = pickupid;
     notifyListeners();
   }
 
-  void sethasActivePickup({required bool hasActivePickup}) {
-    this.hasActivePickup = hasActivePickup;
+  void setPickupStatus(String status) {
+    pickupStatus = status;
     notifyListeners();
   }
 
@@ -39,7 +37,7 @@ class PickupRequestProvider extends ChangeNotifier {
     time = null;
     coordinates = null;
     qna = [];
-
+    pickupStatus = "idle";
     notifyListeners();
   }
 }

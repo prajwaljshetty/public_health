@@ -42,7 +42,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   child: const Icon(
                     CupertinoIcons.person_fill,
-                    size: 45,
+                    size: 55,
                     color: AppColors.accent,
                   ),
                 ),
@@ -125,7 +125,7 @@ class _ProfileOption extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: AppColors.backgroundwhite,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: AppColors.border),
         ),

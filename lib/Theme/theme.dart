@@ -104,7 +104,7 @@ class AppScaffold extends StatelessWidget {
                         end: Alignment.bottomCenter,
                         colors: [
                           AppColors.backgroundwhite,
-                          AppColors.backgroundwhite.withOpacity(0),
+                          AppColors.backgroundwhite.withValues(alpha: 0),
                         ],
                       ),
                     ),
@@ -193,10 +193,10 @@ class AppOptionCard extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: AppColors.accent,
+                color: AppColors.yellow,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Icon(icon, color: AppColors.backgroundwhite, size: 26),
+              child: Icon(icon, color: AppColors.accent, size: 26),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -348,6 +348,34 @@ class AppSecondaryButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AppDashedDivider extends StatelessWidget {
+  const AppDashedDivider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        const dashWidth = 5.0;
+        const dashSpace = 4.0;
+
+        final count = (constraints.maxWidth / (dashWidth + dashSpace)).floor();
+
+        return Row(
+          children: List.generate(
+            count,
+            (index) => Container(
+              width: dashWidth,
+              height: 1,
+              margin: const EdgeInsets.only(right: dashSpace),
+              color: AppColors.backgroundblack,
+            ),
+          ),
+        );
+      },
     );
   }
 }

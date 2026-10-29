@@ -46,20 +46,31 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _connectPickups();
+  }
 
-    Future.microtask(() {
-      final userid = context.read<UserProvider>().userid;
+  Future<void> _connectPickups() async {
+    final userProvider = context.read<UserProvider>();
 
-      if (userid != null) {
-        _pickupStream = ApiService.pickupsStream(userid).stream;
-      }
+    final channel = await ApiService.pickupsStream(userprovider: userProvider);
 
-      context.read<LocationProvider>().startStreaming();
+    if (!mounted) {
+      channel?.sink.close();
+      return;
+    }
 
-      if (mounted) {
-        setState(() {});
-      }
+    if (channel == null) {
+      setState(() {
+        _pickupStream = null;
+      });
+      return;
+    }
+
+    setState(() {
+      _pickupStream = channel.stream;
     });
+
+    context.read<LocationProvider>().startStreaming();
   }
 
   @override
@@ -136,7 +147,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          const SizedBox(height: 60),
+          const SizedBox(height: 30),
 
           Text(l10n.availablePickups, style: AppText.label),
 
@@ -163,7 +174,6 @@ class _HomePageState extends State<HomePage> {
                         if (!snapshot.hasData) {
                           return SizedBox(
                             height: 200,
-
                             child: Center(
                               child: Text(
                                 l10n.noAvailablePickups,
@@ -175,6 +185,18 @@ class _HomePageState extends State<HomePage> {
 
                         final pickups =
                             jsonDecode(snapshot.data as String) as List;
+
+                        if (pickups.isEmpty) {
+                          return SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text(
+                                l10n.noAvailablePickups,
+                                style: AppText.indicator,
+                              ),
+                            ),
+                          );
+                        }
 
                         if (position == null) {
                           return const SizedBox(
@@ -219,12 +241,16 @@ class _HomePageState extends State<HomePage> {
                                 time: pickup['time'],
                                 distance: distance,
                                 qna: List<int>.from(pickup['qna']),
-                                imageUrl: '',
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     CupertinoPageRoute(
                                       builder: (_) => PickupMapPage(
+                                        pickupId: pickup['pickupid'],
+                                        username: pickup['user_name'],
+                                        time: pickup['time'],
+                                        distance: distance,
+                                        qna: List<int>.from(pickup['qna']),
                                         latitude:
                                             (pickup['coordinates']['latitude']
                                                     as num)

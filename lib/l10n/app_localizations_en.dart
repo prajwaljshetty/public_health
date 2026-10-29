@@ -382,4 +382,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notAvailableValue => 'Not available';
+
+  @override
+  String get pickupConfirmationPending => 'You\'re All Set!';
+
+  @override
+  String get pickupConfirmationPendingMessage =>
+      'Your pickup is requested. We\'ll let you know when it\'s confirmed.';
+
+  @override
+  String get waitingForPickupConfirmation => 'We\'ll keep you updated';
 }

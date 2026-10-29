@@ -61,12 +61,16 @@ class _BridgeState extends State<Bridge> {
       final accessToken = userProvider.accesstoken;
       final refreshToken = userProvider.refreshtoken;
 
-      if (uid == null && accessToken == null && refreshToken == null) {
+      final hasUserId = uid != null && uid.isNotEmpty;
+      final hasAccessToken = accessToken != null && accessToken.isNotEmpty;
+      final hasRefreshToken = refreshToken != null && refreshToken.isNotEmpty;
+
+      if (!hasUserId && !hasAccessToken && !hasRefreshToken) {
         goToPortal();
         return;
       }
 
-      if (accessToken != null && accessToken.isNotEmpty) {
+      if (hasAccessToken) {
         final householdResponse = await household.ApiService.getdata(
           userprovider: userProvider,
           pickuprequestprovider: pickupProvider,
@@ -75,14 +79,38 @@ class _BridgeState extends State<Bridge> {
         if (!mounted) return;
 
         if (householdResponse['status'] == true) {
+          if (pickupProvider.pickupStatus != 'idle') {
+            final pickupResponse = await household.ApiService.getpickupdata(
+              userprovider: userProvider,
+              pickuprequestprovider: pickupProvider,
+            );
+
+            if (!mounted) return;
+
+            if (pickupResponse['status'] == true) {
+              final pickupId = pickupProvider.pickupid;
+
+              if (pickupId != null && pickupId.isNotEmpty) {
+                await household.ApiService.pickupstatusstream(
+                  userprovider: userProvider,
+                  pickuprequestprovider: pickupProvider,
+                );
+              }
+            }
+          }
+
+          if (!mounted) return;
+
           Navigator.pushReplacement(
             context,
             CupertinoPageRoute(builder: (_) => const householdhome.HomePage()),
           );
+
           return;
         }
 
-        final code = householdResponse['code'];
+        // Handle household session errors.
+        var code = householdResponse['code'];
 
         if (code == 'NETWORK_ERROR' ||
             code == 'HTTP_ERROR' ||
@@ -93,6 +121,43 @@ class _BridgeState extends State<Bridge> {
 
         if (code == 'AUTH_REQUIRED' || code == 'REFRESH_FAILED') {
           await userProvider.logout();
+
+          if (!mounted) return;
+
+          goToPortal();
+          return;
+        }
+
+        // Check the worker session.
+        final workerResponse = await worker.ApiService.getdata(
+          userprovider: userProvider,
+        );
+
+        if (!mounted) return;
+
+        if (workerResponse['status'] == true) {
+          Navigator.pushReplacement(
+            context,
+            CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
+          );
+
+          return;
+        }
+
+        code = workerResponse['code'];
+
+        if (code == 'NETWORK_ERROR' ||
+            code == 'HTTP_ERROR' ||
+            code == 'INVALID_RESPONSE') {
+          showServerDown();
+          return;
+        }
+
+        if (code == 'AUTH_REQUIRED' || code == 'REFRESH_FAILED') {
+          await userProvider.logout();
+
+          if (!mounted) return;
+
           goToPortal();
           return;
         }
@@ -101,48 +166,18 @@ class _BridgeState extends State<Bridge> {
         return;
       }
 
-      // E part UID use malthondhund
-      if (uid != null && uid.isNotEmpty) {
-        final workerResponse = await worker.ApiService.getdata(uid: uid);
-
-        if (!mounted) return;
-
-        if (workerResponse['status'] == true) {
-          final workerData = workerResponse['userdata'];
-
-          await userProvider.setUser(
-            userid: workerData['userid'],
-            username: workerData['username'],
-            phoneno: workerData['phoneno'],
-            role: workerData['role'],
-          );
-
-          if (!mounted) return;
-
-          Navigator.pushReplacement(
-            context,
-            CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
-          );
-          return;
-        }
-
-        final code = workerResponse['code'];
-
-        if (code == 'NETWORK_ERROR' ||
-            code == 'HTTP_ERROR' ||
-            code == 'INVALID_RESPONSE') {
-          showServerDown();
-          return;
-        }
-      }
-
-      // No valid session remains.
+      // No access token remains.
       await userProvider.logout();
 
       if (!mounted) return;
+
       goToPortal();
-    } catch (e) {
+    } catch (e, stackTrace) {
+      debugPrint('Bridge error: $e');
+      debugPrintStack(stackTrace: stackTrace);
+
       if (!mounted) return;
+
       showServerDown();
     } finally {
       if (mounted) {

@@ -135,5 +135,9 @@
   "okButton": "OK",
   "householdRecipient": "Household",
   "unavailableValue": "Unavailable",
-  "notAvailableValue": "Not available"
+  "notAvailableValue": "Not available",
+
+  "pickupConfirmationPending": "You're All Set!",
+  "pickupConfirmationPendingMessage": "Your pickup is requested. We'll let you know when it's confirmed.",
+  "waitingForPickupConfirmation": "We'll keep you updated"
 }

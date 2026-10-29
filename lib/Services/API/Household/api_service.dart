@@ -2,11 +2,18 @@ import 'dart:convert';
 
 // HTTP :
 import 'package:http/http.dart' as http;
+
+// Websocket :
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+// Provider :
 import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Household/requestpickup.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://10.239.245.28:8000';
+  static const String httpBaseUrl = 'http://127.0.0.1:8000';
+  static const String webSocketBaseUrl = 'ws://127.0.0.1:8000';
+  static WebSocketChannel? pickupStatusChannel;
 
   static Future<Map<String, dynamic>> create({
     required String username,
@@ -15,7 +22,7 @@ class ApiService {
     required UserProvider userprovider,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/household/create'),
+      Uri.parse('$httpBaseUrl/household/create'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'username': username,
@@ -45,7 +52,7 @@ class ApiService {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/household/login'),
+        Uri.parse('$httpBaseUrl/household/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'phoneno': phoneno, 'password': password}),
       );
@@ -86,7 +93,7 @@ class ApiService {
   }) async {
     try {
       var response = await http.get(
-        Uri.parse('$baseUrl/household/data'),
+        Uri.parse('$httpBaseUrl/household/data'),
         headers: {'Authorization': 'Bearer ${userprovider.accesstoken}'},
       );
 
@@ -120,7 +127,7 @@ class ApiService {
         await userprovider.updateAccessToken(newAccessToken);
 
         response = await http.get(
-          Uri.parse('$baseUrl/household/data'),
+          Uri.parse('$httpBaseUrl/household/data'),
           headers: {'Authorization': 'Bearer $newAccessToken'},
         );
       }
@@ -154,8 +161,15 @@ class ApiService {
         role: userData['role'] as String,
       );
 
-      pickuprequestprovider.hasActivePickup =
-          userData['has_active_pickup'] as bool;
+      pickuprequestprovider.pickupStatus =
+          (userData['pickup_status'] as String?) ?? 'idle';
+
+      if (pickuprequestprovider.pickupStatus != "idle") {
+        ApiService.getpickupdata(
+          userprovider: userprovider,
+          pickuprequestprovider: pickuprequestprovider,
+        );
+      }
 
       return result;
     } on http.ClientException {
@@ -177,7 +191,7 @@ class ApiService {
     required String refreshtoken,
   }) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/household/refresh'),
+      Uri.parse('$httpBaseUrl/household/refresh'),
       headers: {'Authorization': 'Bearer $refreshtoken'},
     );
 
@@ -190,7 +204,7 @@ class ApiService {
   }) async {
     try {
       final response = await http.get(
-        Uri.parse('$baseUrl/household/pickupdata'),
+        Uri.parse('$httpBaseUrl/household/pickup/data'),
         headers: {'Authorization': 'Bearer ${userprovider.accesstoken}'},
       );
 
@@ -212,7 +226,7 @@ class ApiService {
         };
       }
 
-      final pickup = requestData['pickupdata'];
+      final pickup = requestData['pickup_data'];
 
       if (pickup != null) {
         final coordinate = pickup['coordinate'];
@@ -247,6 +261,7 @@ class ApiService {
 
   static Future<Map<String, dynamic>> requestpickup({
     required UserProvider userprovider,
+    required PickupRequestProvider pickupRequestProvider,
     required String time,
     required ({double latitude, double longitude}) coordinates,
     required List<int> qna,
@@ -263,7 +278,7 @@ class ApiService {
       }
 
       final response = await http.post(
-        Uri.parse('$baseUrl/household/requestpickup'),
+        Uri.parse('$httpBaseUrl/household/pickup/request'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $accessToken',
@@ -288,6 +303,11 @@ class ApiService {
         };
       }
 
+      pickupstatusstream(
+        userprovider: userprovider,
+        pickuprequestprovider: pickupRequestProvider,
+      );
+
       return data;
     } on http.ClientException {
       return {
@@ -302,5 +322,71 @@ class ApiService {
         'message': 'Invalid response received from the server.',
       };
     }
+  }
+
+  static Future<void> pickupstatusstream({
+    required UserProvider userprovider,
+    required PickupRequestProvider pickuprequestprovider,
+  }) async {
+    final pickupId = pickuprequestprovider.pickupid;
+    final accessToken = userprovider.accesstoken;
+
+    if (pickupId == null || pickupId.isEmpty) {
+      return;
+    }
+
+    if (accessToken == null || accessToken.isEmpty) {
+      return;
+    }
+
+    try {
+      final channel = WebSocketChannel.connect(
+        Uri.parse('$webSocketBaseUrl/household/pickup/status/$pickupId'),
+      );
+
+      pickupStatusChannel = channel;
+
+      await channel.ready;
+
+      channel.sink.add(accessToken);
+
+      channel.stream.listen(
+        (message) {
+          try {
+            final data = jsonDecode(message.toString());
+
+            //print(message);
+
+            if (data is! Map<String, dynamic>) {
+              return;
+            }
+
+            if (data['status'] != true) {
+              return;
+            }
+
+            final pickupData = data['pickup_data'];
+
+            if (pickupData is! Map<String, dynamic>) {
+              return;
+            }
+
+            final status = pickupData['status'];
+
+            if (status is String) {
+              pickuprequestprovider.setPickupStatus(status);
+            }
+          } catch (error) {}
+        },
+        onError: (error) {},
+        onDone: () {},
+        cancelOnError: false,
+      );
+    } catch (error) {}
+  }
+
+  static void disconnect() {
+    pickupStatusChannel?.sink.close();
+    pickupStatusChannel = null;
   }
 }
