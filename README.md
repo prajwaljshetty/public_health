@@ -1,52 +1,45 @@
 # public_health
 
-`SERVER` / Backend infrastructure
+`SERVER` / Backend Systems
 
-# Where the workflow becomes a system.
+## Where the workflow becomes a system.
 
-The backend for `public_health`.
+The backend powering `public_health`.
 
-A Python-based service connecting household operations, pickup workflows, persistent state, and real-time communication — built around a simple idea: every interaction should have a defined path, and every update should reach the right place.
+A Python-based service connecting household operations, pickup workflows, persistent data, and real-time updates. Built to turn mobile interactions into structured operations — from authentication to pickup status changes.
 
----
+### System architecture
 
-### System layers
+**01 / REQUESTS**
 
-**01  /  REQUEST**
+FastAPI powers the backend API, handling household registration, authentication, and pickup-related operations.
 
-FastAPI provides the interface between the mobile application and backend operations, with dedicated routes for household registration, authentication, and data access.
+**02 / IDENTITY**
 
-**02  /  IDENTITY**
+JWT-based authentication supports secure access to protected resources and authenticated sessions.
 
-Access and refresh tokens support authenticated sessions and controlled access to protected resources.
+**03 / PERSISTENCE**
 
-**03  /  PERSISTENCE**
+Firebase provides persistent storage for application data and pickup-related state.
 
-Firebase stores application data and pickup-related state, providing the foundation for ongoing operations.
+**04 / REAL-TIME**
 
-**04  /  REAL-TIME**
+WebSockets enable live communication of pickup status changes between the backend and connected clients.
 
-WebSocket connections provide a channel for communicating pickup status changes to connected clients.
+### The stack
 
----
+`Python` · `FastAPI` · `Firebase` · `JWT` · `WebSockets`
 
-### The toolchain
+### Beyond the endpoints.
 
-`Python`　`FastAPI`　`Firebase`　`JWT`　`WebSockets`
+The real engineering happens between the moving parts.
 
----
+How does a session stay authenticated? How does a state change reach the right client? How do persistence, API boundaries, and asynchronous communication fit together?
 
-### Engineering, beneath the interface.
-
-The interesting problems live between the endpoints.
-
-How does a client recover an authenticated session? How does a state change propagate to a connected user? How should API boundaries, persistent data, and asynchronous communication work together?
-
-This project is where those questions become implementation.
+This project is my space to explore those questions through implementation, debugging, and system design.
 
 ---
 
-<text color="secondary" size="sm">BACKEND SYSTEMS  /  MOBILE INFRASTRUCTURE  /  REAL-TIME DATA</text>
+`BACKEND ENGINEERING` / `MOBILE INFRASTRUCTURE` / `REAL-TIME SYSTEMS`
 
 *Built to connect the moving parts.*
-
