@@ -8,7 +8,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 // Provider :
 import 'package:public_health/Providers/User/user.dart';
-import 'package:public_health/Providers/Household/requestpickup.dart';
 
 class ApiService {
   static const String httpBaseUrl = 'http://127.0.0.1:8000';
@@ -24,7 +23,7 @@ class ApiService {
       final response = await http.post(
         Uri.parse('$httpBaseUrl/worker/login'),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'workerid': workerid, 'password': password}),
+        body: jsonEncode({'worker_id': workerid, 'password': password}),
       );
 
       final data = jsonDecode(response.body) as Map<String, dynamic>;
@@ -63,8 +62,9 @@ class ApiService {
     try {
       var response = await http.get(
         Uri.parse('$httpBaseUrl/worker/data'),
-        headers: {'Authoriztion': 'Bearer ${userprovider.accesstoken}'},
+        headers: {'Authorization': 'Bearer ${userprovider.accesstoken}'},
       );
+      print(response.body);
 
       if (response.statusCode == 401) {
         final refreshToken = userprovider.refreshtoken;
@@ -97,7 +97,7 @@ class ApiService {
 
         response = await http.get(
           Uri.parse('$httpBaseUrl/worker/data'),
-          headers: {'Authoriztion': 'Bearer $newAccessToken'},
+          headers: {'Authorization': 'Bearer $newAccessToken'},
         );
       }
 
@@ -150,7 +150,7 @@ class ApiService {
     required String refreshtoken,
   }) async {
     final response = await http.post(
-      Uri.parse('$httpBaseUrl/household/refresh'),
+      Uri.parse('$httpBaseUrl/worker/refresh'),
       headers: {'Authorization': 'Bearer $refreshtoken'},
     );
 

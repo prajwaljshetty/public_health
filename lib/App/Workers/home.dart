@@ -46,20 +46,31 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _connectPickups();
+  }
 
-    Future.microtask(() async {
-      final userprovider = context.read<UserProvider>();
+  Future<void> _connectPickups() async {
+    final userProvider = context.read<UserProvider>();
 
-      final channel = await ApiService.pickupsStream(
-        userprovider: userprovider,
-      );
+    final channel = await ApiService.pickupsStream(userprovider: userProvider);
 
-      if (!mounted || channel == null) return;
+    if (!mounted) {
+      channel?.sink.close();
+      return;
+    }
 
+    if (channel == null) {
+      setState(() {
+        _pickupStream = null;
+      });
+      return;
+    }
+
+    setState(() {
       _pickupStream = channel.stream;
-
-      context.read<LocationProvider>().startStreaming();
     });
+
+    context.read<LocationProvider>().startStreaming();
   }
 
   @override
@@ -163,7 +174,6 @@ class _HomePageState extends State<HomePage> {
                         if (!snapshot.hasData) {
                           return SizedBox(
                             height: 200,
-
                             child: Center(
                               child: Text(
                                 l10n.noAvailablePickups,
@@ -175,6 +185,18 @@ class _HomePageState extends State<HomePage> {
 
                         final pickups =
                             jsonDecode(snapshot.data as String) as List;
+
+                        if (pickups.isEmpty) {
+                          return SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text(
+                                l10n.noAvailablePickups,
+                                style: AppText.indicator,
+                              ),
+                            ),
+                          );
+                        }
 
                         if (position == null) {
                           return const SizedBox(
