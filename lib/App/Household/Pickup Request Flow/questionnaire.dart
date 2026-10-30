@@ -44,7 +44,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       if (!mounted) return;
       Navigator.push(
         context,
-        CupertinoPageRoute(builder: (_) => const PickupConfirmationPage()),
+        CupertinoPageRoute(builder: (_) => const RequestConfirmationPage()),
       );
     }
   }

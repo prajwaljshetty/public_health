@@ -1,6 +1,11 @@
 import 'package:flutter/foundation.dart';
+
+// Shared Preference :
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+// API :
+import 'package:public_health/Services/API/Household/api_service.dart';
 
 class UserProvider extends ChangeNotifier {
   String? userid, username, phoneno, role;
@@ -68,6 +73,8 @@ class UserProvider extends ChangeNotifier {
 
     await _storage.delete(key: 'access_token');
     await _storage.delete(key: 'refresh_token');
+
+    ApiService.disconnect();
 
     userid = null;
     username = null;

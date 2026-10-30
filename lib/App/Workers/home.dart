@@ -50,9 +50,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _connectPickups() async {
-    final userProvider = context.read<UserProvider>();
+    final userprovider = context.read<UserProvider>();
 
-    final channel = await ApiService.pickupsStream(userprovider: userProvider);
+    final channel = await ApiService.pickupsStream(userprovider: userprovider);
 
     if (!mounted) {
       channel?.sink.close();
@@ -70,12 +70,11 @@ class _HomePageState extends State<HomePage> {
       _pickupStream = channel.stream;
     });
 
-    context.read<LocationProvider>().startStreaming();
+    await context.read<LocationProvider>().startStreaming();
   }
 
   @override
   void dispose() {
-    ApiService.disconnectPickups();
     super.dispose();
   }
 
@@ -86,7 +85,8 @@ class _HomePageState extends State<HomePage> {
     final userid = Provider.of<UserProvider>(context).userid;
 
     // Get current location from Provider
-    final position = context.watch<LocationProvider>().position;
+    final locationProvider = context.watch<LocationProvider>();
+    final position = locationProvider.position;
 
     if (userid == null) {
       return const Center(child: CupertinoActivityIndicator());
@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Container(
                   width: double.infinity,
-                  height: 390,
+                  height: 400,
                   decoration: BoxDecoration(
                     color: AppColors.backgroundwhite,
                     borderRadius: BorderRadius.circular(24),
@@ -171,20 +171,55 @@ class _HomePageState extends State<HomePage> {
                       stream: _pickupStream,
 
                       builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return SizedBox(
+                        if (_pickupStream == null) {
+                          return const SizedBox(
                             height: 200,
                             child: Center(
-                              child: Text(
-                                l10n.noAvailablePickups,
-                                style: AppText.indicator,
-                              ),
+                              child: Text('Unable to connect to pickups.'),
                             ),
                           );
                         }
 
-                        final pickups =
-                            jsonDecode(snapshot.data as String) as List;
+                        if (snapshot.hasError) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Unable to load pickups.'),
+                            ),
+                          );
+                        }
+
+                        if (!snapshot.hasData) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(child: CupertinoActivityIndicator()),
+                          );
+                        }
+
+                        // Decode the incoming pickup data
+                        final dynamic decoded;
+
+                        try {
+                          decoded = jsonDecode(snapshot.data as String);
+                        } on FormatException {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Invalid pickup data received.'),
+                            ),
+                          );
+                        }
+
+                        if (decoded is! List) {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('Invalid pickup data received.'),
+                            ),
+                          );
+                        }
+
+                        final pickups = decoded;
 
                         if (pickups.isEmpty) {
                           return SizedBox(
@@ -199,10 +234,33 @@ class _HomePageState extends State<HomePage> {
                         }
 
                         if (position == null) {
-                          return const SizedBox(
-                            height: 200,
+                          final message =
+                              switch (locationProvider.locationError) {
+                                'LOCATION_SERVICES_DISABLED' =>
+                                  'Please enable location services.',
+                                'LOCATION_PERMISSION_DENIED' => 'Allow location access to calculate pickup distances.',
+                                'LOCATION_STREAM_ERROR' =>
+                                  'Unable to retrieve your location.',
+                                _ => 'Getting location...',
+                              };
 
-                            child: Center(child: Text('Getting location...')),
+                          return Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(top: 20, bottom: 14),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.backgroundwhite,
+                              borderRadius: BorderRadius.circular(22),
+                              border: Border.all(
+                                color: AppColors.backgroundblack,
+                                width: 1,
+                              ),
+                            ),
+                            child: Text(
+                              message,
+                              textAlign: TextAlign.center,
+                              style: AppText.error,
+                            ),
                           );
                         }
 

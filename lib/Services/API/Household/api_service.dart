@@ -386,6 +386,7 @@ class ApiService {
   }
 
   static void disconnect() {
+    pickupStatusChannel?.sink.add("logout");
     pickupStatusChannel?.sink.close();
     pickupStatusChannel = null;
   }
