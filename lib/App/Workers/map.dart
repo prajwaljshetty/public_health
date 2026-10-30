@@ -9,11 +9,11 @@ import 'package:intl/intl.dart';
 import 'package:public_health/Theme/theme.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
-// Geo Locator :
-import 'package:geolocator/geolocator.dart' as geo;
-
 // Language :
 import 'package:public_health/l10n/app_localizations.dart';
+
+// Request Confirmation :
+import 'package:public_health/App/Workers/pickupconfirmation.dart';
 
 // Provider :
 import 'package:provider/provider.dart';
@@ -46,7 +46,13 @@ class PickupMapPage extends StatefulWidget {
 class _PickupMapPageState extends State<PickupMapPage> {
   MapboxMap? _mapboxMap;
 
+  bool isModalOpen = false;
+
   void _showPickupModal() {
+    if (isModalOpen) return;
+
+    isModalOpen = true;
+
     final l10n = AppLocalizations.of(context)!;
 
     final recipientName = widget.username;
@@ -164,9 +170,9 @@ class _PickupMapPageState extends State<PickupMapPage> {
                                             content: Text(l10n.pickupIdCopied),
                                             actions: [
                                               CupertinoDialogAction(
-                                                onPressed: () => Navigator.pop(
-                                                  dialogContext,
-                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(dialogContext);
+                                                },
                                                 child: Text(l10n.okButton),
                                               ),
                                             ],
@@ -216,9 +222,22 @@ class _PickupMapPageState extends State<PickupMapPage> {
                 AppPrimaryButton(
                   text: l10n.acceptPickup,
                   onPressed: () {
-                    Navigator.pop(modalContext);
+                    //Navigator.pop(modalContext);
 
-                    // TODO: Connect pickup acceptance logic.
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (_) => PickupConfirmationPage(
+                          pickupId: widget.pickupId,
+                          username: widget.username,
+                          time: widget.time,
+                          distance: widget.distance,
+                          qna: widget.qna,
+                          latitude: widget.latitude,
+                          longitude: widget.longitude,
+                        ),
+                      ),
+                    );
                   },
                 ),
 
@@ -228,7 +247,9 @@ class _PickupMapPageState extends State<PickupMapPage> {
           ),
         );
       },
-    );
+    ).whenComplete(() {
+      isModalOpen = false;
+    });
   }
 
   Widget _receiptDetail({required String label, required String value}) {

@@ -15,6 +15,7 @@ class AppColors {
   static const textSecondary = CupertinoColors.systemGrey;
   static const primarycoin = Color(0xFFE3B81C);
   static const secondarycoin = Color(0xFFB8910F);
+  static const red = CupertinoColors.systemRed;
 }
 
 class AppText {
@@ -57,6 +58,11 @@ class AppText {
     fontSize: 17,
     fontWeight: FontWeight.w700,
     color: CupertinoColors.white,
+  );
+  static const error = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.red,
   );
 }
 
