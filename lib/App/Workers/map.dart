@@ -13,7 +13,7 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:public_health/l10n/app_localizations.dart';
 
 // Request Confirmation :
-import 'package:public_health/App/Workers/pickupconfirmation.dart';
+import 'package:public_health/App/Workers/pickupacceptanceconfirmation.dart';
 
 // Provider :
 import 'package:provider/provider.dart';
@@ -227,7 +227,7 @@ class _PickupMapPageState extends State<PickupMapPage> {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (_) => PickupConfirmationPage(
+                        builder: (_) => PickupAcceptanceConfirmationPage(
                           pickupId: widget.pickupId,
                           username: widget.username,
                           time: widget.time,

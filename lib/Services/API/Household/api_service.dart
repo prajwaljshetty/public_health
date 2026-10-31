@@ -226,22 +226,35 @@ class ApiService {
         };
       }
 
+      // Extract pickup status
+      final pickupStatus = requestData['pickup_status'] as String?;
+
+      pickuprequestprovider.pickupStatus = pickupStatus ?? 'idle';
+
       final pickup = requestData['pickup_data'];
 
-      if (pickup != null) {
-        final coordinate = pickup['coordinate'];
-
-        pickuprequestprovider.pickupid = pickup['pickupid'] as String?;
-
-        pickuprequestprovider.coordinates = (
-          latitude: (coordinate['latitude'] as num).toDouble(),
-          longitude: (coordinate['longitude'] as num).toDouble(),
-        );
-
-        pickuprequestprovider.time = pickup['time'];
-
-        pickuprequestprovider.qna = List<int>.from(pickup['qna'] ?? []);
+      if (pickup == null) {
+        return requestData;
       }
+
+      // Normalize requested and assigned pickup structures
+      final actualPickupData = pickup.containsKey('pickup_data')
+          ? pickup['pickup_data'] as Map<String, dynamic>
+          : pickup as Map<String, dynamic>;
+
+      // Extract pickup information
+      final coordinate = actualPickupData['coordinate'] as Map<String, dynamic>;
+
+      pickuprequestprovider.pickupid = requestData['pickup_id'] as String?;
+
+      pickuprequestprovider.coordinates = (
+        latitude: (coordinate['latitude'] as num).toDouble(),
+        longitude: (coordinate['longitude'] as num).toDouble(),
+      );
+
+      pickuprequestprovider.time = actualPickupData['time'];
+
+      pickuprequestprovider.qna = List<int>.from(actualPickupData['qna'] ?? []);
 
       return requestData;
     } on http.ClientException {
@@ -267,7 +280,7 @@ class ApiService {
     required List<int> qna,
   }) async {
     try {
-      final accessToken = userprovider.accesstoken;
+      var accessToken = userprovider.accesstoken;
 
       if (accessToken == null || accessToken.isEmpty) {
         return {
@@ -277,7 +290,7 @@ class ApiService {
         };
       }
 
-      final response = await http.post(
+      var response = await http.post(
         Uri.parse('$httpBaseUrl/household/pickup/request'),
         headers: {
           'Content-Type': 'application/json',
@@ -293,13 +306,69 @@ class ApiService {
         }),
       );
 
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (response.statusCode == 401) {
+        final refreshToken = userprovider.refreshtoken;
+
+        if (refreshToken == null || refreshToken.isEmpty) {
+          return {
+            'status': false,
+            'code': 'AUTH_REQUIRED',
+            'message': 'Please log in again.',
+          };
+        }
+
+        final tokenResponse = await getacesstoken(refreshtoken: refreshToken);
+
+        if (tokenResponse['status'] != true ||
+            tokenResponse['access_token'] == null) {
+          return {
+            'status': false,
+            'code': 'REFRESH_FAILED',
+            'message':
+                tokenResponse['detail'] ??
+                tokenResponse['message'] ??
+                'Session expired. Please log in again.',
+          };
+        }
+
+        accessToken = tokenResponse['access_token'] as String;
+
+        await userprovider.updateAccessToken(accessToken);
+
+        response = await http.post(
+          Uri.parse('$httpBaseUrl/household/pickup/request'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $accessToken',
+          },
+          body: jsonEncode({
+            'time': time,
+            'coordinate': {
+              'latitude': coordinates.latitude,
+              'longitude': coordinates.longitude,
+            },
+            'qna': qna,
+          }),
+        );
+      }
 
       if (response.statusCode < 200 || response.statusCode >= 300) {
         return {
           'status': false,
           'code': response.statusCode == 401 ? 'AUTH_REQUIRED' : 'HTTP_ERROR',
-          'message': data['detail'] ?? 'Failed to submit pickup request.',
+          'message': response.statusCode == 401
+              ? 'Session expired. Please log in again.'
+              : 'Failed to submit pickup request.',
+        };
+      }
+
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (data['status'] != true) {
+        return {
+          'status': false,
+          'code': 'API_ERROR',
+          'message': data['message'] ?? 'Failed to submit pickup request.',
         };
       }
 

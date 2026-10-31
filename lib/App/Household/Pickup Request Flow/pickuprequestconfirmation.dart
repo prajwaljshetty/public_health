@@ -23,15 +23,16 @@ import 'package:lottie/lottie.dart';
 // Services
 import 'package:public_health/Services/API/Household/api_service.dart';
 
-class RequestConfirmationPage extends StatefulWidget {
-  const RequestConfirmationPage({super.key});
+class PickupRequestConfirmationPage extends StatefulWidget {
+  const PickupRequestConfirmationPage({super.key});
 
   @override
-  State<RequestConfirmationPage> createState() =>
-      _RequestConfirmationPageState();
+  State<PickupRequestConfirmationPage> createState() =>
+      _PickupRequestConfirmationPageState();
 }
 
-class _RequestConfirmationPageState extends State<RequestConfirmationPage>
+class _PickupRequestConfirmationPageState
+    extends State<PickupRequestConfirmationPage>
     with SingleTickerProviderStateMixin {
   bool _confirmed = false;
   bool _loading = false;
@@ -147,10 +148,6 @@ class _RequestConfirmationPageState extends State<RequestConfirmationPage>
       (route) => false,
     );
   }
-
-  // ---------------------------------------------------------------------------
-  // UI building blocks
-  // ---------------------------------------------------------------------------
 
   Widget _buildIcon() {
     return SizedBox(
@@ -316,7 +313,7 @@ class _RequestConfirmationPageState extends State<RequestConfirmationPage>
           IgnorePointer(
             ignoring: _confirmed,
             child: AnimatedOpacity(
-              opacity: _confirmed ? 0 : 1,
+              opacity: _confirmed || _loading ? 0 : 1,
               duration: _animationDuration,
               child: AppSecondaryButton(
                 text: l10n.cancel,
@@ -353,8 +350,6 @@ class _RequestConfirmationPageState extends State<RequestConfirmationPage>
                       constraints: BoxConstraints(
                         minHeight: constraints.maxHeight,
                       ),
-                      // Sits slightly above true center, which reads as
-                      // optically centered on tall phones.
                       child: Align(
                         alignment: const Alignment(0, -0.2),
                         child: _buildBody(l10n),
