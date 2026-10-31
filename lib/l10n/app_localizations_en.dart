@@ -392,4 +392,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get waitingForPickupConfirmation => 'We\'ll keep you updated';
+
+  @override
+  String get reviewPickupRequest => 'Review Pickup Request';
+
+  @override
+  String get reviewPickupRequestSubtitle =>
+      'Review the pickup information before accepting this request.';
+
+  @override
+  String get distanceLabel => 'Distance';
+
+  @override
+  String get pickupQuestionnaire => 'Pickup Questionnaire';
+
+  @override
+  String pickupAcceptedSubtitle(String username) {
+    return 'You have successfully accepted the pickup request from $username.';
+  }
 }

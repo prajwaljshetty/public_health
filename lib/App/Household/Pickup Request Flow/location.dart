@@ -111,7 +111,7 @@ class _LocationPageState extends State<LocationPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 24),
-          // Hero card with target rings
+
           Container(
             width: double.infinity,
             height: 320,
@@ -124,11 +124,14 @@ class _LocationPageState extends State<LocationPage> {
               children: [
                 Align(
                   alignment: const Alignment(0, 0),
-                  child: Lottie.asset(
-                    AssetMapper.pulse,
-                    width: 180,
-                    height: 180,
-                    fit: BoxFit.contain,
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Lottie.asset(
+                      AssetMapper.pulse,
+                      width: 180,
+                      height: 180,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 Align(

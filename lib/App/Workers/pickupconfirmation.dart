@@ -56,6 +56,10 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
   bool _animationLoaded = false;
 
   static const _animationDuration = Duration(milliseconds: 350);
+  static const _pagePadding = 22.0;
+
+  // Shared with the household confirmation page so both animate identically.
+  static const _animationEnd = 0.88;
 
   @override
   void initState() {
@@ -83,7 +87,7 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
     });
 
     if (_animationLoaded) {
-      _controller.forward(from: 0);
+      _playAnimation();
     }
   }
 
@@ -113,8 +117,21 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
     _animationLoaded = true;
 
     if (_accepted) {
-      _controller.forward(from: 0);
+      _playAnimation();
     }
+  }
+
+  void _playAnimation() {
+    _controller.value = 0;
+    _controller.animateTo(_animationEnd, curve: Curves.linear);
+  }
+
+  void _goHome() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      CupertinoPageRoute(builder: (_) => HomePage()),
+      (route) => false,
+    );
   }
 
   String get _pickupTime {
@@ -129,22 +146,25 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
 
   Widget _detail({required String label, required String value}) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           flex: 2,
           child: Text(
             label,
-            style: AppText.cardSubtitle.copyWith(color: AppColors.accent),
+            style: AppText.cardSubtitle.copyWith(
+              fontSize: 14,
+              color: AppColors.accent,
+            ),
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 12),
         Expanded(
           flex: 3,
           child: Text(
             value,
             textAlign: TextAlign.end,
-            style: AppText.label.copyWith(fontSize: 14, height: 1.4),
+            style: AppText.label.copyWith(fontSize: 15, height: 1.3),
           ),
         ),
       ],
@@ -159,53 +179,59 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
   }
 
   Widget _sectionTitle(String title) {
-    return Text(title, style: AppText.cardTitle.copyWith(fontSize: 16));
+    return Text(title, style: AppText.cardTitle.copyWith(fontSize: 17));
   }
 
   Widget _pickupIdDetail(AppLocalizations l10n) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           flex: 2,
           child: Text(
             l10n.pickupIdLabel,
-            style: AppText.cardSubtitle.copyWith(color: AppColors.accent),
+            style: AppText.cardSubtitle.copyWith(
+              fontSize: 14,
+              color: AppColors.accent,
+            ),
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: 12),
         Flexible(
           flex: 3,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColors.backgroundblack.withAlpha(10),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(
-                    _shortPickupId,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.cardSubtitle.copyWith(
-                      fontSize: 12,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: _copyPickupId,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 7,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundblack.withAlpha(12),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        _shortPickupId,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.label.copyWith(fontSize: 13),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    const Icon(
+                      CupertinoIcons.doc_on_doc,
+                      size: 15,
                       color: AppColors.textPrimary,
                     ),
-                  ),
+                  ],
                 ),
-                const SizedBox(width: 5),
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  minimumSize: ui.Size.zero,
-                  onPressed: _copyPickupId,
-                  child: const Icon(
-                    CupertinoIcons.doc_on_doc,
-                    size: 14,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -213,7 +239,7 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
     );
   }
 
-  Widget _questionnaire() {
+  Widget _questionnaire(AppLocalizations l10n) {
     if (widget.qna.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -221,23 +247,26 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _divider(spacing: 12),
-        _sectionTitle('Pickup Questionnaire'),
-        const SizedBox(height: 8),
+        _divider(),
+
+        _sectionTitle(l10n.pickupQuestionnaire),
+
+        const SizedBox(height: 12),
+
         Wrap(
-          spacing: 6,
-          runSpacing: 6,
+          spacing: 8,
+          runSpacing: 8,
           children: List.generate(
             widget.qna.length,
             (index) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColors.backgroundwhite.withValues(alpha: 0.6),
-                borderRadius: BorderRadius.circular(7),
+                color: AppColors.backgroundwhite.withValues(alpha: 0.7),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
                 '${index + 1}. ${widget.qna[index]}',
-                style: AppText.label.copyWith(fontSize: 12),
+                style: AppText.label.copyWith(fontSize: 12.5),
               ),
             ),
           ),
@@ -249,76 +278,130 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
   Widget _pickupDetails(AppLocalizations l10n) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: AppColors.yellow,
-        borderRadius: BorderRadius.circular(19),
+        color: AppColors.backgroundwhite,
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: AppColors.border),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _sectionTitle(l10n.requestDetails),
-          const SizedBox(height: 20),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
+        decoration: BoxDecoration(
+          color: AppColors.yellow,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _sectionTitle(l10n.requestDetails),
 
-          _detail(label: l10n.recipientLabel, value: widget.username),
+            const SizedBox(height: 18),
 
-          _divider(),
+            _detail(label: l10n.recipientLabel, value: widget.username),
 
-          _pickupIdDetail(l10n),
+            _divider(),
 
-          _divider(),
+            _pickupIdDetail(l10n),
 
-          _detail(label: l10n.requestedTimeLabel, value: _pickupTime),
+            _divider(),
 
-          _divider(),
+            _detail(label: l10n.requestedTimeLabel, value: _pickupTime),
 
-          _detail(
-            label: 'Distance',
-            value: '${widget.distance.toStringAsFixed(2)} km',
-          ),
+            _divider(),
 
-          if (widget.qna.isNotEmpty) _questionnaire(),
-        ],
+            _detail(
+              label: l10n.distanceLabel,
+              value: '${widget.distance.toStringAsFixed(2)} km',
+            ),
+
+            if (widget.qna.isNotEmpty) _questionnaire(l10n),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _header() {
+  Widget _headerIcon() {
+    return SizedBox(
+      width: 96,
+      height: 96,
+      child: AnimatedSwitcher(
+        duration: _animationDuration,
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        transitionBuilder: (child, animation) {
+          return FadeTransition(
+            opacity: animation,
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.9, end: 1).animate(animation),
+              child: child,
+            ),
+          );
+        },
+        child: _accepted
+            ? Lottie.asset(
+                AssetMapper.pickupConfirmed,
+                key: const ValueKey('lottie'),
+                controller: _controller,
+                onLoaded: _onAnimationLoaded,
+                repeat: false,
+                width: 96,
+                height: 96,
+              )
+            : Center(
+                key: const ValueKey('tile'),
+                child: Container(
+                  width: 72,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    color: AppColors.yellow,
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  child: const Icon(
+                    CupertinoIcons.cube_box,
+                    size: 36,
+                    color: AppColors.accent,
+                  ),
+                ),
+              ),
+      ),
+    );
+  }
+
+  Widget _header(AppLocalizations l10n) {
     return Column(
       children: [
-        SizedBox(
-          width: 120,
-          height: 120,
-          child: _accepted
-              ? Lottie.asset(
-                  AssetMapper.pickupConfirmed,
-                  controller: _controller,
-                  onLoaded: _onAnimationLoaded,
-                  repeat: false,
-                )
-              : const Icon(
-                  CupertinoIcons.cube_box,
-                  size: 75,
-                  color: AppColors.accent,
+        _headerIcon(),
+
+        const SizedBox(height: 14),
+
+        AnimatedSize(
+          duration: _animationDuration,
+          curve: Curves.easeInOut,
+          alignment: Alignment.topCenter,
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              children: [
+                _animatedText(
+                  text: _accepted
+                      ? l10n.acceptPickup
+                      : l10n.reviewPickupRequest,
+                  style: AppText.title.copyWith(fontSize: 26),
                 ),
-        ),
 
-        const SizedBox(height: 24),
+                const SizedBox(height: 8),
 
-        _animatedText(
-          text: _accepted ? 'Pickup Accepted!' : 'Review Pickup Request',
-          style: AppText.title,
-        ),
-
-        const SizedBox(height: 12),
-
-        _animatedText(
-          text: _accepted
-              ? 'You have successfully accepted the pickup '
-                    'request from ${widget.username}.'
-              : 'Review the pickup information before accepting '
-                    'this request.',
-          style: AppText.subtitle,
+                _animatedText(
+                  text: _accepted
+                      ? l10n.pickupAcceptedSubtitle(widget.username)
+                      : l10n.reviewPickupRequestSubtitle,
+                  style: AppText.subtitle.copyWith(fontSize: 15),
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
@@ -350,39 +433,34 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
 
   Widget _bottomActions(AppLocalizations l10n) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 12, 10, 12),
+      padding: const EdgeInsets.fromLTRB(_pagePadding, 8, _pagePadding, 12),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (!_accepted) ...[
-            AppPrimaryButton(
-              isLoading: _loading,
-              text: 'Accept Pickup',
-              loadingText: 'Accepting',
-              onPressed: _acceptPickup,
-            ),
+          AppPrimaryButton(
+            isLoading: _loading,
+            text: _accepted ? l10n.done : l10n.acceptPickup,
+            loadingText: l10n.pleaseWait,
+            onPressed: _accepted ? _goHome : _acceptPickup,
+          ),
 
-            const SizedBox(height: 12),
+          const SizedBox(height: 10),
 
-            AppSecondaryButton(
-              text: l10n.cancel,
-              onPressed: () {
-                if (!_loading) {
-                  Navigator.pop(context);
-                }
-              },
+          IgnorePointer(
+            ignoring: _accepted,
+            child: AnimatedOpacity(
+              opacity: _accepted ? 0 : 1,
+              duration: _animationDuration,
+              child: AppSecondaryButton(
+                text: l10n.cancel,
+                onPressed: () {
+                  if (!_loading) {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
             ),
-          ] else
-            AppPrimaryButton(
-              text: l10n.done,
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  CupertinoPageRoute(builder: (_) => HomePage()),
-                  (route) => false,
-                );
-              },
-            ),
+          ),
         ],
       ),
     );
@@ -398,23 +476,47 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
         child: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 24,
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 28),
-                    _header(),
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(
+                      _pagePadding,
+                      12,
+                      _pagePadding,
+                      32,
+                    ),
+                    child: Column(
+                      children: [
+                        _header(l10n),
 
-                    const SizedBox(height: 28),
+                        const SizedBox(height: 22),
 
-                    _pickupDetails(l10n),
+                        _pickupDetails(l10n),
+                      ],
+                    ),
+                  ),
 
-                    const SizedBox(height: 20),
-                  ],
-                ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: 28,
+                    child: IgnorePointer(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              AppColors.backgroundwhite.withValues(alpha: 0),
+                              AppColors.backgroundwhite,
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
 

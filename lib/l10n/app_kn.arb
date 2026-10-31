@@ -1,3 +1,4 @@
+
 {
   "@@locale": "kn",
 
@@ -64,7 +65,7 @@
   "householdHeroSubtitle": "ಉಳಿದದ್ದನ್ನು ನಾವು ನೋಡಿಕೊಳ್ಳುತ್ತೇವೆ.",
   "householdPickups": "ನಿಮ್ಮ ಪಿಕಪ್‌ಗಳು",
 
-  "workerHeroTitle":"ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಕ್ಕೆ ಸಿದ್ಧರಿದ್ದೀರಾ?",
+  "workerHeroTitle": "ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಕ್ಕೆ ಸಿದ್ಧರಿದ್ದೀರಾ?",
   "workerHeroSubtitle": "ನಿಮ್ಮ ಮುಂದಿನ ಪಿಕಪ್ ನಿಮಗಾಗಿ ಕಾಯುತ್ತಿದೆ.",
   "workerPickups": "ಇಂದಿನ ಬಾಕಿ ಇರುವ ಪಿಕಪ್‌ಗಳು",
 
@@ -139,5 +140,19 @@
 
   "pickupConfirmationPending": "ಎಲ್ಲವೂ ಸಿದ್ಧವಾಗಿದೆ!",
   "pickupConfirmationPendingMessage": "ನಿಮ್ಮ ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಣೆಯ ವಿನಂತಿಯನ್ನು ಕಳುಹಿಸಲಾಗಿದೆ. ಅದು ಖಚಿತವಾದ ತಕ್ಷಣ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.",
-  "waitingForPickupConfirmation": "ನಿಮಗೆ ಮಾಹಿತಿ ನೀಡುತ್ತೇವೆ"
+  "waitingForPickupConfirmation": "ನಿಮಗೆ ಮಾಹಿತಿ ನೀಡುತ್ತೇವೆ",
+
+  "reviewPickupRequest": "ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ",
+  "reviewPickupRequestSubtitle": "ಈ ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸುವ ಮೊದಲು ಪಿಕಪ್ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.",
+  "distanceLabel": "ದೂರ",
+  "pickupQuestionnaire": "ಪಿಕಪ್ ಪ್ರಶ್ನಾವಳಿ",
+
+  "pickupAcceptedSubtitle": "ನೀವು {username} ಅವರ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ.",
+  "@pickupAcceptedSubtitle": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  }
 }
