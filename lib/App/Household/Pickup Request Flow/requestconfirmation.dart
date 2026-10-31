@@ -38,7 +38,13 @@ class _RequestConfirmationPageState extends State<RequestConfirmationPage>
 
   String? _errorMessage;
 
-  late AnimationController _controller;
+  late final AnimationController _controller;
+
+  static const _animationDuration = Duration(milliseconds: 350);
+
+  // Shared with the worker pickup page so both animate identically.
+  static const _animationEnd = 0.88;
+  static const _pagePadding = 22.0;
 
   @override
   void initState() {
@@ -128,32 +134,74 @@ class _RequestConfirmationPageState extends State<RequestConfirmationPage>
     }
   }
 
-  Widget _buildAnimation() {
-    if (_confirmed) {
-      return SizedBox(
-        width: 120,
-        height: 120,
-        child: Lottie.asset(
-          AssetMapper.pickupConfirmed,
-          controller: _controller,
-          onLoaded: (composition) {
-            _controller.duration = composition.duration;
-            _controller.animateTo(0.88, curve: Curves.linear);
-          },
-        ),
-      );
-    }
-
-    return const SizedBox(height: 120);
+  void _onAnimationLoaded(LottieComposition composition) {
+    _controller.duration = composition.duration;
+    _controller.value = 0;
+    _controller.animateTo(_animationEnd, curve: Curves.linear);
   }
 
-  Widget _buildAnimatedText({
-    required String text,
-    required Key key,
-    required TextStyle style,
-  }) {
+  void _goHome() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      CupertinoPageRoute(builder: (_) => const HomePage()),
+      (route) => false,
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // UI building blocks
+  // ---------------------------------------------------------------------------
+
+  Widget _buildIcon() {
+    return SizedBox(
+      width: 96,
+      height: 96,
+      child: AnimatedSwitcher(
+        duration: _animationDuration,
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        transitionBuilder: (child, animation) {
+          return FadeTransition(
+            opacity: animation,
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.9, end: 1).animate(animation),
+              child: child,
+            ),
+          );
+        },
+        child: _confirmed
+            ? Lottie.asset(
+                AssetMapper.pickupConfirmed,
+                key: const ValueKey('lottie'),
+                controller: _controller,
+                onLoaded: _onAnimationLoaded,
+                width: 96,
+                height: 96,
+              )
+            : Center(
+                key: const ValueKey('tile'),
+                // Yellow rounded tile, same language as the option cards.
+                child: Container(
+                  width: 72,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    color: AppColors.yellow,
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  child: const Icon(
+                    CupertinoIcons.cube_box,
+                    size: 36,
+                    color: AppColors.accent,
+                  ),
+                ),
+              ),
+      ),
+    );
+  }
+
+  Widget _buildAnimatedText({required String text, required TextStyle style}) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 350),
+      duration: _animationDuration,
       transitionBuilder: (child, animation) {
         return FadeTransition(
           opacity: animation,
@@ -166,60 +214,74 @@ class _RequestConfirmationPageState extends State<RequestConfirmationPage>
           ),
         );
       },
-      child: Text(text, key: key, style: style, textAlign: TextAlign.center),
+      child: Text(
+        text,
+        key: ValueKey(text),
+        style: style,
+        textAlign: TextAlign.center,
+      ),
     );
   }
 
   Widget _buildHeading(AppLocalizations l10n) {
-    return Column(
-      children: [
-        _buildAnimatedText(
-          text: _confirmed ? l10n.pickupConfirmed : l10n.confirmPickupRequest,
-          key: ValueKey(_confirmed),
-          style: AppText.title,
-        ),
+    // AnimatedSize prevents a height "jump" when the text changes.
+    return AnimatedSize(
+      duration: _animationDuration,
+      curve: Curves.easeInOut,
+      alignment: Alignment.topCenter,
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            _buildAnimatedText(
+              text: _confirmed
+                  ? l10n.pickupConfirmed
+                  : l10n.confirmPickupRequest,
+              style: AppText.title.copyWith(fontSize: 26),
+            ),
 
-        const SizedBox(height: 12),
+            const SizedBox(height: 8),
 
-        _buildAnimatedText(
-          text: _confirmed
-              ? l10n.pickupConfirmedMessage
-              : l10n.pickupConfirmationMessage,
-          key: ValueKey(_confirmed),
-          style: AppText.subtitle,
+            _buildAnimatedText(
+              text: _confirmed
+                  ? l10n.pickupConfirmedMessage
+                  : l10n.pickupConfirmationMessage,
+              style: AppText.subtitle.copyWith(fontSize: 15),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
   Widget _buildErrorMessage() {
-    if (_errorMessage == null) {
-      return const SizedBox.shrink();
-    }
-
-    return Column(
-      children: [
-        const SizedBox(height: 16),
-        Text(
-          _errorMessage!,
-          style: const TextStyle(
-            color: CupertinoColors.systemRed,
-            fontSize: 14,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
+    return AnimatedSize(
+      duration: _animationDuration,
+      curve: Curves.easeInOut,
+      alignment: Alignment.topCenter,
+      child: SizedBox(
+        width: double.infinity,
+        child: _errorMessage == null
+            ? const SizedBox.shrink()
+            : Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text(
+                  _errorMessage!,
+                  style: AppText.error,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+      ),
     );
   }
 
   Widget _buildBody(AppLocalizations l10n) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        const SizedBox(height: 200),
+        _buildIcon(),
 
-        _buildAnimation(),
-
-        const SizedBox(height: 24),
+        const SizedBox(height: 14),
 
         _buildHeading(l10n),
 
@@ -229,47 +291,45 @@ class _RequestConfirmationPageState extends State<RequestConfirmationPage>
   }
 
   Widget _buildBottomActions(AppLocalizations l10n) {
-    return Column(
-      children: [
-        if (!_confirmed) ...[
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(_pagePadding, 8, _pagePadding, 12),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // One primary button for both states, so it never jumps position.
           AppPrimaryButton(
             isLoading: _loading,
-            text: l10n.confirmPickup,
+            text: _confirmed ? l10n.done : l10n.confirmPickup,
             loadingText: l10n.requesting,
-            onPressed: () {
-              if (!_loading) {
-                _confirmPickup();
-              }
-            },
+            onPressed: _confirmed
+                ? _goHome
+                : () {
+                    if (!_loading) {
+                      _confirmPickup();
+                    }
+                  },
           ),
 
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
 
-          AppSecondaryButton(
-            text: l10n.cancel,
-            onPressed: () {
-              if (!_loading) {
-                Navigator.pop(context);
-              }
-            },
+          // Fades out but keeps its space, so nothing shifts.
+          IgnorePointer(
+            ignoring: _confirmed,
+            child: AnimatedOpacity(
+              opacity: _confirmed ? 0 : 1,
+              duration: _animationDuration,
+              child: AppSecondaryButton(
+                text: l10n.cancel,
+                onPressed: () {
+                  if (!_loading) {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ),
           ),
-        ] else ...[
-          AppPrimaryButton(
-            text: l10n.done,
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                CupertinoPageRoute(builder: (_) => const HomePage()),
-                (route) => false,
-              );
-            },
-          ),
-
-          const SizedBox(height: 70),
         ],
-
-        const SizedBox(height: 12),
-      ],
+      ),
     );
   }
 
@@ -277,10 +337,38 @@ class _RequestConfirmationPageState extends State<RequestConfirmationPage>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return AppScaffold(
-      showBack: false,
-      body: _buildBody(l10n),
-      bottom: _buildBottomActions(l10n),
+    return CupertinoPageScaffold(
+      backgroundColor: AppColors.backgroundwhite,
+      child: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: _pagePadding,
+                    ),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      // Sits slightly above true center, which reads as
+                      // optically centered on tall phones.
+                      child: Align(
+                        alignment: const Alignment(0, -0.2),
+                        child: _buildBody(l10n),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            _buildBottomActions(l10n),
+          ],
+        ),
+      ),
     );
   }
 }

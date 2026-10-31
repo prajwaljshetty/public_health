@@ -398,4 +398,22 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get waitingForPickupConfirmation => 'ನಿಮಗೆ ಮಾಹಿತಿ ನೀಡುತ್ತೇವೆ';
+
+  @override
+  String get reviewPickupRequest => 'ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ';
+
+  @override
+  String get reviewPickupRequestSubtitle =>
+      'ಈ ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸುವ ಮೊದಲು ಪಿಕಪ್ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.';
+
+  @override
+  String get distanceLabel => 'ದೂರ';
+
+  @override
+  String get pickupQuestionnaire => 'ಪಿಕಪ್ ಪ್ರಶ್ನಾವಳಿ';
+
+  @override
+  String pickupAcceptedSubtitle(String username) {
+    return 'ನೀವು $username ಅವರ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ.';
+  }
 }

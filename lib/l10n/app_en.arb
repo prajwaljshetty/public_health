@@ -1,3 +1,4 @@
+
 {
   "@@locale": "en",
 
@@ -139,5 +140,19 @@
 
   "pickupConfirmationPending": "You're All Set!",
   "pickupConfirmationPendingMessage": "Your pickup is requested. We'll let you know when it's confirmed.",
-  "waitingForPickupConfirmation": "We'll keep you updated"
+  "waitingForPickupConfirmation": "We'll keep you updated",
+
+  "reviewPickupRequest": "Review Pickup Request",
+  "reviewPickupRequestSubtitle": "Review the pickup information before accepting this request.",
+  "distanceLabel": "Distance",
+  "pickupQuestionnaire": "Pickup Questionnaire",
+
+  "pickupAcceptedSubtitle": "You have successfully accepted the pickup request from {username}.",
+  "@pickupAcceptedSubtitle": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  }
 }

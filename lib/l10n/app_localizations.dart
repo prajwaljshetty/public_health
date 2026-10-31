@@ -805,6 +805,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We\'ll keep you updated'**
   String get waitingForPickupConfirmation;
+
+  /// No description provided for @reviewPickupRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Pickup Request'**
+  String get reviewPickupRequest;
+
+  /// No description provided for @reviewPickupRequestSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the pickup information before accepting this request.'**
+  String get reviewPickupRequestSubtitle;
+
+  /// No description provided for @distanceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get distanceLabel;
+
+  /// No description provided for @pickupQuestionnaire.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Questionnaire'**
+  String get pickupQuestionnaire;
+
+  /// No description provided for @pickupAcceptedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You have successfully accepted the pickup request from {username}.'**
+  String pickupAcceptedSubtitle(String username);
 }
 
 class _AppLocalizationsDelegate
