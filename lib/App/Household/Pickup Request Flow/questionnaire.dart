@@ -7,7 +7,7 @@ import 'package:public_health/Theme/theme.dart';
 import 'package:public_health/l10n/app_localizations.dart';
 
 // Pickup Confirmation :
-import 'package:public_health/App/Household/Pickup%20Request%20Flow/requestconfirmation.dart';
+import 'package:public_health/App/Household/Pickup%20Request%20Flow/pickuprequestconfirmation.dart';
 
 // Provider :
 import 'package:provider/provider.dart';
@@ -44,7 +44,9 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       if (!mounted) return;
       Navigator.push(
         context,
-        CupertinoPageRoute(builder: (_) => const RequestConfirmationPage()),
+        CupertinoPageRoute(
+          builder: (_) => const PickupRequestConfirmationPage(),
+        ),
       );
     }
   }

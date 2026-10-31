@@ -3,27 +3,32 @@ import 'package:flutter/cupertino.dart';
 import 'dart:ui' as ui;
 
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 // Theme :
 import 'package:public_health/Theme/theme.dart';
 
-// Assets
+// Assets :
 import 'package:public_health/assetmaper.dart';
 
 // Language :
 import 'package:public_health/l10n/app_localizations.dart';
 
-// Home
+// Home L
 import 'package:public_health/App/Workers/home.dart';
+
+// Provider :
+import 'package:provider/provider.dart';
+import 'package:public_health/Providers/User/user.dart';
 
 // Lottie :
 import 'package:lottie/lottie.dart';
 
 // Services :
-//import 'package:public_health/Services/API/Household/api_service.dart';
+import 'package:public_health/Services/API/Workers/api_service.dart';
 
-class PickupConfirmationPage extends StatefulWidget {
+class PickupAcceptanceConfirmationPage extends StatefulWidget {
   final String pickupId;
   final String username;
   final String time;
@@ -32,7 +37,7 @@ class PickupConfirmationPage extends StatefulWidget {
   final double latitude;
   final double longitude;
 
-  const PickupConfirmationPage({
+  const PickupAcceptanceConfirmationPage({
     super.key,
     required this.pickupId,
     required this.username,
@@ -44,10 +49,12 @@ class PickupConfirmationPage extends StatefulWidget {
   });
 
   @override
-  State<PickupConfirmationPage> createState() => _PickupConfirmationPageState();
+  State<PickupAcceptanceConfirmationPage> createState() =>
+      _PickupAcceptanceConfirmationPageState();
 }
 
-class _PickupConfirmationPageState extends State<PickupConfirmationPage>
+class _PickupAcceptanceConfirmationPageState
+    extends State<PickupAcceptanceConfirmationPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
@@ -73,21 +80,41 @@ class _PickupConfirmationPageState extends State<PickupConfirmationPage>
     super.dispose();
   }
 
-  void _acceptPickup() {
+  Future<void> _acceptPickup() async {
     if (_loading || _accepted) return;
 
     setState(() => _loading = true);
 
-    // TODO: Call pickup acceptance API.
-    // Only confirm after a successful backend response.
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-    setState(() {
-      _loading = false;
-      _accepted = true;
-    });
+      final response = await ApiService.acceptpickup(
+        pickupid: widget.pickupId,
+        userprovider: userProvider,
+      );
 
-    if (_animationLoaded) {
-      _playAnimation();
+      if (!mounted) return;
+
+      if (response['status'] != true) {
+        setState(() => _loading = false);
+        debugPrint(response['message'] ?? 'Failed to accept pickup.');
+        return;
+      }
+
+      setState(() {
+        _loading = false;
+        _accepted = true;
+      });
+
+      if (_animationLoaded) {
+        _playAnimation();
+      }
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() => _loading = false);
+
+      debugPrint('Pickup acceptance error: $e');
     }
   }
 

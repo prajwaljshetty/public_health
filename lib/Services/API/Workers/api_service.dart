@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 // HTTP :
 import 'package:http/http.dart' as http;
@@ -180,6 +181,107 @@ class ApiService {
       return channel;
     } catch (error) {
       return null;
+    }
+  }
+
+  static Future<Map<String, dynamic>> acceptpickup({
+    required String pickupid,
+    required UserProvider userprovider,
+  }) async {
+    try {
+      var accessToken = userprovider.accesstoken;
+
+      if (accessToken == null || accessToken.isEmpty) {
+        return {
+          'status': false,
+          'code': 'AUTH_REQUIRED',
+          'message': 'Please log in again.',
+        };
+      }
+
+      var response = await http.post(
+        Uri.parse('$httpBaseUrl/worker/pickup/accept'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+        body: jsonEncode({'pickup_id': pickupid}),
+      );
+
+      print(response.body);
+
+      if (response.statusCode == 401) {
+        final refreshToken = userprovider.refreshtoken;
+
+        if (refreshToken == null || refreshToken.isEmpty) {
+          return {
+            'status': false,
+            'code': 'AUTH_REQUIRED',
+            'message': 'Please log in again.',
+          };
+        }
+
+        final tokenResponse = await getacesstoken(refreshtoken: refreshToken);
+
+        if (tokenResponse['status'] != true ||
+            tokenResponse['access_token'] == null) {
+          return {
+            'status': false,
+            'code': 'REFRESH_FAILED',
+            'message':
+                tokenResponse['detail'] ??
+                tokenResponse['message'] ??
+                'Session expired. Please log in again.',
+          };
+        }
+
+        accessToken = tokenResponse['access_token'] as String;
+
+        await userprovider.updateAccessToken(accessToken);
+
+        response = await http.post(
+          Uri.parse('$httpBaseUrl/worker/pickup/accept'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $accessToken',
+          },
+          body: jsonEncode({'pickup_id': pickupid}),
+        );
+      }
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        return {
+          'status': false,
+          'code': response.statusCode == 401 ? 'AUTH_REQUIRED' : 'HTTP_ERROR',
+          'message': response.statusCode == 401
+              ? 'Session expired. Please log in again.'
+              : 'Failed to accept pickup.',
+        };
+      }
+
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (data['status'] != true) {
+        return {
+          'status': false,
+          'code': 'API_ERROR',
+          'message': data['message'] ?? 'Failed to accept pickup.',
+        };
+      }
+
+      return data;
+    } on http.ClientException {
+      return {
+        'status': false,
+        'code': 'NETWORK_ERROR',
+        'message': 'Unable to connect to the server.',
+      };
+    } on FormatException {
+      return {
+        'status': false,
+        'code': 'INVALID_RESPONSE',
+        'message': 'Invalid response received from the server.',
+      };
     }
   }
 
