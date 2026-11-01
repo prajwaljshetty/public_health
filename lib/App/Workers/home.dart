@@ -2,33 +2,36 @@ import 'package:flutter/cupertino.dart';
 
 import 'dart:convert';
 
-// Theme
+// Theme :
 import 'package:public_health/Theme/theme.dart';
 import 'package:public_health/Theme/profileicon.dart';
 
-// Assets
+// Assets :
 import 'package:public_health/assetmaper.dart';
 
-// Language
+// Language :
 import 'package:public_health/l10n/app_localizations.dart';
 import 'package:public_health/Language/language_switcher.dart';
 
-// Pickup Card
+// Pickup Card :
 import 'package:public_health/App/Workers/pickupcard.dart';
 
-// Lottie
+// Lottie :
 import 'package:lottie/lottie.dart';
 
 // API
 import 'package:public_health/Services/API/Workers/api_service.dart';
 
-// Map
+// Map :
 import 'package:public_health/App/Workers/map.dart';
 
-// Geolocator
+// Accepted pickups :
+import 'package:public_health/App/Workers/acceptedpickups.dart';
+
+// Geolocator :
 import 'package:geolocator/geolocator.dart';
 
-// Provider
+// Provider :
 import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Location/location.dart';
@@ -84,7 +87,6 @@ class _HomePageState extends State<HomePage> {
 
     final userid = Provider.of<UserProvider>(context).userid;
 
-    // Get current location from Provider
     final locationProvider = context.watch<LocationProvider>();
     final position = locationProvider.position;
 
@@ -95,7 +97,21 @@ class _HomePageState extends State<HomePage> {
     return AppScaffold(
       showBack: false,
 
-      trailing: const [
+      trailing: [
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (_) => AcceptedPickupsPage()),
+            );
+          },
+          child: const Icon(
+            CupertinoIcons.cube_box_fill,
+            color: AppColors.accent,
+            size: 36,
+          ),
+        ),
         LanguageSwitcher(),
         SizedBox(width: 10),
         ProfileIcon(role: 'worker'),
@@ -303,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                     context,
                                     CupertinoPageRoute(
-                                      builder: (_) => PickupMapPage(
+                                      builder: (_) => MapPage(
                                         pickupId: pickup['pickupid'],
                                         username: pickup['user_name'],
                                         time: pickup['time'],
@@ -317,6 +333,7 @@ class _HomePageState extends State<HomePage> {
                                             (pickup['coordinates']['longitude']
                                                     as num)
                                                 .toDouble(),
+                                        mode: MapViewMode.discover,
                                       ),
                                     ),
                                   );

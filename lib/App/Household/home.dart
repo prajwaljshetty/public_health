@@ -84,16 +84,7 @@ class HomePage extends StatelessWidget {
                   height: 160,
                   fit: BoxFit.contain,
                 ),
-                Text(
-                  l10n.householdHeroTitle,
-                  style: const TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: -0.4,
-                    height: 1.2,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
+                Text(l10n.householdHeroTitle, style: AppText.title),
                 const SizedBox(height: 8),
                 Text(
                   l10n.householdHeroSubtitle,

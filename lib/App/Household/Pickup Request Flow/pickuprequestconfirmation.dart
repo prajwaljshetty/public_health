@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 
 // Theme
@@ -37,8 +39,6 @@ class _PickupRequestConfirmationPageState
   bool _confirmed = false;
   bool _loading = false;
 
-  String? _errorMessage;
-
   late final AnimationController _controller;
 
   static const _animationDuration = Duration(milliseconds: 350);
@@ -59,13 +59,31 @@ class _PickupRequestConfirmationPageState
     super.dispose();
   }
 
-  Future<void> _confirmPickup() async {
-    if (_loading) return;
+  // Error Dialog :
+  void _showErrorDialog(String message) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (dialogContext) => CupertinoAlertDialog(
+        title: const Text('Unable to request pickup'),
+        content: Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(message),
+        ),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(AppLocalizations.of(context)!.okButton),
+          ),
+        ],
+      ),
+    );
+  }
 
-    setState(() {
-      _loading = true;
-      _errorMessage = null;
-    });
+  // Confirm Pickup :
+  Future<void> _confirmPickup() async {
+    if (_loading || _confirmed) return;
+
+    setState(() => _loading = true);
 
     try {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -83,17 +101,18 @@ class _PickupRequestConfirmationPageState
         time: pickupProvider.time!,
         coordinates: pickupProvider.coordinates!,
         qna: pickupProvider.qna,
-      );
+      ).timeout(const Duration(seconds: 15));
 
       if (!mounted) return;
 
       if (pickupResponse['status'] != true) {
-        setState(() {
-          _loading = false;
-          _errorMessage =
-              pickupResponse['message'] ??
-              'Unable to request pickup. Please try again.';
-        });
+        setState(() => _loading = false);
+
+        _showErrorDialog(
+          pickupResponse['message']?.toString() ??
+              'Unable to request pickup. Please try again.',
+        );
+
         return;
       }
 
@@ -102,45 +121,59 @@ class _PickupRequestConfirmationPageState
       final dataResponse = await ApiService.getdata(
         userprovider: userProvider,
         pickuprequestprovider: pickupProvider,
-      );
-
-      await ApiService.pickupstatusstream(
-        userprovider: userProvider,
-        pickuprequestprovider: pickupProvider,
-      );
+      ).timeout(const Duration(seconds: 15));
 
       if (!mounted) return;
 
       if (dataResponse['status'] != true) {
-        setState(() {
-          _loading = false;
-          _errorMessage =
-              'Pickup requested, but refreshing your account failed. '
-              'Please return home and refresh your data.';
-        });
+        setState(() => _loading = false);
+
+        _showErrorDialog(
+          'Pickup requested, but refreshing your account failed. '
+          'Please return home and refresh your data.',
+        );
+
         return;
       }
+
+      await ApiService.pickupstatusstream(
+        userprovider: userProvider,
+        pickuprequestprovider: pickupProvider,
+      ).timeout(const Duration(seconds: 15));
+
+      if (!mounted) return;
 
       setState(() {
         _loading = false;
         _confirmed = true;
       });
+    } on TimeoutException {
+      if (!mounted) return;
+
+      setState(() => _loading = false);
+
+      _showErrorDialog(
+        'The request timed out. Please check your internet connection and try again.',
+      );
     } catch (e) {
       if (!mounted) return;
 
-      setState(() {
-        _loading = false;
-        _errorMessage = 'Unable to request pickup. Please try again.';
-      });
+      setState(() => _loading = false);
+
+      debugPrint('Pickup request error: $e');
+
+      _showErrorDialog('Unable to request pickup. Please try again later.');
     }
   }
 
+  // Lottie Animation :
   void _onAnimationLoaded(LottieComposition composition) {
     _controller.duration = composition.duration;
     _controller.value = 0;
     _controller.animateTo(_animationEnd, curve: Curves.linear);
   }
 
+  // Navigation :
   void _goHome() {
     Navigator.pushAndRemoveUntil(
       context,
@@ -149,6 +182,7 @@ class _PickupRequestConfirmationPageState
     );
   }
 
+  // Header Icon :
   Widget _buildIcon() {
     return SizedBox(
       width: 96,
@@ -177,18 +211,18 @@ class _PickupRequestConfirmationPageState
               )
             : Center(
                 key: const ValueKey('tile'),
-                // Yellow rounded tile, same language as the option cards.
                 child: Container(
-                  width: 72,
-                  height: 72,
+                  width: 68,
+                  height: 68,
                   decoration: BoxDecoration(
-                    color: AppColors.yellow,
+                    color: AppColors.backgroundwhite,
+                    border: BoxBorder.all(width: 1),
                     borderRadius: BorderRadius.circular(22),
                   ),
                   child: const Icon(
-                    CupertinoIcons.cube_box,
-                    size: 36,
-                    color: AppColors.accent,
+                    CupertinoIcons.cube_box_fill,
+                    size: 44,
+                    color: AppColors.boxyellow,
                   ),
                 ),
               ),
@@ -196,6 +230,7 @@ class _PickupRequestConfirmationPageState
     );
   }
 
+  // Animated Text :
   Widget _buildAnimatedText({required String text, required TextStyle style}) {
     return AnimatedSwitcher(
       duration: _animationDuration,
@@ -220,8 +255,8 @@ class _PickupRequestConfirmationPageState
     );
   }
 
+  // Heading :
   Widget _buildHeading(AppLocalizations l10n) {
-    // AnimatedSize prevents a height "jump" when the text changes.
     return AnimatedSize(
       duration: _animationDuration,
       curve: Curves.easeInOut,
@@ -236,9 +271,7 @@ class _PickupRequestConfirmationPageState
                   : l10n.confirmPickupRequest,
               style: AppText.title.copyWith(fontSize: 26),
             ),
-
             const SizedBox(height: 8),
-
             _buildAnimatedText(
               text: _confirmed
                   ? l10n.pickupConfirmedMessage
@@ -251,65 +284,30 @@ class _PickupRequestConfirmationPageState
     );
   }
 
-  Widget _buildErrorMessage() {
-    return AnimatedSize(
-      duration: _animationDuration,
-      curve: Curves.easeInOut,
-      alignment: Alignment.topCenter,
-      child: SizedBox(
-        width: double.infinity,
-        child: _errorMessage == null
-            ? const SizedBox.shrink()
-            : Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text(
-                  _errorMessage!,
-                  style: AppText.error,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-      ),
-    );
-  }
-
+  // Body :
   Widget _buildBody(AppLocalizations l10n) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildIcon(),
-
-        const SizedBox(height: 14),
-
-        _buildHeading(l10n),
-
-        _buildErrorMessage(),
-      ],
+      children: [_buildIcon(), const SizedBox(height: 14), _buildHeading(l10n)],
     );
   }
 
+  // Bottom Actions :
   Widget _buildBottomActions(AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(_pagePadding, 8, _pagePadding, 12),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // One primary button for both states, so it never jumps position.
           AppPrimaryButton(
             isLoading: _loading,
             text: _confirmed ? l10n.done : l10n.confirmPickup,
             loadingText: l10n.requesting,
-            onPressed: _confirmed
-                ? _goHome
-                : () {
-                    if (!_loading) {
-                      _confirmPickup();
-                    }
-                  },
+            onPressed: _confirmed ? _goHome : _confirmPickup,
           ),
 
           const SizedBox(height: 10),
 
-          // Fades out but keeps its space, so nothing shifts.
           IgnorePointer(
             ignoring: _confirmed,
             child: AnimatedOpacity(
@@ -359,7 +357,6 @@ class _PickupRequestConfirmationPageState
                 },
               ),
             ),
-
             _buildBottomActions(l10n),
           ],
         ),

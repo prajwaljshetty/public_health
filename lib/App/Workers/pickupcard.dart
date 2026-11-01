@@ -36,8 +36,6 @@ class PickupCard extends StatelessWidget {
   }
 
   String get shortPickupId {
-    // Safe for any length (the old check was `<= 8` but cut at 16,
-    // which would throw for IDs between 9 and 15 characters).
     if (pickupId.length <= 16) {
       return pickupId;
     }
@@ -50,12 +48,6 @@ class PickupCard extends StatelessWidget {
     HapticFeedback.lightImpact();
   }
 
-  // ---------------------------------------------------------------------------
-  // UI building blocks
-  // ---------------------------------------------------------------------------
-
-  /// Same language as AppOptionCard: yellow icon tile, bold title, grey
-  /// subtitle, chevron.
   Widget _header() {
     return Row(
       children: [

@@ -11,6 +11,7 @@ class AppColors {
   static const activeblue = CupertinoColors.activeBlue;
   static const accentSoft = Color(0xFFE2F1E8);
   static const yellow = Color(0xFFE8E3D0);
+  static const boxyellow = Color.fromARGB(255, 165, 150, 118);
   static const textPrimary = CupertinoColors.black;
   static const textSecondary = CupertinoColors.systemGrey;
   static const primarycoin = Color(0xFFE3B81C);
@@ -20,7 +21,7 @@ class AppColors {
 
 class AppText {
   static const title = TextStyle(
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: FontWeight.w800,
     letterSpacing: -0.6,
     color: AppColors.textPrimary,
@@ -40,12 +41,12 @@ class AppText {
     color: AppColors.textSecondary,
   );
   static const cardTitle = TextStyle(
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
   );
   static const cardSubtitle = TextStyle(
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: FontWeight.w600,
     color: AppColors.textSecondary,
   );
@@ -55,7 +56,7 @@ class AppText {
     height: 1.4,
   );
   static const button = TextStyle(
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: FontWeight.w700,
     color: CupertinoColors.white,
   );

@@ -120,7 +120,6 @@ class WalletPage extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          // How points work
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(20),

@@ -42,6 +42,10 @@ flutter:
   generate: true
 
   assets:
+    # Images :
+    - assets/images/ManilaQRCode.png
+
+    # Gifs :
     - assets/animations/pickupConfirmed.json
     - assets/animations/coins.json
     - assets/animations/box.json

@@ -70,28 +70,12 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
           const SizedBox(height: 100),
 
           // Heading
-          Text(
-            l10n.quickCheck,
-            style: const TextStyle(
-              fontSize: 34,
-              fontWeight: FontWeight.w800,
-              letterSpacing: -1,
-              color: AppColors.textPrimary,
-            ),
-          ),
+          Text(l10n.quickCheck, style: AppText.title),
 
           const SizedBox(height: 8),
 
           // Subtitle
-          Text(
-            l10n.quickCheckSubtitle,
-            style: const TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w500,
-              height: 1.4,
-              color: AppColors.textSecondary,
-            ),
-          ),
+          Text(l10n.quickCheckSubtitle, style: AppText.cardSubtitle),
 
           const SizedBox(height: 28),
 
@@ -123,15 +107,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
                 const SizedBox(height: 28),
 
                 // Question
-                Text(
-                  questions[_currentQuestion],
-                  style: const TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.w700,
-                    height: 1.3,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
+                Text(questions[_currentQuestion], style: AppText.cardTitle),
 
                 const SizedBox(height: 24),
 

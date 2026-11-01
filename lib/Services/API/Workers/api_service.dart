@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 // HTTP :
 import 'package:http/http.dart' as http;
@@ -65,7 +64,6 @@ class ApiService {
         Uri.parse('$httpBaseUrl/worker/data'),
         headers: {'Authorization': 'Bearer ${userprovider.accesstoken}'},
       );
-      print(response.body);
 
       if (response.statusCode == 401) {
         final refreshToken = userprovider.refreshtoken;
@@ -281,6 +279,86 @@ class ApiService {
         'status': false,
         'code': 'INVALID_RESPONSE',
         'message': 'Invalid response received from the server.',
+      };
+    }
+  }
+
+  static Future<Map<String, dynamic>> acceptedpickupdata({
+    required UserProvider userprovider,
+  }) async {
+    try {
+      var response = await http.get(
+        Uri.parse('$httpBaseUrl/worker/pickup/accepted/data'),
+        headers: {'Authorization': 'Bearer ${userprovider.accesstoken}'},
+      );
+
+      if (response.statusCode == 401) {
+        final refreshToken = userprovider.refreshtoken;
+
+        if (refreshToken == null || refreshToken.isEmpty) {
+          return {
+            'status': false,
+            'message': 'Please log in again.',
+            'code': 'AUTH_REQUIRED',
+          };
+        }
+
+        final tokenResponse = await getacesstoken(refreshtoken: refreshToken);
+
+        if (tokenResponse['status'] != true ||
+            tokenResponse['access_token'] == null) {
+          return {
+            'status': false,
+            'message':
+                tokenResponse['detail'] ??
+                tokenResponse['message'] ??
+                'Session expired. Please log in again.',
+            'code': 'REFRESH_FAILED',
+          };
+        }
+
+        final newAccessToken = tokenResponse['access_token'] as String;
+
+        await userprovider.updateAccessToken(newAccessToken);
+
+        response = await http.get(
+          Uri.parse('$httpBaseUrl/worker/pickup/accepted/data'),
+          headers: {'Authorization': 'Bearer $newAccessToken'},
+        );
+      }
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        return {
+          'status': false,
+          'message': response.statusCode == 401
+              ? 'Session expired. Please log in again.'
+              : 'Request failed with status ${response.statusCode}.',
+          'code': response.statusCode == 401 ? 'AUTH_REQUIRED' : 'HTTP_ERROR',
+        };
+      }
+
+      final result = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (result['status'] != true) {
+        return {
+          'status': false,
+          'message': result['message'] ?? 'Unable to fetch accepted pickups.',
+          'code': 'API_ERROR',
+        };
+      }
+
+      return result;
+    } on http.ClientException {
+      return {
+        'status': false,
+        'message': 'Unable to connect to the server.',
+        'code': 'NETWORK_ERROR',
+      };
+    } on FormatException {
+      return {
+        'status': false,
+        'message': 'The server returned an invalid response.',
+        'code': 'INVALID_RESPONSE',
       };
     }
   }
