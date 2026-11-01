@@ -1,5 +1,8 @@
 class AssetMapper {
-  static String bucket = 'assets/images/bucket.png';
+  // Images :
+  static String qrCode = 'assets/images/ManilaQRCode.png';
+
+  // Gifs :
   static String pickupConfirmed = 'assets/animations/pickupConfirmed.json';
   static String coins = 'assets/animations/coins.json';
   static String box = 'assets/animations/box.json';
