@@ -10,8 +10,8 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:public_health/Providers/User/user.dart';
 
 class ApiService {
-  static const String httpBaseUrl = 'http://10.239.245.28:8000';
-  static const String webSocketBaseUrl = 'ws://10.239.245.28:8000';
+  static const String httpBaseUrl = 'https://public-health-server.onrender.com';
+  static const String webSocketBaseUrl = 'wss://public-health-server.onrender.com';
   static WebSocketChannel? pickupChannel;
 
   static Future<Map<String, dynamic>> login({
