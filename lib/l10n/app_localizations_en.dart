@@ -366,10 +366,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pickupIdLabel => 'Pickup ID';
 
   @override
+  String get pickupCodeLabel => 'Pickup Code';
+
+  @override
   String get requestedTimeLabel => 'Requested Time';
 
   @override
   String get pickupIdCopied => 'Pickup ID copied';
+
+  @override
+  String get pickupCodeCopied => 'Pickup Code copied';
 
   @override
   String get okButton => 'OK';

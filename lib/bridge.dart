@@ -28,7 +28,7 @@ class Bridge extends StatefulWidget {
 }
 
 class _BridgeState extends State<Bridge> {
-  bool _checking = true;
+  bool _checking = false;
   bool _serverDown = false;
 
   @override
@@ -39,6 +39,7 @@ class _BridgeState extends State<Bridge> {
 
   Future<void> checkLogin() async {
     if (!mounted) return;
+    if (_checking) return;
 
     setState(() {
       _checking = true;

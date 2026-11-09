@@ -752,6 +752,12 @@ abstract class AppLocalizations {
   /// **'Pickup ID'**
   String get pickupIdLabel;
 
+  /// No description provided for @pickupCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Code'**
+  String get pickupCodeLabel;
+
   /// No description provided for @requestedTimeLabel.
   ///
   /// In en, this message translates to:
@@ -763,6 +769,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pickup ID copied'**
   String get pickupIdCopied;
+
+  /// No description provided for @pickupCodeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Pickup Code copied'**
+  String get pickupCodeCopied;
 
   /// No description provided for @okButton.
   ///

@@ -113,7 +113,8 @@ class HomePage extends StatelessWidget {
             ),
             child: Row(
               children: [
-                if (pickuprequestdata.pickupStatus == 'requested') ...[
+                if (pickuprequestdata.pickupStatus == 'requested' ||
+                    pickuprequestdata.pickupStatus == 'assigned') ...[
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,7 +214,7 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                ] else if (pickuprequestdata.pickupStatus == 'assigned') ...[
+                ] else if (pickuprequestdata.pickupStatus == 'accepted') ...[
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
