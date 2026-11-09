@@ -21,8 +21,9 @@ class ApiService {
     required String password,
     required UserProvider userprovider,
   }) async {
+    final endpoint = '$httpBaseUrl/household/create';
     final response = await http.post(
-      Uri.parse('$httpBaseUrl/household/create'),
+      Uri.parse(endpoint),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'username': username,
@@ -50,9 +51,10 @@ class ApiService {
     required String password,
     required UserProvider userprovider,
   }) async {
+    final endpoint = '$httpBaseUrl/household/login';
     try {
       final response = await http.post(
-        Uri.parse('$httpBaseUrl/household/login'),
+        Uri.parse(endpoint),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'phoneno': phoneno, 'password': password}),
       );
@@ -91,9 +93,10 @@ class ApiService {
     required UserProvider userprovider,
     required PickupRequestProvider pickuprequestprovider,
   }) async {
+    final endpoint = '$httpBaseUrl/household/data';
     try {
       var response = await http.get(
-        Uri.parse('$httpBaseUrl/household/data'),
+        Uri.parse(endpoint),
         headers: {'Authorization': 'Bearer ${userprovider.accesstoken}'},
       );
 
@@ -127,7 +130,7 @@ class ApiService {
         await userprovider.updateAccessToken(newAccessToken);
 
         response = await http.get(
-          Uri.parse('$httpBaseUrl/household/data'),
+          Uri.parse(endpoint),
           headers: {'Authorization': 'Bearer $newAccessToken'},
         );
       }
@@ -279,6 +282,7 @@ class ApiService {
     required ({double latitude, double longitude}) coordinates,
     required List<int> qna,
   }) async {
+    final endpoint = '$httpBaseUrl/household/pickup/request';
     try {
       var accessToken = userprovider.accesstoken;
 
@@ -291,7 +295,7 @@ class ApiService {
       }
 
       var response = await http.post(
-        Uri.parse('$httpBaseUrl/household/pickup/request'),
+        Uri.parse(endpoint),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $accessToken',
@@ -336,7 +340,7 @@ class ApiService {
         await userprovider.updateAccessToken(accessToken);
 
         response = await http.post(
-          Uri.parse('$httpBaseUrl/household/pickup/request'),
+          Uri.parse(endpoint),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $accessToken',
@@ -399,6 +403,7 @@ class ApiService {
   }) async {
     final pickupId = pickuprequestprovider.pickupid;
     final accessToken = userprovider.accesstoken;
+    final endpoint = '$webSocketBaseUrl/household/pickup/status/$pickupId';
 
     if (pickupId == null || pickupId.isEmpty) {
       return;
@@ -409,9 +414,7 @@ class ApiService {
     }
 
     try {
-      final channel = WebSocketChannel.connect(
-        Uri.parse('$webSocketBaseUrl/household/pickup/status/$pickupId'),
-      );
+      final channel = WebSocketChannel.connect(Uri.parse(endpoint));
 
       pickupStatusChannel = channel;
 
@@ -452,6 +455,119 @@ class ApiService {
         cancelOnError: false,
       );
     } catch (error) {}
+  }
+
+  static Future<Map<String, dynamic>> registerCode({
+    required UserProvider userprovider,
+    required PickupRequestProvider pickupRequestProvider,
+    required String code,
+  }) async {
+    final endpoint = '$httpBaseUrl/household/pickup/registercode';
+
+    try {
+      var accessToken = userprovider.accesstoken;
+
+      if (accessToken == null || accessToken.isEmpty) {
+        return {
+          'status': false,
+          'code': 'AUTH_REQUIRED',
+          'message': 'Please log in again.',
+        };
+      }
+
+      var response = await http.post(
+        Uri.parse(endpoint),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+        body: jsonEncode({
+          'pickup_id': pickupRequestProvider.pickupid,
+          'code': code,
+        }),
+      );
+
+      if (response.statusCode == 401) {
+        final refreshToken = userprovider.refreshtoken;
+
+        if (refreshToken == null || refreshToken.isEmpty) {
+          return {
+            'status': false,
+            'code': 'AUTH_REQUIRED',
+            'message': 'Please log in again.',
+          };
+        }
+
+        final tokenResponse = await getacesstoken(refreshtoken: refreshToken);
+
+        if (tokenResponse['status'] != true ||
+            tokenResponse['access_token'] == null) {
+          return {
+            'status': false,
+            'code': 'REFRESH_FAILED',
+            'message':
+                tokenResponse['detail'] ??
+                tokenResponse['message'] ??
+                'Session expired. Please log in again.',
+          };
+        }
+
+        accessToken = tokenResponse['access_token'] as String;
+
+        await userprovider.updateAccessToken(accessToken);
+
+        response = await http.post(
+          Uri.parse(endpoint),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $accessToken',
+          },
+          body: jsonEncode({
+            'pickup_id': pickupRequestProvider.pickupid,
+            'code': code,
+          }),
+        );
+      }
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        return {
+          'status': false,
+          'code': response.statusCode == 401 ? 'AUTH_REQUIRED' : 'HTTP_ERROR',
+          'message': response.statusCode == 401
+              ? 'Session expired. Please log in again.'
+              : 'Failed to register pickup code.',
+        };
+      }
+
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (data['status'] != true) {
+        return {
+          'status': false,
+          'code': 'API_ERROR',
+          'message': data['message'] ?? 'Failed to register pickup code.',
+        };
+      }
+
+      pickupstatusstream(
+        userprovider: userprovider,
+        pickuprequestprovider: pickupRequestProvider,
+      );
+
+      return data;
+    } on http.ClientException {
+      return {
+        'status': false,
+        'code': 'NETWORK_ERROR',
+        'message': 'Unable to connect to the server.',
+      };
+    } on FormatException {
+      return {
+        'status': false,
+        'code': 'INVALID_RESPONSE',
+        'message': 'Invalid response received from the server.',
+      };
+    }
   }
 
   static void disconnect() {

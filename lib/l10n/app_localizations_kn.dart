@@ -372,10 +372,16 @@ class AppLocalizationsKn extends AppLocalizations {
   String get pickupIdLabel => 'ಪಿಕಪ್ ಐಡಿ';
 
   @override
+  String get pickupCodeLabel => 'ಪಿಕಪ್ ಕೋಡ್';
+
+  @override
   String get requestedTimeLabel => 'ವಿನಂತಿಸಿದ ಸಮಯ';
 
   @override
   String get pickupIdCopied => 'ಪಿಕಪ್ ಐಡಿ ನಕಲಿಸಲಾಗಿದೆ';
+
+  @override
+  String get pickupCodeCopied => 'ಪಿಕಪ್ ಕೋಡ್ ನಕಲಿಸಲಾಗಿದೆ';
 
   @override
   String get okButton => 'ಸರಿ';
