@@ -357,6 +357,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get generateQrCode => 'Generate QR Code';
 
   @override
+  String get scanQrCode => 'Scan Qr';
+
+  @override
   String get requestDetails => 'Request Details';
 
   @override
@@ -394,7 +397,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pickupConfirmationPendingMessage =>
-      'Your pickup is requested. We\'ll let you know when it\'s confirmed.';
+      'Your pickup request is submitted. We\'ll let you know when it\'s confirmed.';
 
   @override
   String get waitingForPickupConfirmation => 'We\'ll keep you updated';
@@ -416,4 +419,61 @@ class AppLocalizationsEn extends AppLocalizations {
   String pickupAcceptedSubtitle(String username) {
     return 'You have successfully accepted the pickup request from $username.';
   }
+
+  @override
+  String get myPickups => 'My Pickups';
+
+  @override
+  String get manageAcceptedPickups => 'Manage your accepted pickup requests.';
+
+  @override
+  String get acceptedPickups => 'Accepted Pickups';
+
+  @override
+  String get activePickups => 'Active pickups';
+
+  @override
+  String get yourAcceptedPickups => 'Your Accepted Pickups';
+
+  @override
+  String get tryAgain => 'Try Again';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong.';
+
+  @override
+  String get noAcceptedPickups => 'No accepted pickups yet.';
+
+  @override
+  String get locationUnavailable =>
+      'Location is unavailable. Please enable location access.';
+
+  @override
+  String get unableToLoadAcceptedPickups => 'Unable to load accepted pickups.';
+
+  @override
+  String get verifyPickup => 'Verify Pickup';
+
+  @override
+  String get scanHouseholdQrCode => 'Scan Household QR Code';
+
+  @override
+  String get scanHouseholdQrInstructions =>
+      'Ask the household to display their pickup QR code, then scan it to verify the handover.';
+
+  @override
+  String get orLabel => 'OR';
+
+  @override
+  String get cantScanQr => 'Can\'t scan QR?';
+
+  @override
+  String get enterPickupVerificationCode =>
+      'Enter the 6-digit pickup verification code.';
+
+  @override
+  String get verifyCode => 'Verify Code';
+
+  @override
+  String get tryAnotherWay => 'Try Another Way';
 }

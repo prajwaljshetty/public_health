@@ -104,6 +104,7 @@
 
   "availablePickups": "Today's Pending Pickups",
   "pickupDetails": "Pickup Details",
+
   "pickupAvailable": "Pickup Available",
   "noAvailablePickups": "No pickup requests are available right now.",
   "acceptPickup": "Accept Pickup",
@@ -127,11 +128,12 @@
   "verifyYourPickup": "Verify Your Pickup",
   "pickupQrInstructions": "When your collection worker arrives, generate your QR code and show it to them to verify the pickup and confirm the handover.",
   "generateQrCode": "Generate QR Code",
+  "scanQrCode": "Scan Qr",
 
   "requestDetails": "Request Details",
   "recipientLabel": "Recipient",
   "pickupIdLabel": "Pickup ID",
-  "pickupCodeLabel":"Pickup Code",
+  "pickupCodeLabel": "Pickup Code",
   "requestedTimeLabel": "Requested Time",
   "pickupIdCopied": "Pickup ID copied",
   "pickupCodeCopied": "Pickup Code copied",
@@ -141,7 +143,7 @@
   "notAvailableValue": "Not available",
 
   "pickupConfirmationPending": "You're All Set!",
-  "pickupConfirmationPendingMessage": "Your pickup is requested. We'll let you know when it's confirmed.",
+  "pickupConfirmationPendingMessage": "Your pickup request is submitted. We'll let you know when it's confirmed.",
   "waitingForPickupConfirmation": "We'll keep you updated",
 
   "reviewPickupRequest": "Review Pickup Request",
@@ -156,5 +158,25 @@
         "type": "String"
       }
     }
-  }
+  },
+
+  "myPickups": "My Pickups",
+  "manageAcceptedPickups": "Manage your accepted pickup requests.",
+  "acceptedPickups": "Accepted Pickups",
+  "activePickups": "Active pickups",
+  "yourAcceptedPickups": "Your Accepted Pickups",
+  "tryAgain": "Try Again",
+  "somethingWentWrong": "Something went wrong.",
+  "noAcceptedPickups": "No accepted pickups yet.",
+  "locationUnavailable": "Location is unavailable. Please enable location access.",
+  "unableToLoadAcceptedPickups": "Unable to load accepted pickups.",
+
+  "verifyPickup": "Verify Pickup",
+  "scanHouseholdQrCode": "Scan Household QR Code",
+  "scanHouseholdQrInstructions": "Ask the household to display their pickup QR code, then scan it to verify the handover.",
+  "orLabel": "OR",
+  "cantScanQr": "Can't scan QR?",
+  "enterPickupVerificationCode": "Enter the 6-digit pickup verification code.",
+  "verifyCode": "Verify Code",
+  "tryAnotherWay": "Try Another Way"
 }
