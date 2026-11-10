@@ -148,9 +148,11 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
     } catch (e) {
       if (!mounted) return;
 
+      final l10n = AppLocalizations.of(context)!;
+
       setState(() {
         _errorMessage = e.toString().contains('LOCATION_UNAVAILABLE')
-            ? 'Location is unavailable. Please enable location access.'
+            ? l10n.locationUnavailable
             : e.toString().replaceFirst('Exception: ', '');
 
         _isLoading = false;
@@ -170,6 +172,8 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
   }
 
   Widget _buildErrorState() {
+    final l10n = AppLocalizations.of(context)!;
+
     return SizedBox(
       height: 400,
       child: Center(
@@ -187,7 +191,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
               const SizedBox(height: 16),
 
               Text(
-                _errorMessage ?? 'Something went wrong.',
+                _errorMessage ?? l10n.somethingWentWrong,
                 textAlign: TextAlign.center,
                 style: AppText.cardSubtitle.copyWith(fontSize: 15),
               ),
@@ -202,9 +206,9 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
                 color: AppColors.accent,
                 borderRadius: BorderRadius.circular(20),
                 onPressed: _refreshPickups,
-                child: const Text(
-                  'Try Again',
-                  style: TextStyle(
+                child: Text(
+                  l10n.tryAgain,
+                  style: const TextStyle(
                     color: CupertinoColors.white,
                     fontWeight: FontWeight.w600,
                   ),
@@ -218,6 +222,8 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
   }
 
   Widget _buildEmptyState() {
+    final l10n = AppLocalizations.of(context)!;
+
     return SizedBox(
       height: 400,
       child: Center(
@@ -233,7 +239,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
             const SizedBox(height: 16),
 
             Text(
-              'No accepted pickups yet.',
+              l10n.noAcceptedPickups,
               textAlign: TextAlign.center,
               style: AppText.cardSubtitle.copyWith(fontSize: 16),
             ),
@@ -244,12 +250,15 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
   }
 
   Widget _buildPickupList() {
-    return Column(
-      children: [
-        const SizedBox(height: 20),
-        ...pickups,
-        const SizedBox(height: 20),
-      ],
+    return SizedBox(
+      height: 400,
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          ...pickups,
+          const SizedBox(height: 20),
+        ],
+      ),
     );
   }
 
@@ -422,7 +431,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
           const SizedBox(height: 60),
 
           Text(
-            'My Pickups',
+            l10n.myPickups,
             style: AppText.title.copyWith(
               fontSize: 30,
               fontWeight: FontWeight.w800,
@@ -432,10 +441,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
 
           const SizedBox(height: 6),
 
-          Text(
-            'Manage your accepted pickup requests.',
-            style: AppText.cardSubtitle,
-          ),
+          Text(l10n.manageAcceptedPickups, style: AppText.cardSubtitle),
 
           const SizedBox(height: 24),
 
@@ -460,7 +466,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
                     const SizedBox(width: 10),
 
                     Text(
-                      'Accepted Pickups',
+                      l10n.acceptedPickups,
                       style: AppText.title.copyWith(
                         color: AppColors.accent,
                         fontSize: 18,
@@ -481,7 +487,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
                           _buildPickupCounter(),
 
                           Text(
-                            'Active pickups',
+                            l10n.activePickups,
                             style: AppText.title.copyWith(
                               color: AppColors.accent,
                               fontSize: 16,
@@ -506,7 +512,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
           const SizedBox(height: 32),
 
           Text(
-            'Your Accepted Pickups',
+            l10n.yourAcceptedPickups,
             style: AppText.title.copyWith(
               fontSize: 20,
               fontWeight: FontWeight.w700,

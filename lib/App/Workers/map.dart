@@ -55,7 +55,6 @@ class _MapPageState extends State<MapPage> {
 
   bool isModalOpen = false;
 
-  // One controller handles all six digits, including paste and backspace.
   final TextEditingController _codeController = TextEditingController();
   final FocusNode _codeFocusNode = FocusNode();
 
@@ -274,317 +273,348 @@ class _MapPageState extends State<MapPage> {
     showCupertinoModalPopup(
       context: context,
       builder: (modalContext) {
-        return StatefulBuilder(
-          builder: (context, setModalState) {
-            return Container(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-              decoration: const BoxDecoration(
-                color: AppColors.backgroundwhite,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-              ),
-              child: SafeArea(
-                top: false,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Container(
-                          width: 38,
-                          height: 4,
-                          decoration: BoxDecoration(
-                            color: AppColors.layering,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
+        return Container(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+          decoration: const BoxDecoration(
+            color: AppColors.backgroundwhite,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          ),
+          child: SafeArea(
+            top: false,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 38,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: AppColors.layering,
+                        borderRadius: BorderRadius.circular(10),
                       ),
+                    ),
+                  ),
 
-                      const SizedBox(height: 22),
+                  const SizedBox(height: 22),
 
-                      const SizedBox(height: 16),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundwhite,
+                      borderRadius: BorderRadius.circular(22),
+                      border: Border.all(
+                        color: AppColors.backgroundblack,
+                        width: 1.3,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              CupertinoIcons.cube_box_fill,
+                              color: AppColors.boxyellow,
+                              size: 33,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              l10n.verifyPickup,
+                              style: AppText.cardTitle.copyWith(fontSize: 19),
+                            ),
+                          ],
+                        ),
 
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(18),
-                        decoration: BoxDecoration(
-                          color: AppColors.backgroundwhite,
-                          borderRadius: BorderRadius.circular(22),
-                          border: Border.all(
-                            color: AppColors.backgroundblack,
-                            width: 1.3,
+                        const SizedBox(height: 18),
+
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 22,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.backgroundwhite,
+                            borderRadius: BorderRadius.circular(17),
+                            border: Border.all(
+                              color: AppColors.backgroundblack,
+                              width: 1.3,
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                AssetMapper.qrCode,
+                                height: 150,
+                                width: 150,
+                                fit: BoxFit.contain,
+                              ),
+
+                              const SizedBox(height: 16),
+
+                              Text(
+                                l10n.scanHouseholdQrCode,
+                                textAlign: TextAlign.center,
+                                style: AppText.cardTitle.copyWith(fontSize: 16),
+                              ),
+
+                              const SizedBox(height: 8),
+
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                ),
+                                child: Text(
+                                  l10n.scanHouseholdQrInstructions,
+                                  textAlign: TextAlign.center,
+                                  style: AppText.cardSubtitle.copyWith(
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+
+                        const SizedBox(height: 12),
+
+                        SizedBox(
+                          width: double.infinity,
+                          child: CupertinoButton(
+                            padding: const EdgeInsets.symmetric(vertical: 13),
+                            color: AppColors.accent,
+                            borderRadius: BorderRadius.circular(14),
+                            onPressed: () {
+                              // TODO:
+                              // Navigate to QR scanner page.
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
-                                  CupertinoIcons.cube_box_fill,
-                                  color: AppColors.boxyellow,
-                                  size: 33,
+                                const Icon(
+                                  CupertinoIcons.qrcode_viewfinder,
+                                  color: CupertinoColors.white,
+                                  size: 20,
                                 ),
-
-                                const SizedBox(width: 10),
-
+                                const SizedBox(width: 9),
                                 Text(
-                                  'Verify Pickup',
-                                  style: AppText.cardTitle.copyWith(
-                                    fontSize: 19,
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            const SizedBox(height: 18),
-
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 22,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.backgroundwhite,
-                                borderRadius: BorderRadius.circular(17),
-                                border: Border.all(
-                                  color: AppColors.backgroundblack,
-                                  width: 1.3,
-                                ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    AssetMapper.qrCode,
-                                    height: 150,
-                                    width: 150,
-                                    fit: BoxFit.contain,
-                                  ),
-
-                                  const SizedBox(height: 16),
-
-                                  Text(
-                                    'Scan Household QR Code',
-                                    textAlign: TextAlign.center,
-                                    style: AppText.cardTitle.copyWith(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-
-                                  const SizedBox(height: 8),
-
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                    ),
-                                    child: Text(
-                                      'Ask the household to display their pickup QR code, then scan it to verify the handover.',
-                                      textAlign: TextAlign.center,
-                                      style: AppText.cardSubtitle.copyWith(
-                                        height: 1.5,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-
-                            SizedBox(
-                              width: double.infinity,
-                              child: CupertinoButton(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 13,
-                                ),
-                                color: AppColors.accent,
-                                borderRadius: BorderRadius.circular(14),
-                                onPressed: () {
-                                  // TODO:
-                                  // Navigate to QR scanner page.
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      CupertinoIcons.qrcode_viewfinder,
-                                      color: CupertinoColors.white,
-                                      size: 20,
-                                    ),
-
-                                    const SizedBox(width: 9),
-
-                                    Text(
-                                      'Scan QR Code',
-                                      style: TextStyle(
-                                        color: AppColors.backgroundwhite,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-
-                            const SizedBox(height: 20),
-
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    height: 1,
-                                    color: AppColors.layering,
-                                  ),
-                                ),
-
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                  ),
-                                  child: Text(
-                                    'OR',
-                                    style: AppText.cardSubtitle,
-                                  ),
-                                ),
-
-                                Expanded(
-                                  child: Container(
-                                    height: 1,
-                                    color: AppColors.layering,
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            const SizedBox(height: 18),
-
-                            // MANUAL CODE TITLE
-                            Text(
-                              "Can't scan QR?",
-                              style: AppText.cardTitle.copyWith(fontSize: 17),
-                            ),
-
-                            const SizedBox(height: 6),
-
-                            Text(
-                              'Enter the 6-digit pickup verification code.',
-                              style: AppText.cardSubtitle,
-                            ),
-
-                            const SizedBox(height: 16),
-
-                            // SIX-DIGIT OTP INPUT
-                            GestureDetector(
-                              onTap: () {
-                                _codeFocusNode.requestFocus();
-                              },
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  // Visual boxes
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: List.generate(6, (index) {
-                                      final code = _codeController.text;
-                                      final hasValue = index < code.length;
-                                      final isActive =
-                                          index == code.length &&
-                                          code.length < 6;
-
-                                      return AnimatedContainer(
-                                        duration: const Duration(
-                                          milliseconds: 160,
-                                        ),
-                                        width: 42,
-                                        height: 50,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.backgroundwhite,
-                                          border: Border.all(
-                                            color: isActive
-                                                ? AppColors.accent
-                                                : AppColors.layering,
-                                            width: isActive ? 1.8 : 1.2,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            10,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          hasValue ? code[index] : '',
-                                          style: AppText.cardTitle.copyWith(
-                                            fontSize: 22,
-                                          ),
-                                        ),
-                                      );
-                                    }),
-                                  ),
-
-                                  // One invisible field receives all keyboard input.
-                                  Positioned.fill(
-                                    child: Opacity(
-                                      opacity: 0,
-                                      child: CupertinoTextField(
-                                        controller: _codeController,
-                                        focusNode: _codeFocusNode,
-                                        keyboardType: TextInputType.number,
-                                        textAlign: TextAlign.center,
-                                        maxLength: 6,
-                                        maxLengthEnforcement:
-                                            MaxLengthEnforcement.enforced,
-                                        autofillHints: const [
-                                          AutofillHints.oneTimeCode,
-                                        ],
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter
-                                              .digitsOnly,
-                                        ],
-                                        enableInteractiveSelection: false,
-                                        decoration: const BoxDecoration(),
-                                        onChanged: (_) {
-                                          setModalState(() {});
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            const SizedBox(height: 18),
-
-                            SizedBox(
-                              width: double.infinity,
-                              child: CupertinoButton(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 13,
-                                ),
-                                color: AppColors.accent,
-                                borderRadius: BorderRadius.circular(14),
-                                disabledColor: AppColors.layering,
-                                onPressed: _isCodeComplete
-                                    ? () {
-                                        final code = _verificationCode;
-                                      }
-                                    : null,
-                                child: Text(
-                                  'Verify Code',
+                                  l10n.scanQrCode,
                                   style: TextStyle(
                                     color: AppColors.backgroundwhite,
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        SizedBox(
+                          width: double.infinity,
+                          child: CupertinoButton(
+                            padding: const EdgeInsets.symmetric(vertical: 13),
+                            color: AppColors.backgroundwhite,
+                            borderRadius: BorderRadius.circular(14),
+                            onPressed: () {
+                              _codeController.clear();
+                              _codeFocusNode.unfocus();
+                              _codeDailogBox(modalContext, l10n);
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                if (modalContext.mounted) {
+                                  _codeFocusNode.requestFocus();
+                                }
+                              });
+                            },
+                            child: Text(
+                              l10n.tryAnotherWay,
+                              style: AppText.cardTitle.copyWith(fontSize: 15),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 12),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() {
+      isModalOpen = false;
+
+      _codeController.clear();
+      _codeFocusNode.unfocus();
+    });
+  }
+
+  void _codeDailogBox(BuildContext modalContext, AppLocalizations l10n) {
+    showCupertinoDialog(
+      context: modalContext,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AnimatedPadding(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeOut,
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(dialogContext).viewInsets.bottom / 2,
+              ),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 14),
+                    padding: const EdgeInsets.all(22),
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundwhite,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(height: 16),
+
+                        const SizedBox(height: 8),
+
+                        Text(
+                          l10n.enterPickupVerificationCode,
+                          textAlign: TextAlign.center,
+                          style: AppText.cardSubtitle.copyWith(height: 1.5),
+                        ),
+
+                        const SizedBox(height: 24),
+
+                        GestureDetector(
+                          onTap: () {
+                            _codeFocusNode.requestFocus();
+                          },
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: List.generate(6, (index) {
+                                  final code = _codeController.text;
+
+                                  final hasValue = index < code.length;
+
+                                  final isActive =
+                                      index == code.length && code.length < 6;
+
+                                  return AnimatedContainer(
+                                    duration: const Duration(milliseconds: 160),
+                                    width: 48,
+                                    height: 48,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.backgroundwhite,
+                                      border: Border.all(
+                                        color: isActive
+                                            ? AppColors.accent
+                                            : AppColors.backgroundblack,
+                                        width: isActive ? 1.8 : 1.2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Text(
+                                      hasValue ? code[index] : '',
+                                      style: AppText.cardTitle.copyWith(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ),
+
+                              Positioned.fill(
+                                child: Opacity(
+                                  opacity: 0,
+                                  child: CupertinoTextField(
+                                    controller: _codeController,
+                                    focusNode: _codeFocusNode,
+                                    keyboardType: TextInputType.number,
+                                    textAlign: TextAlign.center,
+                                    maxLength: 6,
+                                    maxLengthEnforcement:
+                                        MaxLengthEnforcement.enforced,
+                                    autofillHints: const [
+                                      AutofillHints.oneTimeCode,
+                                    ],
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                    ],
+                                    enableInteractiveSelection: false,
+                                    decoration: const BoxDecoration(),
+                                    onChanged: (_) {
+                                      setDialogState(() {});
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 26),
+
+                        SizedBox(
+                          width: double.infinity,
+                          child: CupertinoButton(
+                            padding: const EdgeInsets.symmetric(vertical: 13),
+                            color: _isCodeComplete
+                                ? AppColors.accent
+                                : AppColors.layering,
+                            borderRadius: BorderRadius.circular(13),
+                            onPressed: _isCodeComplete
+                                ? () {
+                                    final code = _verificationCode;
+
+                                    // TODO:
+                                    // Verify the pickup code.
+                                  }
+                                : null,
+                            child: Text(
+                              l10n.verifyCode,
+                              style: TextStyle(
+                                color: AppColors.backgroundwhite,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
 
-                      const SizedBox(height: 12),
-                    ],
+                        const SizedBox(height: 6),
+
+                        CupertinoButton(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 8,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(dialogContext);
+                            _codeController.clear();
+                            _codeFocusNode.unfocus();
+                          },
+                          child: Text(
+                            l10n.cancel,
+                            style: AppText.cardSubtitle.copyWith(
+                              color: AppColors.backgroundblack,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -592,9 +622,7 @@ class _MapPageState extends State<MapPage> {
           },
         );
       },
-    ).whenComplete(() {
-      isModalOpen = false;
-
+    ).then((_) {
       _codeController.clear();
       _codeFocusNode.unfocus();
     });
@@ -692,7 +720,6 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  // CONFIGURE PICKUP MARKER :
   Future<void> _configurePickupMarker() async {
     final mapboxMap = _mapboxMap;
     if (mapboxMap == null) return;
@@ -736,7 +763,6 @@ class _MapPageState extends State<MapPage> {
 
   @override
   void dispose() {
-    // Verification Code :
     _codeController.dispose();
     _codeFocusNode.dispose();
 
@@ -824,7 +850,6 @@ class _MapPageState extends State<MapPage> {
             ),
           ),
 
-          // SHOW MODAL BUTTON
           Positioned(
             bottom: 30,
             right: 16,
@@ -851,7 +876,9 @@ class _MapPageState extends State<MapPage> {
                   ],
                 ),
                 child: Text(
-                  l10n.pickupDetails,
+                  widget.mode == MapViewMode.discover
+                      ? l10n.pickupDetails
+                      : l10n.scanQrCode,
                   style: TextStyle(
                     color: AppColors.backgroundwhite,
                     fontSize: 15,

@@ -734,6 +734,12 @@ abstract class AppLocalizations {
   /// **'Generate QR Code'**
   String get generateQrCode;
 
+  /// No description provided for @scanQrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Qr'**
+  String get scanQrCode;
+
   /// No description provided for @requestDetails.
   ///
   /// In en, this message translates to:
@@ -809,7 +815,7 @@ abstract class AppLocalizations {
   /// No description provided for @pickupConfirmationPendingMessage.
   ///
   /// In en, this message translates to:
-  /// **'Your pickup is requested. We\'ll let you know when it\'s confirmed.'**
+  /// **'Your pickup request is submitted. We\'ll let you know when it\'s confirmed.'**
   String get pickupConfirmationPendingMessage;
 
   /// No description provided for @waitingForPickupConfirmation.
@@ -847,6 +853,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You have successfully accepted the pickup request from {username}.'**
   String pickupAcceptedSubtitle(String username);
+
+  /// No description provided for @myPickups.
+  ///
+  /// In en, this message translates to:
+  /// **'My Pickups'**
+  String get myPickups;
+
+  /// No description provided for @manageAcceptedPickups.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your accepted pickup requests.'**
+  String get manageAcceptedPickups;
+
+  /// No description provided for @acceptedPickups.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted Pickups'**
+  String get acceptedPickups;
+
+  /// No description provided for @activePickups.
+  ///
+  /// In en, this message translates to:
+  /// **'Active pickups'**
+  String get activePickups;
+
+  /// No description provided for @yourAcceptedPickups.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Accepted Pickups'**
+  String get yourAcceptedPickups;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgain;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong.'**
+  String get somethingWentWrong;
+
+  /// No description provided for @noAcceptedPickups.
+  ///
+  /// In en, this message translates to:
+  /// **'No accepted pickups yet.'**
+  String get noAcceptedPickups;
+
+  /// No description provided for @locationUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Location is unavailable. Please enable location access.'**
+  String get locationUnavailable;
+
+  /// No description provided for @unableToLoadAcceptedPickups.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load accepted pickups.'**
+  String get unableToLoadAcceptedPickups;
+
+  /// No description provided for @verifyPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Pickup'**
+  String get verifyPickup;
+
+  /// No description provided for @scanHouseholdQrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Household QR Code'**
+  String get scanHouseholdQrCode;
+
+  /// No description provided for @scanHouseholdQrInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask the household to display their pickup QR code, then scan it to verify the handover.'**
+  String get scanHouseholdQrInstructions;
+
+  /// No description provided for @orLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'OR'**
+  String get orLabel;
+
+  /// No description provided for @cantScanQr.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t scan QR?'**
+  String get cantScanQr;
+
+  /// No description provided for @enterPickupVerificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit pickup verification code.'**
+  String get enterPickupVerificationCode;
+
+  /// No description provided for @verifyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Code'**
+  String get verifyCode;
+
+  /// No description provided for @tryAnotherWay.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Another Way'**
+  String get tryAnotherWay;
 }
 
 class _AppLocalizationsDelegate

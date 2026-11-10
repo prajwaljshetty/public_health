@@ -61,7 +61,6 @@ class _PickupAcceptanceConfirmationPageState
   static const _animationDuration = Duration(milliseconds: 350);
   static const _pagePadding = 22.0;
 
-  // Shared with the household confirmation page so both animate identically.
   static const _animationEnd = 0.88;
 
   @override
@@ -76,7 +75,6 @@ class _PickupAcceptanceConfirmationPageState
     super.dispose();
   }
 
-  // Error Dialog :
   void _showErrorDialog(String message) {
     showCupertinoDialog<void>(
       context: context,
@@ -96,7 +94,6 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
-  // Accept Pickup :
   Future<void> _acceptPickup() async {
     if (_loading || _accepted) return;
 

@@ -363,6 +363,9 @@ class AppLocalizationsKn extends AppLocalizations {
   String get generateQrCode => 'QR ಕೋಡ್ ರಚಿಸಿ';
 
   @override
+  String get scanQrCode => 'QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ';
+
+  @override
   String get requestDetails => 'ವಿನಂತಿಯ ವಿವರಗಳು';
 
   @override
@@ -422,4 +425,64 @@ class AppLocalizationsKn extends AppLocalizations {
   String pickupAcceptedSubtitle(String username) {
     return 'ನೀವು $username ಅವರ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ.';
   }
+
+  @override
+  String get myPickups => 'ನನ್ನ ಪಿಕಪ್‌ಗಳು';
+
+  @override
+  String get manageAcceptedPickups =>
+      'ನೀವು ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ನಿರ್ವಹಿಸಿ.';
+
+  @override
+  String get acceptedPickups => 'ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳು';
+
+  @override
+  String get activePickups => 'ಸಕ್ರಿಯ ಪಿಕಪ್‌ಗಳು';
+
+  @override
+  String get yourAcceptedPickups => 'ನೀವು ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳು';
+
+  @override
+  String get tryAgain => 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ';
+
+  @override
+  String get somethingWentWrong => 'ಏನೋ ತಪ್ಪಾಗಿದೆ.';
+
+  @override
+  String get noAcceptedPickups =>
+      'ಇನ್ನೂ ಯಾವುದೇ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಿಲ್ಲ.';
+
+  @override
+  String get locationUnavailable =>
+      'ಸ್ಥಳ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ.';
+
+  @override
+  String get unableToLoadAcceptedPickups =>
+      'ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.';
+
+  @override
+  String get verifyPickup => 'ಪಿಕಪ್ ದೃಢೀಕರಿಸಿ';
+
+  @override
+  String get scanHouseholdQrCode => 'ಮನೆಯ QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ';
+
+  @override
+  String get scanHouseholdQrInstructions =>
+      'ಮನೆಯವರು ತಮ್ಮ ಪಿಕಪ್ QR ಕೋಡ್ ತೋರಿಸಲು ಕೇಳಿ. ನಂತರ ಹಸ್ತಾಂತರವನ್ನು ದೃಢೀಕರಿಸಲು ಅದನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.';
+
+  @override
+  String get orLabel => 'ಅಥವಾ';
+
+  @override
+  String get cantScanQr => 'QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲವೇ?';
+
+  @override
+  String get enterPickupVerificationCode =>
+      '6 ಅಂಕಿಗಳ ಪಿಕಪ್ ದೃಢೀಕರಣ ಕೋಡ್ ನಮೂದಿಸಿ.';
+
+  @override
+  String get verifyCode => 'ಕೋಡ್ ದೃಢೀಕರಿಸಿ';
+
+  @override
+  String get tryAnotherWay => 'ಬೇರೆ ವಿಧಾನವನ್ನು ಪ್ರಯತ್ನಿಸಿ';
 }

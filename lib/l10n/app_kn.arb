@@ -127,6 +127,7 @@
   "verifyYourPickup": "ಪಿಕಪ್ ದೃಢೀಕರಣ",
   "pickupQrInstructions": "ಕಾರ್ಮಿಕರು ಬಂದಾಗ QR ಕೋಡ್ ರಚಿಸಿ, ಪಿಕಪ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಅವರಿಗೆ ತೋರಿಸಿ.",
   "generateQrCode": "QR ಕೋಡ್ ರಚಿಸಿ",
+  "scanQrCode": "QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
 
   "requestDetails": "ವಿನಂತಿಯ ವಿವರಗಳು",
   "recipientLabel": "ಸ್ವೀಕರಿಸುವವರು",
@@ -156,5 +157,25 @@
         "type": "String"
       }
     }
-  }
+  },
+
+  "myPickups": "ನನ್ನ ಪಿಕಪ್‌ಗಳು",
+  "manageAcceptedPickups": "ನೀವು ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ನಿರ್ವಹಿಸಿ.",
+  "acceptedPickups": "ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳು",
+  "activePickups": "ಸಕ್ರಿಯ ಪಿಕಪ್‌ಗಳು",
+  "yourAcceptedPickups": "ನೀವು ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳು",
+  "tryAgain": "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ",
+  "somethingWentWrong": "ಏನೋ ತಪ್ಪಾಗಿದೆ.",
+  "noAcceptedPickups": "ಇನ್ನೂ ಯಾವುದೇ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಿಲ್ಲ.",
+  "locationUnavailable": "ಸ್ಥಳ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ.",
+  "unableToLoadAcceptedPickups": "ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.",
+
+  "verifyPickup": "ಪಿಕಪ್ ದೃಢೀಕರಿಸಿ",
+  "scanHouseholdQrCode": "ಮನೆಯ QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ",
+  "scanHouseholdQrInstructions": "ಮನೆಯವರು ತಮ್ಮ ಪಿಕಪ್ QR ಕೋಡ್ ತೋರಿಸಲು ಕೇಳಿ. ನಂತರ ಹಸ್ತಾಂತರವನ್ನು ದೃಢೀಕರಿಸಲು ಅದನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.",
+  "orLabel": "ಅಥವಾ",
+  "cantScanQr": "QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲವೇ?",
+  "enterPickupVerificationCode": "6 ಅಂಕಿಗಳ ಪಿಕಪ್ ದೃಢೀಕರಣ ಕೋಡ್ ನಮೂದಿಸಿ.",
+  "verifyCode": "ಕೋಡ್ ದೃಢೀಕರಿಸಿ",
+  "tryAnotherWay": "ಬೇರೆ ವಿಧಾನವನ್ನು ಪ್ರಯತ್ನಿಸಿ"
 }
