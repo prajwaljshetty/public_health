@@ -45,7 +45,10 @@ flutter:
     # Images :
     - assets/images/ManilaQRCode.png
 
-    # Gifs :
+    # GIFS :
+    - assets/gifs/running.gif
+
+    # Lottie :
     - assets/animations/pickupConfirmed.json
     - assets/animations/coins.json
     - assets/animations/box.json
