@@ -70,7 +70,7 @@ class AppText {
 class AppScaffold extends StatelessWidget {
   final Widget? header;
   final Widget body;
-  final Widget? bottom;
+  final Widget bottom;
   final List<Widget>? trailing;
   final bool showBack;
 
@@ -78,7 +78,7 @@ class AppScaffold extends StatelessWidget {
     super.key,
     this.header,
     required this.body,
-    this.bottom,
+    required this.bottom,
     this.trailing,
     this.showBack = true,
   });
@@ -121,20 +121,14 @@ class AppScaffold extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 22),
-                    child: SingleChildScrollView(
-                      keyboardDismissBehavior:
-                          ScrollViewKeyboardDismissBehavior.onDrag,
-                      padding: EdgeInsets.only(bottom: keyboard + 16),
-                      child: body,
-                    ),
+                    child: body,
                   ),
                 ),
 
-                if (bottom != null)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 22),
-                    child: bottom!,
-                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  child: bottom!,
+                ),
               ],
             ),
 
@@ -156,9 +150,10 @@ class AppScaffold extends StatelessWidget {
 
             if (trailing != null)
               Positioned(
-                top: 8,
+                top: 0,
+                left: showBack ? 60 : 22,
                 right: 22,
-                child: Row(mainAxisSize: MainAxisSize.min, children: trailing!),
+                child: Row(mainAxisSize: MainAxisSize.max, children: trailing!),
               ),
           ],
         ),
@@ -200,7 +195,8 @@ class AppOptionCard extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                color: AppColors.yellow,
+                color: AppColors.backgroundwhite,
+                border: Border.all(width: 1),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(icon, color: AppColors.accent, size: 26),
@@ -253,7 +249,7 @@ class AppTextField extends StatelessWidget {
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: AppColors.backgroundwhite,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: AppColors.border, width: 1),
           ),
@@ -383,6 +379,30 @@ class AppDashedDivider extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class AppIcon extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onClick;
+
+  const AppIcon({super.key, required this.icon, required this.onClick});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.backgroundblack, width: 1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: CupertinoButton(
+        padding: const EdgeInsets.all(4),
+        onPressed: onClick,
+        child: Icon(icon, color: AppColors.accent, size: 24),
+      ),
     );
   }
 }

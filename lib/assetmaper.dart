@@ -3,6 +3,9 @@ class AssetMapper {
   static String qrCode = 'assets/images/ManilaQRCode.png';
 
   // Gifs :
+  static String running = 'assets/gifs/running.gif';
+
+  // Lottie :
   static String pickupConfirmed = 'assets/animations/pickupConfirmed.json';
   static String coins = 'assets/animations/coins.json';
   static String box = 'assets/animations/box.json';
