@@ -215,7 +215,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quickCheckSubtitle =>
-      'Just a few quick questions to help us prepare for your pickup.\nYour answers help workers handle the waste safely.';
+      'Just a few quick questions to help us prepare for your pickup.Your answers help workers handle the waste safely.';
 
   @override
   String get sharpObjectsQuestion =>
@@ -476,4 +476,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tryAnotherWay => 'Try Another Way';
+
+  @override
+  String get serverDownTitle => 'Server Temporarily Down';
+
+  @override
+  String get serverDownDescription =>
+      'Our servers are currently unavailable. We’re working hard to get everything back up and running.';
+
+  @override
+  String get serverDownWhatCanYouDo => 'What can you do?';
+
+  @override
+  String get serverDownInstructions =>
+      'There’s nothing you need to fix on your end. Please wait a little while and try again. We appreciate your patience while we restore our services.';
+
+  @override
+  String get serverDownRetry => 'Try Again';
+
+  @override
+  String get serverDownFooter => 'Thank you for bearing with us.';
 }

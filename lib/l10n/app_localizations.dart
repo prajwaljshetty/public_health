@@ -473,7 +473,7 @@ abstract class AppLocalizations {
   /// No description provided for @quickCheckSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Just a few quick questions to help us prepare for your pickup.\nYour answers help workers handle the waste safely.'**
+  /// **'Just a few quick questions to help us prepare for your pickup.Your answers help workers handle the waste safely.'**
   String get quickCheckSubtitle;
 
   /// No description provided for @sharpObjectsQuestion.
@@ -961,6 +961,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try Another Way'**
   String get tryAnotherWay;
+
+  /// No description provided for @serverDownTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Server Temporarily Down'**
+  String get serverDownTitle;
+
+  /// No description provided for @serverDownDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Our servers are currently unavailable. We’re working hard to get everything back up and running.'**
+  String get serverDownDescription;
+
+  /// No description provided for @serverDownWhatCanYouDo.
+  ///
+  /// In en, this message translates to:
+  /// **'What can you do?'**
+  String get serverDownWhatCanYouDo;
+
+  /// No description provided for @serverDownInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'There’s nothing you need to fix on your end. Please wait a little while and try again. We appreciate your patience while we restore our services.'**
+  String get serverDownInstructions;
+
+  /// No description provided for @serverDownRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get serverDownRetry;
+
+  /// No description provided for @serverDownFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for bearing with us.'**
+  String get serverDownFooter;
 }
 
 class _AppLocalizationsDelegate

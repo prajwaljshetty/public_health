@@ -77,7 +77,7 @@
   "addPhoto": "Add Photo",
 
   "quickCheck": "Quick Safety Check",
-  "quickCheckSubtitle": "Just a few quick questions to help us prepare for your pickup.\nYour answers help workers handle the waste safely.",
+  "quickCheckSubtitle": "Just a few quick questions to help us prepare for your pickup.Your answers help workers handle the waste safely.",
   "sharpObjectsQuestion": "Does the waste contain any sharp objects, such as needles or blades?",
   "expiredMedicineQuestion": "Does the waste contain unused or expired medicines?",
   "bodyFluidsQuestion": "Does the waste include items that have come into contact with blood or other body fluids?",
@@ -178,5 +178,13 @@
   "cantScanQr": "Can't scan QR?",
   "enterPickupVerificationCode": "Enter the 6-digit pickup verification code.",
   "verifyCode": "Verify Code",
-  "tryAnotherWay": "Try Another Way"
+  "tryAnotherWay": "Try Another Way",
+
+    "serverDownTitle": "Server Temporarily Down",
+  "serverDownDescription": "Our servers are currently unavailable. We’re working hard to get everything back up and running.",
+  "serverDownWhatCanYouDo": "What can you do?",
+  "serverDownInstructions": "There’s nothing you need to fix on your end. Please wait a little while and try again. We appreciate your patience while we restore our services.",
+  "serverDownRetry": "Try Again",
+  "serverDownFooter": "Thank you for bearing with us."
+  
 }

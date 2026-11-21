@@ -221,7 +221,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get quickCheckSubtitle =>
-      'ನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಸಿದ್ಧರಾಗಲು ಕೆಲವು ತ್ವರಿತ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸಿ.\nನಿಮ್ಮ ಉತ್ತರಗಳು ಕಾರ್ಮಿಕರು ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ನಿರ್ವಹಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತವೆ.';
+      'ನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಸಿದ್ಧರಾಗಲು ಕೆಲವು ತ್ವರಿತ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸಿ.ನಿಮ್ಮ ಉತ್ತರಗಳು ಕಾರ್ಮಿಕರು ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ನಿರ್ವಹಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತವೆ.';
 
   @override
   String get sharpObjectsQuestion =>
@@ -485,4 +485,24 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get tryAnotherWay => 'ಬೇರೆ ವಿಧಾನವನ್ನು ಪ್ರಯತ್ನಿಸಿ';
+
+  @override
+  String get serverDownTitle => 'ಸರ್ವರ್ ತಾತ್ಕಾಲಿಕವಾಗಿ ಸ್ಥಗಿತಗೊಂಡಿದೆ';
+
+  @override
+  String get serverDownDescription =>
+      'ನಮ್ಮ ಸರ್ವರ್‌ಗಳು ಪ್ರಸ್ತುತ ಲಭ್ಯವಿಲ್ಲ. ಸೇವೆಗಳನ್ನು ಆದಷ್ಟು ಬೇಗ ಪುನಃ ಪ್ರಾರಂಭಿಸಲು ನಾವು ಕೆಲಸ ಮಾಡುತ್ತಿದ್ದೇವೆ.';
+
+  @override
+  String get serverDownWhatCanYouDo => 'ನೀವು ಏನು ಮಾಡಬಹುದು?';
+
+  @override
+  String get serverDownInstructions =>
+      'ನಿಮ್ಮ ಕಡೆಯಿಂದ ಏನನ್ನೂ ಸರಿಪಡಿಸುವ ಅಗತ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯ ಕಾಯ್ದು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. ನಮ್ಮ ಸೇವೆಗಳನ್ನು ಪುನಃ ಪ್ರಾರಂಭಿಸುವವರೆಗೆ ನಿಮ್ಮ ತಾಳ್ಮೆಗೆ ಧನ್ಯವಾದಗಳು.';
+
+  @override
+  String get serverDownRetry => 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ';
+
+  @override
+  String get serverDownFooter => 'ನಿಮ್ಮ ಸಹನೆಗೆ ಧನ್ಯವಾದಗಳು.';
 }
