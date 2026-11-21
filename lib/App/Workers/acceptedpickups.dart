@@ -1,27 +1,35 @@
 import 'package:flutter/cupertino.dart';
 
-// Provider :
+// Provider
 import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
 
 // Theme
 import 'package:public_health/Theme/theme.dart';
 import 'package:public_health/Language/language_switcher.dart';
-import 'package:public_health/Theme/profileicon.dart';
+
+// Profile
+import 'package:public_health/App/Workers/profile.dart';
+
+// Assets
+import 'package:public_health/assetmaper.dart';
+
+// Lottie
+import 'package:lottie/lottie.dart';
 
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 
-// Pickup Card :
+// Pickup Card
 import 'package:public_health/App/Workers/pickupcard.dart';
 
-// Map :
+// Map
 import 'package:public_health/App/Workers/map.dart';
 
-// Geolocator :
+// Geolocator
 import 'package:geolocator/geolocator.dart';
 
-// Provider :
+// Provider
 import 'package:public_health/Providers/Location/location.dart';
 
 // Services
@@ -92,7 +100,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
       for (final pickup in fetchedPickups) {
         final pickupData = pickup['pickup_data'] as Map<String, dynamic>;
 
-        final coordinate = pickupData['coordinate'] as Map<String, dynamic>;
+        final coordinate = pickupData['coordinates'] as Map<String, dynamic>;
 
         final latitude = (coordinate['latitude'] as num).toDouble();
 
@@ -250,15 +258,12 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
   }
 
   Widget _buildPickupList() {
-    return SizedBox(
-      height: 400,
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          ...pickups,
-          const SizedBox(height: 20),
-        ],
-      ),
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        ...pickups,
+        const SizedBox(height: 20),
+      ],
     );
   }
 
@@ -285,85 +290,74 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(24),
-      child: SizedBox(
-        height: 400,
-        child: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 400,
-              color: AppColors.backgroundwhite,
-            ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(width: double.infinity, color: AppColors.backgroundwhite),
 
-            SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: AnimatedSize(
-                duration: _animationDuration,
-                curve: Curves.easeInOutCubic,
-                alignment: Alignment.topCenter,
-                child: AnimatedSwitcher(
-                  duration: _animationDuration,
-                  switchInCurve: Curves.easeOut,
-                  switchOutCurve: Curves.easeIn,
-                  transitionBuilder: (child, animation) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: SizeTransition(
-                        sizeFactor: animation,
-                        axisAlignment: -1,
-                        child: child,
-                      ),
-                    );
-                  },
-                  child: KeyedSubtree(
-                    key: ValueKey(contentKey),
-                    child: content,
-                  ),
+          SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: AnimatedSwitcher(
+              duration: _animationDuration,
+              reverseDuration: _animationDuration,
+              switchInCurve: Curves.easeOut,
+              switchOutCurve: Curves.easeIn,
+
+              layoutBuilder: (currentChild, previousChildren) {
+                return Stack(
+                  alignment: Alignment.topCenter,
+                  children: [...previousChildren, ?currentChild],
+                );
+              },
+
+              transitionBuilder: (child, animation) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+
+              child: KeyedSubtree(key: ValueKey(contentKey), child: content),
+            ),
+          ),
+
+          // Top fade
+          Positioned(
+            top: -2,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 20,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    AppColors.backgroundwhite,
+                    AppColors.backgroundwhite.withValues(alpha: 0),
+                  ],
                 ),
               ),
             ),
+          ),
 
-            // Top fade
-            Positioned(
-              top: -2,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 20,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.backgroundwhite,
-                      AppColors.backgroundwhite.withValues(alpha: 0),
-                    ],
-                  ),
+          // Bottom fade
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 20,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    AppColors.backgroundwhite,
+                    AppColors.backgroundwhite.withValues(alpha: 0),
+                  ],
                 ),
               ),
             ),
-
-            // Bottom fade
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 20,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      AppColors.backgroundwhite,
-                      AppColors.backgroundwhite.withValues(alpha: 0),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -371,43 +365,42 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
   Widget _buildPickupCounter() {
     return SizedBox(
       height: 62,
-      child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        switchInCurve: Curves.easeOut,
-        switchOutCurve: Curves.easeIn,
-        transitionBuilder: (child, animation) {
-          return FadeTransition(
-            opacity: animation,
-            child: ScaleTransition(
-              scale: Tween<double>(begin: 0.95, end: 1).animate(animation),
-              child: child,
-            ),
-          );
-        },
-        child: _isLoading && pickups.isEmpty
-            ? const SizedBox(
-                key: ValueKey('counter-loading'),
-                height: 62,
+      child: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              opacity: _isLoading && pickups.isEmpty ? 1 : 0,
+              child: const SizedBox(
+                width: 52,
+                height: 52,
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.topLeft,
                   child: CupertinoActivityIndicator(radius: 14),
                 ),
-              )
-            : SizedBox(
-                key: const ValueKey('counter-value'),
-                height: 62,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '${pickups.length}',
-                    style: AppText.title.copyWith(
-                      color: AppColors.accent,
-                      fontSize: 52,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 300),
+              opacity: _isLoading && pickups.isEmpty ? 0 : 1,
+              child: Text(
+                '${pickups.length}',
+                style: AppText.title.copyWith(
+                  color: AppColors.accent,
+                  fontSize: 52,
+                  fontWeight: FontWeight.w800,
+                  height: 1,
                 ),
               ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -419,10 +412,18 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
     return AppScaffold(
       showBack: true,
 
-      trailing: const [
+      trailing: [
         LanguageSwitcher(),
-        SizedBox(width: 10),
-        ProfileIcon(role: 'worker'),
+        const Spacer(),
+        AppIcon(
+          icon: CupertinoIcons.person_fill,
+          onClick: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (_) => const ProfilePage()),
+            );
+          },
+        ),
       ],
 
       body: Column(
@@ -430,6 +431,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
         children: [
           const SizedBox(height: 60),
 
+          // Page title
           Text(
             l10n.myPickups,
             style: AppText.title.copyWith(
@@ -443,7 +445,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
 
           Text(l10n.manageAcceptedPickups, style: AppText.cardSubtitle),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 14),
 
           Container(
             width: double.infinity,
@@ -498,10 +500,11 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
                       ),
                     ),
 
-                    const Icon(
-                      CupertinoIcons.cube_box_fill,
-                      color: AppColors.accent,
-                      size: 90,
+                    Lottie.asset(
+                      AssetMapper.box,
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.contain,
                     ),
                   ],
                 ),
@@ -511,6 +514,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
 
           const SizedBox(height: 32),
 
+          // Accepted pickups heading
           Text(
             l10n.yourAcceptedPickups,
             style: AppText.title.copyWith(
@@ -522,7 +526,31 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
 
           const SizedBox(height: 0),
 
-          _buildPickupContent(),
+          Expanded(child: _buildPickupContent()),
+        ],
+      ),
+      bottom: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.backgroundblack, width: 1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                // Open AI Assistant
+              },
+              child: const Icon(
+                CupertinoIcons.sparkles,
+                color: AppColors.accent,
+                size: 26,
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -4,7 +4,6 @@ import 'dart:convert';
 
 // Theme :
 import 'package:public_health/Theme/theme.dart';
-import 'package:public_health/Theme/profileicon.dart';
 
 // Assets :
 import 'package:public_health/assetmaper.dart';
@@ -16,11 +15,11 @@ import 'package:public_health/Language/language_switcher.dart';
 // Pickup Card :
 import 'package:public_health/App/Workers/pickupcard.dart';
 
-// Lottie :
-import 'package:lottie/lottie.dart';
-
 // API
 import 'package:public_health/Services/API/Workers/api_service.dart';
+
+// Profile :
+import 'package:public_health/App/Workers/profile.dart';
 
 // Map :
 import 'package:public_health/App/Workers/map.dart';
@@ -98,25 +97,28 @@ class _HomePageState extends State<HomePage> {
       showBack: false,
 
       trailing: [
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          onPressed: () {
+        LanguageSwitcher(),
+        const Spacer(),
+        AppIcon(
+          icon: CupertinoIcons.cube_box_fill,
+          onClick: () {
             Navigator.push(
               context,
               CupertinoPageRoute(builder: (_) => AcceptedPickupsPage()),
             );
           },
-          child: const Icon(
-            CupertinoIcons.cube_box_fill,
-            color: AppColors.accent,
-            size: 36,
-          ),
         ),
-        LanguageSwitcher(),
         SizedBox(width: 10),
-        ProfileIcon(role: 'worker'),
+        AppIcon(
+          icon: CupertinoIcons.person_fill,
+          onClick: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (_) => ProfilePage()),
+            );
+          },
+        ),
       ],
-
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -124,7 +126,7 @@ class _HomePageState extends State<HomePage> {
 
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(22, 0, 22, 22),
+            padding: const EdgeInsets.fromLTRB(22, 20, 22, 22),
             alignment: Alignment.bottomLeft,
             decoration: BoxDecoration(
               color: AppColors.yellow,
@@ -134,11 +136,10 @@ class _HomePageState extends State<HomePage> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Lottie.asset(
-                  AssetMapper.box,
+                SizedBox(
                   width: 160,
                   height: 160,
-                  fit: BoxFit.contain,
+                  child: Image.asset(AssetMapper.running, fit: BoxFit.contain),
                 ),
                 Text(
                   l10n.workerHeroTitle,
@@ -176,7 +177,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Container(
                   width: double.infinity,
-                  height: 400,
+                  height: 356,
                   decoration: BoxDecoration(
                     color: AppColors.backgroundwhite,
                     borderRadius: BorderRadius.circular(24),
@@ -390,6 +391,30 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+      bottom: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.backgroundblack, width: 1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                // Open AI Assistant
+              },
+              child: const Icon(
+                CupertinoIcons.sparkles,
+                color: AppColors.accent,
+                size: 26,
+              ),
             ),
           ),
         ],

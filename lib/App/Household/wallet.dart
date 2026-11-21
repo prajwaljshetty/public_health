@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+
+// Provider
+import 'package:public_health/Providers/User/user.dart';
 
 // Theme
 import 'package:public_health/Theme/theme.dart';
 import 'package:public_health/Language/language_switcher.dart';
-import 'package:public_health/Theme/profileicon.dart';
 
 // Assets
 import 'package:public_health/assetmaper.dart';
@@ -11,11 +14,148 @@ import 'package:public_health/assetmaper.dart';
 // Lottie
 import 'package:lottie/lottie.dart';
 
+// Profile
+import 'package:public_health/App/Household/profile.dart';
+
+// API
+import 'package:public_health/Services/API/Household/api_service.dart';
+
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
 
-class WalletPage extends StatelessWidget {
+class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
+
+  @override
+  State<WalletPage> createState() => WalletPageState();
+}
+
+class WalletPageState extends State<WalletPage> {
+  int _points = 0;
+  bool _isLoading = true;
+  String? _errorMessage;
+
+  static const _animationDuration = Duration(milliseconds: 350);
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadPoints();
+    });
+  }
+
+  Future<void> _loadPoints() async {
+    if (!mounted) return;
+
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      final result = await ApiService.getPoints(userprovider: userProvider);
+
+      if (!mounted) return;
+
+      if (result['status'] != true) {
+        throw Exception(result['message'] ?? 'Unable to load points.');
+      }
+
+      setState(() {
+        _points = (result['points'] as num).toInt();
+        _isLoading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() {
+        _errorMessage = e.toString().replaceFirst('Exception: ', '');
+        _isLoading = false;
+      });
+    }
+  }
+
+  Widget _buildPointsValue() {
+    if (_isLoading) {
+      return const SizedBox(
+        height: 62,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: CupertinoActivityIndicator(
+            color: AppColors.backgroundwhite,
+            radius: 14,
+          ),
+        ),
+      );
+    }
+
+    if (_errorMessage != null) {
+      return SizedBox(
+        height: 62,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: _loadPoints,
+            child: const Icon(
+              CupertinoIcons.refresh,
+              color: AppColors.backgroundwhite,
+              size: 28,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Text(
+      '$_points',
+      style: AppText.title.copyWith(
+        color: AppColors.backgroundwhite,
+        fontSize: 52,
+        fontWeight: FontWeight.w800,
+      ),
+    );
+  }
+
+  Widget _buildErrorState() {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Row(
+        children: [
+          const Icon(
+            CupertinoIcons.exclamationmark_circle,
+            color: AppColors.red,
+            size: 16,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              _errorMessage ?? l10n.somethingWentWrong,
+              style: AppText.cardSubtitle.copyWith(
+                color: AppColors.red,
+                fontSize: 13,
+              ),
+            ),
+          ),
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            minimumSize: Size.zero,
+            onPressed: _loadPoints,
+            child: Text(
+              l10n.tryAgain,
+              style: AppText.button.copyWith(color: AppColors.accent),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +163,18 @@ class WalletPage extends StatelessWidget {
 
     return AppScaffold(
       showBack: true,
-      trailing: const [
+      trailing: [
         LanguageSwitcher(),
-        SizedBox(width: 10),
-        ProfileIcon(role: 'household'),
+        const Spacer(),
+        AppIcon(
+          icon: CupertinoIcons.person_fill,
+          onClick: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (_) => const ProfilePage()),
+            );
+          },
+        ),
       ],
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +196,6 @@ class WalletPage extends StatelessWidget {
 
           const SizedBox(height: 24),
 
-          // Wallet balance
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(20),
@@ -63,14 +210,14 @@ class WalletPage extends StatelessWidget {
                   children: [
                     const Icon(
                       CupertinoIcons.creditcard,
-                      color: AppColors.yellow,
+                      color: AppColors.backgroundwhite,
                       size: 24,
                     ),
                     const SizedBox(width: 10),
                     Text(
                       l10n.walletTotalBalance,
                       style: AppText.title.copyWith(
-                        color: AppColors.yellow,
+                        color: AppColors.backgroundwhite,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -86,18 +233,12 @@ class WalletPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            '0',
-                            style: AppText.title.copyWith(
-                              color: AppColors.yellow,
-                              fontSize: 52,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
+                          _buildPointsValue(),
+
                           Text(
                             l10n.points,
                             style: AppText.title.copyWith(
-                              color: AppColors.yellow,
+                              color: AppColors.backgroundwhite,
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                             ),
@@ -108,12 +249,14 @@ class WalletPage extends StatelessWidget {
 
                     Lottie.asset(
                       AssetMapper.coins,
-                      width: 120,
-                      height: 120,
+                      width: 140,
+                      height: 140,
                       fit: BoxFit.contain,
                     ),
                   ],
                 ),
+
+                if (_errorMessage != null) _buildErrorState(),
               ],
             ),
           ),
@@ -124,7 +267,8 @@ class WalletPage extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppColors.yellow,
+              color: AppColors.backgroundwhite,
+              border: Border.all(color: AppColors.border, width: 1),
               borderRadius: BorderRadius.circular(24),
             ),
             child: Row(
@@ -133,7 +277,8 @@ class WalletPage extends StatelessWidget {
                   width: 54,
                   height: 54,
                   decoration: BoxDecoration(
-                    color: AppColors.accent.withAlpha(20),
+                    color: AppColors.backgroundwhite,
+                    border: Border.all(color: AppColors.border, width: 1),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: const Icon(
@@ -159,6 +304,30 @@ class WalletPage extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+      bottom: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.backgroundblack, width: 1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                // Open AI Assistant
+              },
+              child: const Icon(
+                CupertinoIcons.sparkles,
+                color: AppColors.accent,
+                size: 26,
+              ),
             ),
           ),
         ],
