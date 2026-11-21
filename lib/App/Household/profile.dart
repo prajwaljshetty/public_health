@@ -25,39 +25,98 @@ class ProfilePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 40),
-
-          Center(
-            child: Column(
+          const SizedBox(height: 60),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              color: AppColors.backgroundwhite,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: AppColors.border, width: 1.2),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: 90,
-                  height: 90,
+                  width: 76,
+                  height: 76,
                   decoration: BoxDecoration(
-                    color: AppColors.yellow,
-                    shape: BoxShape.circle,
+                    color: AppColors.backgroundwhite,
+                    border: Border.all(width: 1),
+                    borderRadius: BorderRadius.circular(18),
                   ),
                   child: const Icon(
-                    CupertinoIcons.person_fill,
-                    size: 55,
+                    CupertinoIcons.person,
+                    size: 40,
                     color: AppColors.accent,
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(width: 18),
 
-                Text(userProvider.username ?? '', style: AppText.cardTitle),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        userProvider.username ?? '',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.cardTitle.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          height: 1.2,
+                        ),
+                      ),
 
-                const SizedBox(height: 4),
+                      const SizedBox(height: 9),
 
-                Text(
-                  '+91 ${userProvider.phoneno ?? ''}',
-                  style: AppText.cardSubtitle,
+                      Row(
+                        children: [
+                          const Icon(
+                            CupertinoIcons.phone,
+                            size: 15,
+                            color: AppColors.accent,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              '+91 ${userProvider.phoneno ?? ''}',
+                              style: AppText.cardSubtitle.copyWith(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 11,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.accent,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Text(
+                          'Household Account',
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.backgroundwhite,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-
           const SizedBox(height: 40),
 
           Text(l10n.account, style: AppText.label),
@@ -94,6 +153,30 @@ class ProfilePage extends StatelessWidget {
                 (route) => false,
               );
             },
+          ),
+        ],
+      ),
+      bottom: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.backgroundblack, width: 1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                // Open AI Assistant
+              },
+              child: const Icon(
+                CupertinoIcons.sparkles,
+                color: AppColors.accent,
+                size: 26,
+              ),
+            ),
           ),
         ],
       ),

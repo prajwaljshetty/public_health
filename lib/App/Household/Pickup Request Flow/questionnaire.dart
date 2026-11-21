@@ -69,12 +69,10 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         children: [
           const SizedBox(height: 100),
 
-          // Heading
           Text(l10n.quickCheck, style: AppText.title),
 
           const SizedBox(height: 8),
 
-          // Subtitle
           Text(l10n.quickCheckSubtitle, style: AppText.cardSubtitle),
 
           const SizedBox(height: 28),
@@ -84,7 +82,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(22, 20, 22, 24),
             decoration: BoxDecoration(
-              color: AppColors.yellow,
+              color: AppColors.backgroundwhite,
               border: Border.all(color: AppColors.textPrimary, width: 1.5),
               borderRadius: BorderRadius.circular(24),
             ),
@@ -106,12 +104,10 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
 
                 const SizedBox(height: 28),
 
-                // Question
                 Text(questions[_currentQuestion], style: AppText.cardTitle),
 
                 const SizedBox(height: 24),
 
-                // Yes
                 _AnswerOption(
                   text: l10n.yes,
                   selected: _selectedAnswer == l10n.yes,
@@ -125,7 +121,6 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
 
                 const SizedBox(height: 14),
 
-                // No
                 _AnswerOption(
                   text: l10n.no,
                   selected: _selectedAnswer == l10n.no,
@@ -142,7 +137,6 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         ],
       ),
 
-      // Bottom buttons
       bottom: Column(
         children: [
           AppPrimaryButton(
@@ -190,7 +184,9 @@ class _AnswerOption extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: selected ? AppColors.yellow : AppColors.textPrimary,
+                color: selected
+                    ? AppColors.backgroundwhite
+                    : AppColors.textPrimary,
                 width: 2,
               ),
             ),

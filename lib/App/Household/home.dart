@@ -3,13 +3,15 @@ import 'package:flutter/cupertino.dart';
 // Theme
 import 'package:public_health/Theme/theme.dart';
 import 'package:public_health/Language/language_switcher.dart';
-import 'package:public_health/Theme/profileicon.dart';
 
 // Assets
 import 'package:public_health/assetmaper.dart';
 
 // Lottie :
 import 'package:lottie/lottie.dart';
+
+// Profile :
+import 'package:public_health/App/Household/profile.dart';
 
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
@@ -41,24 +43,27 @@ class HomePage extends StatelessWidget {
     return AppScaffold(
       showBack: false,
       trailing: [
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          onPressed: () {
+        const LanguageSwitcher(),
+        Spacer(),
+        AppIcon(
+          icon: CupertinoIcons.creditcard_fill,
+          onClick: () {
             Navigator.push(
               context,
               CupertinoPageRoute(builder: (_) => const WalletPage()),
             );
           },
-          child: const Icon(
-            CupertinoIcons.creditcard_fill,
-            color: AppColors.accent,
-            size: 26,
-          ),
         ),
         const SizedBox(width: 10),
-        const LanguageSwitcher(),
-        const SizedBox(width: 10),
-        const ProfileIcon(role: 'household'),
+        AppIcon(
+          icon: CupertinoIcons.person_fill,
+          onClick: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (_) => const ProfilePage()),
+            );
+          },
+        ),
       ],
       body: Column(
         children: [
@@ -72,6 +77,7 @@ class HomePage extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             decoration: BoxDecoration(
               color: AppColors.yellow,
+
               borderRadius: BorderRadius.circular(24),
             ),
             child: Column(
@@ -108,10 +114,11 @@ class HomePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
                 color: const Color.fromARGB(255, 0, 0, 0),
-                width: 1.5,
+                width: 1,
               ),
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (pickuprequestdata.pickupStatus == 'requested' ||
                     pickuprequestdata.pickupStatus == 'assigned') ...[
@@ -170,13 +177,14 @@ class HomePage extends StatelessWidget {
                             border: Border.all(width: 1),
                           ),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 width: 44,
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  color: AppColors.yellow,
+                                  color: AppColors.backgroundwhite,
+                                  border: BoxBorder.all(width: 1),
                                   borderRadius: BorderRadius.circular(14),
                                 ),
                                 child: const Icon(
@@ -367,11 +375,18 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
 
-                  // Leading QR icon
-                  const Icon(
-                    CupertinoIcons.qrcode,
-                    size: 64,
-                    color: AppColors.textPrimary,
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundwhite,
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(width: 1),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.qrcode,
+                      size: 64,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ],
               ],
@@ -379,23 +394,46 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottom: Column(
+      bottom: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (pickuprequestdata.pickupStatus == "idle") ...[
-            AppPrimaryButton(
-              text: l10n.requestPickup,
-              onPressed: () {
-                if (pickuprequestdata.pickupStatus != "idle") return;
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (_) => const LocationPage()),
-                );
-              },
+            Expanded(
+              child: AppPrimaryButton(
+                text: l10n.requestPickup,
+                onPressed: () {
+                  if (pickuprequestdata.pickupStatus != "idle") return;
+
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (_) => const LocationPage()),
+                  );
+                },
+              ),
             ),
-            const SizedBox(height: 18),
-          ] else ...[
-            SizedBox(height: 5),
-          ],
+            const SizedBox(width: 12),
+          ] else
+            const Spacer(),
+
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.backgroundblack, width: 1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                // Open AI Assistant
+              },
+              child: const Icon(
+                CupertinoIcons.sparkles,
+                color: AppColors.accent,
+                size: 26,
+              ),
+            ),
+          ),
         ],
       ),
     );

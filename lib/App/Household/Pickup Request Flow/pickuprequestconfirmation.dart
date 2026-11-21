@@ -43,7 +43,6 @@ class _PickupRequestConfirmationPageState
 
   static const _animationDuration = Duration(milliseconds: 350);
 
-  // Shared with the worker pickup page so both animate identically.
   static const _animationEnd = 0.88;
   static const _pagePadding = 22.0;
 
@@ -59,7 +58,6 @@ class _PickupRequestConfirmationPageState
     super.dispose();
   }
 
-  // Error Dialog :
   void _showErrorDialog(String message) {
     showCupertinoDialog<void>(
       context: context,
@@ -79,7 +77,6 @@ class _PickupRequestConfirmationPageState
     );
   }
 
-  // Confirm Pickup :
   Future<void> _confirmPickup() async {
     if (_loading || _confirmed) return;
 
@@ -116,7 +113,9 @@ class _PickupRequestConfirmationPageState
         return;
       }
 
-      pickupProvider.setpickupid(pickupid: pickupResponse['pickupid']);
+      pickupProvider.setpickupid(
+        pickupid: pickupResponse['pickup_id'] as String,
+      );
 
       final dataResponse = await ApiService.getdata(
         userprovider: userProvider,
@@ -166,14 +165,12 @@ class _PickupRequestConfirmationPageState
     }
   }
 
-  // Lottie Animation :
   void _onAnimationLoaded(LottieComposition composition) {
     _controller.duration = composition.duration;
     _controller.value = 0;
     _controller.animateTo(_animationEnd, curve: Curves.linear);
   }
 
-  // Navigation :
   void _goHome() {
     Navigator.pushAndRemoveUntil(
       context,
@@ -182,7 +179,6 @@ class _PickupRequestConfirmationPageState
     );
   }
 
-  // Header Icon :
   Widget _buildIcon() {
     return SizedBox(
       width: 96,
@@ -192,13 +188,7 @@ class _PickupRequestConfirmationPageState
         switchInCurve: Curves.easeOut,
         switchOutCurve: Curves.easeIn,
         transitionBuilder: (child, animation) {
-          return FadeTransition(
-            opacity: animation,
-            child: ScaleTransition(
-              scale: Tween<double>(begin: 0.9, end: 1).animate(animation),
-              child: child,
-            ),
-          );
+          return FadeTransition(opacity: animation, child: child);
         },
         child: _confirmed
             ? Lottie.asset(
@@ -211,18 +201,16 @@ class _PickupRequestConfirmationPageState
               )
             : Center(
                 key: const ValueKey('tile'),
-                child: Container(
-                  width: 68,
-                  height: 68,
-                  decoration: BoxDecoration(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(22),
+                  child: Container(
+                    width: 96,
+                    height: 96,
                     color: AppColors.backgroundwhite,
-                    border: BoxBorder.all(width: 1),
-                    borderRadius: BorderRadius.circular(22),
-                  ),
-                  child: const Icon(
-                    CupertinoIcons.cube_box_fill,
-                    size: 44,
-                    color: AppColors.boxyellow,
+                    child: Image.asset(
+                      AssetMapper.running,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),
@@ -230,7 +218,6 @@ class _PickupRequestConfirmationPageState
     );
   }
 
-  // Animated Text :
   Widget _buildAnimatedText({required String text, required TextStyle style}) {
     return AnimatedSwitcher(
       duration: _animationDuration,
@@ -255,36 +242,29 @@ class _PickupRequestConfirmationPageState
     );
   }
 
-  // Heading :
   Widget _buildHeading(AppLocalizations l10n) {
-    return AnimatedSize(
-      duration: _animationDuration,
-      curve: Curves.easeInOut,
-      alignment: Alignment.topCenter,
-      child: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: [
-            _buildAnimatedText(
-              text: _confirmed
-                  ? l10n.pickupConfirmed
-                  : l10n.confirmPickupRequest,
-              style: AppText.title.copyWith(fontSize: 26),
-            ),
-            const SizedBox(height: 8),
-            _buildAnimatedText(
-              text: _confirmed
-                  ? l10n.pickupConfirmedMessage
-                  : l10n.pickupConfirmationMessage,
-              style: AppText.subtitle.copyWith(fontSize: 15),
-            ),
-          ],
-        ),
+    return SizedBox(
+      width: double.infinity,
+      height: 110,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _buildAnimatedText(
+            text: _confirmed ? l10n.pickupConfirmed : l10n.confirmPickupRequest,
+            style: AppText.title.copyWith(fontSize: 26),
+          ),
+          const SizedBox(height: 8),
+          _buildAnimatedText(
+            text: _confirmed
+                ? l10n.pickupConfirmedMessage
+                : l10n.pickupConfirmationMessage,
+            style: AppText.subtitle.copyWith(fontSize: 15),
+          ),
+        ],
       ),
     );
   }
 
-  // Body :
   Widget _buildBody(AppLocalizations l10n) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -292,7 +272,6 @@ class _PickupRequestConfirmationPageState
     );
   }
 
-  // Bottom Actions :
   Widget _buildBottomActions(AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(_pagePadding, 8, _pagePadding, 12),
