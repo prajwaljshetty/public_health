@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+// Theme :
 import 'package:public_health/Theme/theme.dart';
+
+// Language :
+import 'package:public_health/l10n/app_localizations.dart';
 
 class PickupCard extends StatelessWidget {
   final String pickupId;
@@ -55,7 +59,8 @@ class PickupCard extends StatelessWidget {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color: AppColors.yellow,
+            color: AppColors.backgroundwhite,
+            border: Border.all(width: 1),
             borderRadius: BorderRadius.circular(15),
           ),
           child: const Icon(
@@ -115,7 +120,6 @@ class PickupCard extends StatelessWidget {
     );
   }
 
-  /// Green label over a bold black value, like the Request Details card.
   Widget _stat({required String label, required Widget value}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,9 +143,9 @@ class PickupCard extends StatelessWidget {
     );
   }
 
-  Widget _distanceStat() {
+  Widget _distanceStat(AppLocalizations l10n) {
     return _stat(
-      label: 'Distance',
+      label: l10n.distanceLabel,
       value: Text(
         formattedDistance,
         style: AppText.label.copyWith(fontSize: 14),
@@ -149,9 +153,9 @@ class PickupCard extends StatelessWidget {
     );
   }
 
-  Widget _qnaStat() {
+  Widget _qnaStat(AppLocalizations l10n) {
     return _stat(
-      label: 'Q&A',
+      label: "Q&N",
       value: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -174,12 +178,12 @@ class PickupCard extends StatelessWidget {
     );
   }
 
-  Widget _idStat() {
+  Widget _idStat(AppLocalizations l10n) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: copyPickupId,
       child: _stat(
-        label: 'Pickup ID',
+        label: l10n.pickupIdLabel,
         value: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -207,6 +211,7 @@ class PickupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -230,9 +235,9 @@ class PickupCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(flex: 3, child: _distanceStat()),
-                Expanded(flex: 3, child: _qnaStat()),
-                Expanded(flex: 5, child: _idStat()),
+                Expanded(flex: 3, child: _distanceStat(l10n)),
+                Expanded(flex: 3, child: _qnaStat(l10n)),
+                Expanded(flex: 5, child: _idStat(l10n)),
               ],
             ),
           ],

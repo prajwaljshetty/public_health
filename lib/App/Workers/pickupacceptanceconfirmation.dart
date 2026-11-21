@@ -147,7 +147,6 @@ class _PickupAcceptanceConfirmationPageState
     }
   }
 
-  // Copy Pickup ID :
   Future<void> _copyPickupId() async {
     await Clipboard.setData(ClipboardData(text: widget.pickupId));
 
@@ -169,7 +168,6 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
-  // Lottie Animation :
   void _onAnimationLoaded(LottieComposition composition) {
     _controller.duration = composition.duration;
     _animationLoaded = true;
@@ -184,7 +182,6 @@ class _PickupAcceptanceConfirmationPageState
     _controller.animateTo(_animationEnd, curve: Curves.linear);
   }
 
-  // Navigation :
   void _goHome() {
     Navigator.pushAndRemoveUntil(
       context,
@@ -193,19 +190,16 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
-  // Pickup Time :
   String get _pickupTime {
     return DateFormat('dd MMM yyyy, hh:mm a')
         .format(DateTime.parse(widget.time));
   }
 
-  // Short Pickup ID :
   String get _shortPickupId {
     final id = widget.pickupId;
     return id.length > 12 ? '${id.substring(0, 12)}...' : id;
   }
 
-  // Detail Row :
   Widget _detail({required String label, required String value}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -216,7 +210,7 @@ class _PickupAcceptanceConfirmationPageState
             label,
             style: AppText.cardSubtitle.copyWith(
               fontSize: 14,
-              color: AppColors.accent,
+              color: AppColors.backgroundblack,
             ),
           ),
         ),
@@ -226,14 +220,17 @@ class _PickupAcceptanceConfirmationPageState
           child: Text(
             value,
             textAlign: TextAlign.end,
-            style: AppText.label.copyWith(fontSize: 15, height: 1.3),
+            style: AppText.label.copyWith(
+              fontSize: 15,
+              height: 1.3,
+              color: AppColors.accent,
+            ),
           ),
         ),
       ],
     );
   }
 
-  // Divider :
   Widget _divider({double spacing = 12}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: spacing),
@@ -241,12 +238,10 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
-  // Section Title :
   Widget _sectionTitle(String title) {
     return Text(title, style: AppText.cardTitle.copyWith(fontSize: 17));
   }
 
-  // Pickup ID :
   Widget _pickupIdDetail(AppLocalizations l10n) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -257,7 +252,7 @@ class _PickupAcceptanceConfirmationPageState
             l10n.pickupIdLabel,
             style: AppText.cardSubtitle.copyWith(
               fontSize: 14,
-              color: AppColors.accent,
+              color: AppColors.backgroundblack,
             ),
           ),
         ),
@@ -285,7 +280,10 @@ class _PickupAcceptanceConfirmationPageState
                       child: Text(
                         _shortPickupId,
                         overflow: TextOverflow.ellipsis,
-                        style: AppText.label.copyWith(fontSize: 13),
+                        style: AppText.label.copyWith(
+                          fontSize: 13,
+                          color: AppColors.accent,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 6),
@@ -304,7 +302,6 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
-  // Questionnaire :
   Widget _questionnaire(AppLocalizations l10n) {
     if (widget.qna.isEmpty) {
       return const SizedBox.shrink();
@@ -324,8 +321,8 @@ class _PickupAcceptanceConfirmationPageState
             (index) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColors.backgroundwhite.withValues(alpha: 0.7),
                 borderRadius: BorderRadius.circular(10),
+                border: BoxBorder.all(width: 1),
               ),
               child: Text(
                 '${index + 1}. ${widget.qna[index]}',
@@ -338,46 +335,36 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
-  // Pickup Details :
   Widget _pickupDetails(AppLocalizations l10n) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
       decoration: BoxDecoration(
         color: AppColors.backgroundwhite,
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(width: 1),
+        borderRadius: BorderRadius.circular(20),
       ),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.fromLTRB(18, 18, 18, 20),
-        decoration: BoxDecoration(
-          color: AppColors.yellow,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _sectionTitle(l10n.requestDetails),
-            const SizedBox(height: 18),
-            _detail(label: l10n.recipientLabel, value: widget.username),
-            _divider(),
-            _pickupIdDetail(l10n),
-            _divider(),
-            _detail(label: l10n.requestedTimeLabel, value: _pickupTime),
-            _divider(),
-            _detail(
-              label: l10n.distanceLabel,
-              value: '${widget.distance.toStringAsFixed(2)} km',
-            ),
-            if (widget.qna.isNotEmpty) _questionnaire(l10n),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _sectionTitle(l10n.requestDetails),
+          const SizedBox(height: 18),
+          _detail(label: l10n.recipientLabel, value: widget.username),
+          _divider(),
+          _pickupIdDetail(l10n),
+          _divider(),
+          _detail(label: l10n.requestedTimeLabel, value: _pickupTime),
+          _divider(),
+          _detail(
+            label: l10n.distanceLabel,
+            value: '${widget.distance.toStringAsFixed(2)} km',
+          ),
+          if (widget.qna.isNotEmpty) _questionnaire(l10n),
+        ],
       ),
     );
   }
 
-  // Header Icon :
   Widget _headerIcon() {
     return SizedBox(
       width: 96,
@@ -416,9 +403,9 @@ class _PickupAcceptanceConfirmationPageState
                     borderRadius: BorderRadius.circular(22),
                   ),
                   child: const Icon(
-                    CupertinoIcons.cube_box_fill,
+                    CupertinoIcons.cube_box,
                     size: 44,
-                    color: AppColors.boxyellow,
+                    color: AppColors.accent,
                   ),
                 ),
               ),
@@ -426,7 +413,6 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
-  // Header :
   Widget _header(AppLocalizations l10n) {
     return Column(
       children: [
@@ -461,7 +447,6 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
-  // Animated Text :
   Widget _animatedText({required String text, required TextStyle style}) {
     return AnimatedSwitcher(
       duration: _animationDuration,
@@ -486,7 +471,6 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
-  // Bottom Actions :
   Widget _bottomActions(AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(_pagePadding, 8, _pagePadding, 12),
@@ -541,6 +525,7 @@ class _PickupAcceptanceConfirmationPageState
                     ),
                     child: Column(
                       children: [
+                        const SizedBox(height: 32),
                         _header(l10n),
                         const SizedBox(height: 22),
                         _pickupDetails(l10n),
