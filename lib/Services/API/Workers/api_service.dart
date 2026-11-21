@@ -31,6 +31,7 @@ class ApiService {
       if (response.statusCode >= 200 &&
           response.statusCode < 300 &&
           data['status'] == true) {
+        await userprovider.setPref(userid: data['user_id']);
         await userprovider.setTokens(
           accesstoken: data['access_token'] as String,
           refreshtoken: data['refresh_token'] as String,
@@ -124,6 +125,7 @@ class ApiService {
 
       await userprovider.setUser(
         userid: userData['user_id'] as String,
+        workerid: userData['worker_id'] as String,
         username: userData['user_name'] as String,
         phoneno: userData['phoneno'] as String,
         role: userData['role'] as String,
@@ -363,7 +365,105 @@ class ApiService {
     }
   }
 
-  static void disconnectPickups() {
+  static Future<Map<String, dynamic>> confirmCollection({
+    required String pickupid,
+    required String code,
+    required UserProvider userprovider,
+  }) async {
+    try {
+      var accessToken = userprovider.accesstoken;
+
+      if (accessToken == null || accessToken.isEmpty) {
+        return {
+          'status': false,
+          'code': 'AUTH_REQUIRED',
+          'message': 'Please log in again.',
+        };
+      }
+
+      Future<http.Response> sendRequest(String token) {
+        return http.post(
+          Uri.parse('$httpBaseUrl/worker/pickup/confirm-collection'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({'pickup_id': pickupid, 'code': code}),
+        );
+      }
+
+      var response = await sendRequest(accessToken);
+
+      if (response.statusCode == 401) {
+        final refreshToken = userprovider.refreshtoken;
+
+        if (refreshToken == null || refreshToken.isEmpty) {
+          return {
+            'status': false,
+            'code': 'AUTH_REQUIRED',
+            'message': 'Please log in again.',
+          };
+        }
+
+        final tokenResponse = await getacesstoken(refreshtoken: refreshToken);
+
+        if (tokenResponse['status'] != true ||
+            tokenResponse['access_token'] == null) {
+          return {
+            'status': false,
+            'code': 'REFRESH_FAILED',
+            'message':
+                tokenResponse['detail'] ??
+                tokenResponse['message'] ??
+                'Session expired. Please log in again.',
+          };
+        }
+
+        accessToken = tokenResponse['access_token'] as String;
+
+        await userprovider.updateAccessToken(accessToken);
+
+        response = await sendRequest(accessToken);
+      }
+
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        final detail = data['detail'] ?? data['message'];
+
+        return {
+          'status': false,
+          'code': detail ?? 'HTTP_ERROR',
+          'message': detail ?? 'Failed to confirm collection.',
+          'http_status': response.statusCode,
+        };
+      }
+
+      if (data['status'] != true) {
+        return {
+          'status': false,
+          'code': data['detail'] ?? 'API_ERROR',
+          'message': data['message'] ?? 'Failed to confirm collection.',
+        };
+      }
+
+      return data;
+    } on http.ClientException {
+      return {
+        'status': false,
+        'code': 'NETWORK_ERROR',
+        'message': 'Unable to connect to the server.',
+      };
+    } on FormatException {
+      return {
+        'status': false,
+        'code': 'INVALID_RESPONSE',
+        'message': 'Invalid response received from the server.',
+      };
+    }
+  }
+
+  static void disconnect() {
     pickupChannel?.sink.add('logout');
     pickupChannel?.sink.close();
     pickupChannel = null;

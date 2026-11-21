@@ -34,16 +34,18 @@ class ApiService {
 
     final data = jsonDecode(response.body) as Map<String, dynamic>;
 
-    if (response.statusCode >= 200 &&
-        response.statusCode < 300 &&
-        data['status'] == true) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      await userprovider.setPref(userid: data['user_id']);
       await userprovider.setTokens(
         accesstoken: data['access_token'] as String,
         refreshtoken: data['refresh_token'] as String,
       );
     }
 
-    return {'status': data['status'], 'code': data['message']};
+    return {
+      'status': response.statusCode >= 200 && response.statusCode < 300,
+      'code': data['detail'],
+    };
   }
 
   static Future<Map<String, dynamic>> login({
@@ -64,6 +66,7 @@ class ApiService {
       if (response.statusCode >= 200 &&
           response.statusCode < 300 &&
           data['status'] == true) {
+        await userprovider.setPref(userid: data['user_id']);
         await userprovider.setTokens(
           accesstoken: data['access_token'] as String,
           refreshtoken: data['refresh_token'] as String,
@@ -159,6 +162,7 @@ class ApiService {
 
       await userprovider.setUser(
         userid: userData['user_id'] as String,
+        workerid: null,
         username: userData['user_name'] as String,
         phoneno: userData['phoneno'] as String,
         role: userData['role'] as String,
@@ -172,6 +176,88 @@ class ApiService {
           userprovider: userprovider,
           pickuprequestprovider: pickuprequestprovider,
         );
+      }
+
+      return result;
+    } on http.ClientException {
+      return {
+        'status': false,
+        'message': 'Unable to connect to the server.',
+        'code': 'NETWORK_ERROR',
+      };
+    } on FormatException {
+      return {
+        'status': false,
+        'message': 'The server returned an invalid response.',
+        'code': 'INVALID_RESPONSE',
+      };
+    }
+  }
+
+  static Future<Map<String, dynamic>> getPoints({
+    required UserProvider userprovider,
+  }) async {
+    final endpoint = '$httpBaseUrl/household/points';
+
+    try {
+      var response = await http.get(
+        Uri.parse(endpoint),
+        headers: {'Authorization': 'Bearer ${userprovider.accesstoken}'},
+      );
+
+      if (response.statusCode == 401) {
+        final refreshToken = userprovider.refreshtoken;
+
+        if (refreshToken == null || refreshToken.isEmpty) {
+          return {
+            'status': false,
+            'message': 'Please log in again.',
+            'code': 'AUTH_REQUIRED',
+          };
+        }
+
+        final tokenResponse = await getacesstoken(refreshtoken: refreshToken);
+
+        if (tokenResponse['status'] != true ||
+            tokenResponse['access_token'] == null) {
+          return {
+            'status': false,
+            'message':
+                tokenResponse['detail'] ??
+                tokenResponse['message'] ??
+                'Session expired. Please log in again.',
+            'code': 'REFRESH_FAILED',
+          };
+        }
+
+        final newAccessToken = tokenResponse['access_token'] as String;
+
+        await userprovider.updateAccessToken(newAccessToken);
+
+        response = await http.get(
+          Uri.parse(endpoint),
+          headers: {'Authorization': 'Bearer $newAccessToken'},
+        );
+      }
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        return {
+          'status': false,
+          'message': response.statusCode == 401
+              ? 'Session expired. Please log in again.'
+              : 'Request failed with status ${response.statusCode}.',
+          'code': response.statusCode == 401 ? 'AUTH_REQUIRED' : 'HTTP_ERROR',
+        };
+      }
+
+      final result = jsonDecode(response.body) as Map<String, dynamic>;
+
+      if (result['status'] != true) {
+        return {
+          'status': false,
+          'message': result['message'] ?? 'Unable to fetch points.',
+          'code': 'API_ERROR',
+        };
       }
 
       return result;
@@ -229,7 +315,6 @@ class ApiService {
         };
       }
 
-      // Extract pickup status
       final pickupStatus = requestData['pickup_status'] as String?;
 
       pickuprequestprovider.pickupStatus = pickupStatus ?? 'idle';
@@ -240,13 +325,12 @@ class ApiService {
         return requestData;
       }
 
-      // Normalize requested and assigned pickup structures
       final actualPickupData = pickup.containsKey('pickup_data')
           ? pickup['pickup_data'] as Map<String, dynamic>
           : pickup as Map<String, dynamic>;
 
-      // Extract pickup information
-      final coordinate = actualPickupData['coordinate'] as Map<String, dynamic>;
+      final coordinate =
+          actualPickupData['coordinates'] as Map<String, dynamic>;
 
       pickuprequestprovider.pickupid = requestData['pickup_id'] as String?;
 
@@ -376,6 +460,8 @@ class ApiService {
         };
       }
 
+      pickupRequestProvider.pickupid = data['pickup_id'] as String?;
+
       pickupstatusstream(
         userprovider: userprovider,
         pickuprequestprovider: pickupRequestProvider,
@@ -426,8 +512,6 @@ class ApiService {
         (message) {
           try {
             final data = jsonDecode(message.toString());
-
-            //print(message);
 
             if (data is! Map<String, dynamic>) {
               return;
