@@ -13,9 +13,6 @@ import 'package:public_health/Providers/User/user.dart';
 // Portal :
 import 'package:public_health/Portal/portal.dart';
 
-// API
-import 'package:public_health/Services/API/Workers/api_service.dart';
-
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -28,39 +25,133 @@ class ProfilePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 40),
+          const SizedBox(height: 60),
 
           Center(
-            child: Column(
-              children: [
-                Container(
-                  width: 90,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    color: AppColors.yellow,
-                    shape: BoxShape.circle,
+            child: Container(
+              width: double.infinity,
+              constraints: const BoxConstraints(maxWidth: 380),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.yellow,
+                borderRadius: BorderRadius.circular(18),
+                //border: Border.all(width: 1),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'WORKER IDENTIFICATION',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.accent,
+                          letterSpacing: 0.7,
+                        ),
+                      ),
+                      const Icon(
+                        CupertinoIcons.checkmark_seal_fill,
+                        color: AppColors.accent,
+                        size: 26,
+                      ),
+                    ],
                   ),
-                  child: const Icon(
-                    CupertinoIcons.person_fill,
-                    size: 55,
-                    color: AppColors.accent,
+
+                  const SizedBox(height: 14),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 100,
+                        height: 110,
+                        decoration: BoxDecoration(
+                          color: AppColors.backgroundwhite,
+                          border: Border.all(width: 1),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: const Icon(
+                          CupertinoIcons.person,
+                          size: 55,
+                          color: AppColors.accent,
+                        ),
+                      ),
+
+                      const SizedBox(width: 16),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'WORKER ID',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.backgroundblack,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              userProvider.workerid ?? '',
+                              style: AppText.cardTitle.copyWith(
+                                fontSize: 17,
+                                color: AppColors.accent,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            const Text(
+                              'NAME',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.backgroundblack,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              userProvider.username ?? '',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppText.cardTitle.copyWith(
+                                fontSize: 17,
+                                color: AppColors.accent,
+                              ),
+                            ),
+
+                            const SizedBox(height: 10),
+
+                            const Text(
+                              'PHONE NUMBER',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.backgroundblack,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              '+91 ${userProvider.phoneno ?? ''}',
+                              style: AppText.cardTitle.copyWith(
+                                fontSize: 17,
+                                color: AppColors.accent,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-
-                const SizedBox(height: 10),
-
-                Text(userProvider.username ?? '', style: AppText.cardTitle),
-
-                const SizedBox(height: 4),
-
-                Text(
-                  '+91 ${userProvider.phoneno ?? ''}',
-                  style: AppText.cardSubtitle,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-
           const SizedBox(height: 40),
 
           Text(l10n.account, style: AppText.label),
@@ -87,7 +178,6 @@ class ProfilePage extends StatelessWidget {
             icon: CupertinoIcons.square_arrow_right,
             title: l10n.logOut,
             onPressed: () async {
-              ApiService.disconnectPickups();
               await userProvider.logout();
 
               if (!context.mounted) return;
@@ -98,6 +188,30 @@ class ProfilePage extends StatelessWidget {
                 (route) => false,
               );
             },
+          ),
+        ],
+      ),
+      bottom: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.backgroundblack, width: 1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                // Open AI Assistant
+              },
+              child: const Icon(
+                CupertinoIcons.sparkles,
+                color: AppColors.accent,
+                size: 26,
+              ),
+            ),
           ),
         ],
       ),
