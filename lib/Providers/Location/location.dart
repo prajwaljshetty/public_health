@@ -13,7 +13,6 @@ class LocationProvider extends ChangeNotifier {
   Future<void> startStreaming() async {
     if (_subscription != null) return;
 
-    // Check whether location services are enabled.
     final serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!serviceEnabled) {
@@ -22,7 +21,6 @@ class LocationProvider extends ChangeNotifier {
       return;
     }
 
-    // Check location permission.
     var permission = await Geolocator.checkPermission();
 
     if (permission == LocationPermission.denied) {
