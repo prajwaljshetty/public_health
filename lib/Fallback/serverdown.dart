@@ -1,5 +1,11 @@
 import 'package:flutter/cupertino.dart';
+
+// Theme
 import 'package:public_health/Theme/theme.dart';
+
+// Language
+import 'package:public_health/l10n/app_localizations.dart';
+import 'package:public_health/Language/language_switcher.dart';
 
 class ServerDownPage extends StatelessWidget {
   final VoidCallback onReload;
@@ -8,58 +14,136 @@ class ServerDownPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return AppScaffold(
       showBack: false,
+      trailing: [LanguageSwitcher(), const Spacer()],
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 120),
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: AppColors.yellow,
-                borderRadius: BorderRadius.circular(36),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Main server status card
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 38),
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundwhite,
+                  border: Border.all(
+                    color: AppColors.backgroundblack,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                child: Column(
+                  children: [
+                    // Server illustration
+                    Container(
+                      width: 104,
+                      height: 104,
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.white,
+                        borderRadius: BorderRadius.circular(28),
+                        border: Border.all(
+                          color: AppColors.backgroundblack,
+                          width: 1,
+                        ),
+                      ),
+                      child: const Icon(
+                        CupertinoIcons.wrench,
+                        color: AppColors.accent,
+                        size: 52,
+                      ),
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // Title
+                    Text(
+                      l10n.serverDownTitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.accent,
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    // Description
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 28),
+                      child: Text(
+                        l10n.serverDownDescription,
+                        textAlign: TextAlign.center,
+                        style: AppText.subtitle,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              alignment: Alignment.center,
-              child: const Icon(
-                CupertinoIcons.gear_alt,
-                size: 60,
-                color: AppColors.accent,
+
+              const SizedBox(height: 32),
+
+              // What you can do
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(l10n.serverDownWhatCanYouDo, style: AppText.title),
               ),
-            ),
 
-            const SizedBox(height: 32),
+              const SizedBox(height: 14),
 
-            const Text(
-              'Server Unavailable',
-              textAlign: TextAlign.center,
-              style: AppText.title,
-            ),
+              // Instructions
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  l10n.serverDownInstructions,
+                  style: AppText.subtitle,
+                ),
+              ),
 
-            const SizedBox(height: 12),
+              const SizedBox(height: 32),
 
-            const Text(
-              'We couldn’t connect to our server right now. '
-              'Please check your connection or try again in a moment.',
-              textAlign: TextAlign.center,
-              style: AppText.subtitle,
-            ),
+              // Retry
+              AppPrimaryButton(text: l10n.serverDownRetry, onPressed: onReload),
 
-            const SizedBox(height: 32),
+              const SizedBox(height: 18),
 
-            AppPrimaryButton(text: 'Reload', onPressed: onReload),
-
-            const SizedBox(height: 12),
-
-            const Text(
-              'We’ll be back as soon as possible.',
-              textAlign: TextAlign.center,
-              style: AppText.caption,
-            ),
-          ],
+              // Footer
+              Text(
+                l10n.serverDownFooter,
+                style: AppText.caption,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
+      ),
+      bottom: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.backgroundblack, width: 1),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                // Open AI Assistant
+              },
+              child: const Icon(
+                CupertinoIcons.sparkles,
+                color: AppColors.accent,
+                size: 26,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
