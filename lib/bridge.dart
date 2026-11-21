@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 // Portal
 import 'package:public_health/Portal/portal.dart';
@@ -16,7 +17,6 @@ import 'package:public_health/Services/API/Household/api_service.dart'
 import 'package:public_health/Services/API/Workers/api_service.dart' as worker;
 
 // Providers
-import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Household/requestpickup.dart';
 
@@ -28,8 +28,14 @@ class Bridge extends StatefulWidget {
 }
 
 class _BridgeState extends State<Bridge> {
-  bool _checking = false;
+  bool _isChecking = false;
   bool _serverDown = false;
+
+  UserProvider get _userProvider =>
+      Provider.of<UserProvider>(context, listen: false);
+
+  PickupRequestProvider get _pickupProvider =>
+      Provider.of<PickupRequestProvider>(context, listen: false);
 
   @override
   void initState() {
@@ -38,173 +44,155 @@ class _BridgeState extends State<Bridge> {
   }
 
   Future<void> checkLogin() async {
-    if (!mounted) return;
-    if (_checking) return;
+    if (!mounted || _isChecking) return;
+
+    _isChecking = true;
 
     setState(() {
-      _checking = true;
       _serverDown = false;
     });
 
     try {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      await _userProvider.initialize();
 
-      final pickupProvider = Provider.of<PickupRequestProvider>(
-        context,
-        listen: false,
+      if (!mounted) return;
+
+      if (!_hasValidSession) {
+        await _logoutAndGoToPortal();
+        return;
+      }
+
+      final householdResponse = await household.ApiService.getdata(
+        userprovider: _userProvider,
+        pickuprequestprovider: _pickupProvider,
       );
 
-      await userProvider.initialize();
-
       if (!mounted) return;
 
-      final uid = userProvider.userid;
-      final accessToken = userProvider.accesstoken;
-      final refreshToken = userProvider.refreshtoken;
-
-      final hasUserId = uid != null && uid.isNotEmpty;
-      final hasAccessToken = accessToken != null && accessToken.isNotEmpty;
-      final hasRefreshToken = refreshToken != null && refreshToken.isNotEmpty;
-
-      if (!hasUserId && !hasAccessToken && !hasRefreshToken) {
-        goToPortal();
+      if (householdResponse['status'] == true) {
+        await _initializeHousehold();
         return;
       }
 
-      if (hasAccessToken) {
-        final householdResponse = await household.ApiService.getdata(
-          userprovider: userProvider,
-          pickuprequestprovider: pickupProvider,
-        );
+      final householdCode = householdResponse['code'];
 
-        if (!mounted) return;
-
-        if (householdResponse['status'] == true) {
-          if (pickupProvider.pickupStatus != 'idle') {
-            final pickupResponse = await household.ApiService.getpickupdata(
-              userprovider: userProvider,
-              pickuprequestprovider: pickupProvider,
-            );
-
-            if (!mounted) return;
-
-            if (pickupResponse['status'] == true) {
-              final pickupId = pickupProvider.pickupid;
-
-              if (pickupId != null && pickupId.isNotEmpty) {
-                await household.ApiService.pickupstatusstream(
-                  userprovider: userProvider,
-                  pickuprequestprovider: pickupProvider,
-                );
-              }
-            }
-          }
-
-          if (!mounted) return;
-
-          Navigator.pushReplacement(
-            context,
-            CupertinoPageRoute(builder: (_) => const householdhome.HomePage()),
-          );
-
-          return;
-        }
-
-        // Handle household session errors.
-        var code = householdResponse['code'];
-
-        if (code == 'NETWORK_ERROR' ||
-            code == 'HTTP_ERROR' ||
-            code == 'INVALID_RESPONSE') {
-          showServerDown();
-          return;
-        }
-
-        if (code == 'AUTH_REQUIRED' || code == 'REFRESH_FAILED') {
-          await userProvider.logout();
-
-          if (!mounted) return;
-
-          goToPortal();
-          return;
-        }
-
-        // Check the worker session.
-        final workerResponse = await worker.ApiService.getdata(
-          userprovider: userProvider,
-        );
-
-        if (!mounted) return;
-
-        if (workerResponse['status'] == true) {
-          Navigator.pushReplacement(
-            context,
-            CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
-          );
-
-          return;
-        }
-
-        code = workerResponse['code'];
-
-        if (code == 'NETWORK_ERROR' ||
-            code == 'HTTP_ERROR' ||
-            code == 'INVALID_RESPONSE') {
-          showServerDown();
-          return;
-        }
-
-        if (code == 'AUTH_REQUIRED' || code == 'REFRESH_FAILED') {
-          await userProvider.logout();
-
-          if (!mounted) return;
-
-          goToPortal();
-          return;
-        }
-
-        showServerDown();
+      if (_isNetworkFailure(householdCode)) {
+        _showServerDown();
         return;
       }
 
-      // No access token remains.
-      await userProvider.logout();
+      if (_isAuthFailure(householdCode)) {
+        await _logoutAndGoToPortal();
+        return;
+      }
+
+      final workerResponse = await worker.ApiService.getdata(
+        userprovider: _userProvider,
+      );
 
       if (!mounted) return;
 
-      goToPortal();
+      if (workerResponse['status'] == true) {
+        _goToWorkerHome();
+        return;
+      }
+
+      final workerCode = workerResponse['code'];
+
+      if (_isNetworkFailure(workerCode)) {
+        _showServerDown();
+        return;
+      }
+
+      if (_isAuthFailure(workerCode)) {
+        await _logoutAndGoToPortal();
+        return;
+      }
+
+      _showServerDown();
     } catch (e, stackTrace) {
       debugPrint('Bridge error: $e');
       debugPrintStack(stackTrace: stackTrace);
 
-      if (!mounted) return;
-
-      showServerDown();
-    } finally {
       if (mounted) {
-        setState(() {
-          _checking = false;
-        });
+        _showServerDown();
       }
+    } finally {
+      _isChecking = false;
     }
   }
 
-  void showServerDown() {
-    if (!mounted) return;
+  bool get _hasValidSession {
+    final uid = _userProvider.userid;
+    final refreshToken = _userProvider.refreshtoken;
 
-    setState(() {
-      _checking = false;
-      _serverDown = true;
-    });
+    return uid != null &&
+        uid.isNotEmpty &&
+        refreshToken != null &&
+        refreshToken.isNotEmpty;
   }
 
-  void goToPortal() {
+  Future<void> _initializeHousehold() async {
+    if (_pickupProvider.pickupStatus != 'idle') {
+      final pickupResponse = await household.ApiService.getpickupdata(
+        userprovider: _userProvider,
+        pickuprequestprovider: _pickupProvider,
+      );
+
+      if (!mounted) return;
+
+      if (pickupResponse['status'] == true) {
+        final pickupId = _pickupProvider.pickupid;
+
+        if (pickupId != null && pickupId.isNotEmpty) {
+          await household.ApiService.pickupstatusstream(
+            userprovider: _userProvider,
+            pickuprequestprovider: _pickupProvider,
+          );
+        }
+      }
+    }
+
+    if (!mounted) return;
+
+    Navigator.pushReplacement(
+      context,
+      CupertinoPageRoute(builder: (_) => const householdhome.HomePage()),
+    );
+  }
+
+  bool _isNetworkFailure(dynamic code) {
+    return code == 'NETWORK_ERROR' || code == 'INVALID_RESPONSE';
+  }
+
+  bool _isAuthFailure(dynamic code) {
+    return code == 'AUTH_REQUIRED' || code == 'REFRESH_FAILED';
+  }
+
+  Future<void> _logoutAndGoToPortal() async {
+    await _userProvider.logout();
+
     if (!mounted) return;
 
     Navigator.pushReplacement(
       context,
       CupertinoPageRoute(builder: (_) => const Portal()),
     );
+  }
+
+  void _goToWorkerHome() {
+    Navigator.pushReplacement(
+      context,
+      CupertinoPageRoute(builder: (_) => const workerhome.HomePage()),
+    );
+  }
+
+  void _showServerDown() {
+    if (!mounted) return;
+
+    setState(() {
+      _serverDown = true;
+    });
   }
 
   @override

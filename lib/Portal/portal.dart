@@ -21,7 +21,7 @@ class Portal extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return AppScaffold(
-      trailing: const [LanguageSwitcher()],
+      trailing: const [Spacer(), LanguageSwitcher()],
       showBack: false,
       body: Column(
         children: [

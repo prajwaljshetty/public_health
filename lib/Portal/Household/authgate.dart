@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 // Theme
 import 'package:public_health/Theme/theme.dart';
 
-// Language
+// Language :
+import 'package:public_health/Language/language_switcher.dart';
 import 'package:public_health/l10n/app_localizations.dart';
 
 // Pages
@@ -18,6 +19,7 @@ class AuthGate extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return AppScaffold(
+      trailing: const [Spacer(), LanguageSwitcher()],
       body: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.16),
