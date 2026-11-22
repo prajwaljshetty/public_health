@@ -335,6 +335,14 @@ class _PickupAcceptanceConfirmationPageState
     );
   }
 
+  String formattedDistance(double distance) {
+    if (distance < 1000) {
+      return '${distance.round()} m';
+    }
+
+    return '${(distance / 1000).toStringAsFixed(1)} km';
+  }
+
   Widget _pickupDetails(AppLocalizations l10n) {
     return Container(
       width: double.infinity,
@@ -357,7 +365,7 @@ class _PickupAcceptanceConfirmationPageState
           _divider(),
           _detail(
             label: l10n.distanceLabel,
-            value: '${widget.distance.toStringAsFixed(2)} km',
+            value: formattedDistance(widget.distance),
           ),
           if (widget.qna.isNotEmpty) _questionnaire(l10n),
         ],

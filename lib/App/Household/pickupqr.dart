@@ -227,7 +227,6 @@ class PickupQrPageState extends State<PickupQrPage> {
 
             const SizedBox(height: 12),
 
-            // 2. QR ticket
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(12),
@@ -305,7 +304,7 @@ class PickupQrPageState extends State<PickupQrPage> {
                           horizontal: 15,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.layering,
+                          color: AppColors.backgroundwhite,
                           borderRadius: BorderRadius.circular(16),
                           border: BoxBorder.all(width: 1),
                         ),
@@ -313,6 +312,7 @@ class PickupQrPageState extends State<PickupQrPage> {
                           textAlign: TextAlign.center,
                           code.toString().split('').join('  '),
                           style: const TextStyle(
+                            color: AppColors.textPrimary,
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 2,
@@ -321,7 +321,6 @@ class PickupQrPageState extends State<PickupQrPage> {
                       ),
                     ),
 
-                    // Instructions
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(5),
@@ -351,30 +350,6 @@ class PickupQrPageState extends State<PickupQrPage> {
               ),
             ),
           ],
-        ],
-      ),
-      bottom: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.backgroundblack, width: 1),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                // Open AI Assistant
-              },
-              child: const Icon(
-                CupertinoIcons.sparkles,
-                color: AppColors.accent,
-                size: 26,
-              ),
-            ),
-          ),
         ],
       ),
     );

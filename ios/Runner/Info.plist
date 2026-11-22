@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera access is required to scan QR codes for verification.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is used to arrange medical waste pickups from your home.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -66,10 +70,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location is used to arrange medical waste pickups from your home.</string>
-
-	<key>NSCameraUsageDescription</key>
-	<string>We use the camera to take a photo of the medical waste for verification.</string>
 </dict>
 </plist>

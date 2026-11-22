@@ -70,7 +70,7 @@ class AppText {
 class AppScaffold extends StatelessWidget {
   final Widget? header;
   final Widget body;
-  final Widget bottom;
+  final Widget? bottom;
   final List<Widget>? trailing;
   final bool showBack;
 
@@ -78,7 +78,7 @@ class AppScaffold extends StatelessWidget {
     super.key,
     this.header,
     required this.body,
-    required this.bottom,
+    this.bottom,
     this.trailing,
     this.showBack = true,
   });
@@ -125,10 +125,11 @@ class AppScaffold extends StatelessWidget {
                   ),
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 22),
-                  child: bottom!,
-                ),
+                if (bottom != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    child: bottom,
+                  ),
               ],
             ),
 

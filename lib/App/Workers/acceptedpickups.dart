@@ -126,8 +126,8 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
             time: time,
             distance: distance,
             qna: qna,
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              final shouldRefresh = await Navigator.push<bool>(
                 context,
                 CupertinoPageRoute(
                   builder: (_) => MapPage(
@@ -142,6 +142,10 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
                   ),
                 ),
               );
+
+              if (shouldRefresh == true && mounted) {
+                await _refreshPickups();
+              }
             },
           ),
         );
@@ -527,30 +531,6 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
           const SizedBox(height: 0),
 
           Expanded(child: _buildPickupContent()),
-        ],
-      ),
-      bottom: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.backgroundblack, width: 1),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                // Open AI Assistant
-              },
-              child: const Icon(
-                CupertinoIcons.sparkles,
-                color: AppColors.accent,
-                size: 26,
-              ),
-            ),
-          ),
         ],
       ),
     );

@@ -52,7 +52,11 @@ class _LocationPageState extends State<LocationPage> {
         return;
       }
 
-      final coordinates = await Geolocator.getCurrentPosition();
+      final coordinates = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        ),
+      );
 
       if (mounted) {
         final pickuprequestdata = Provider.of<PickupRequestProvider>(

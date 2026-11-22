@@ -412,28 +412,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-          ] else
-            const Spacer(),
-
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.backgroundblack, width: 1),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                // Open AI Assistant
-              },
-              child: const Icon(
-                CupertinoIcons.sparkles,
-                color: AppColors.accent,
-                size: 26,
-              ),
-            ),
-          ),
+          ],
         ],
       ),
     );

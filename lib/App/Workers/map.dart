@@ -5,7 +5,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:public_health/Providers/User/user.dart';
 
 // Map
 import 'package:public_health/Theme/theme.dart';
@@ -20,14 +19,23 @@ import 'package:public_health/App/Workers/pickupacceptanceconfirmation.dart';
 // Assets
 import 'package:public_health/assetmaper.dart';
 
+// Lottie :
+import 'package:lottie/lottie.dart';
+
+// QR Scanner :
+import 'package:mobile_scanner/mobile_scanner.dart';
+
 // Provider
 import 'package:provider/provider.dart';
+import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Location/location.dart';
 
 // Services :
 import 'package:public_health/Services/API/Workers/api_service.dart';
 
 enum MapViewMode { discover, accepted }
+
+enum AcceptedModalState { idle, scanning, success }
 
 class MapPage extends StatefulWidget {
   final String pickupId;
@@ -69,20 +77,38 @@ class _MapPageState extends State<MapPage> {
   bool _isRequesting = false;
 
   final TextEditingController _codeController = TextEditingController();
+
+  // State and Error :
+  AcceptedModalState modalState = AcceptedModalState.idle;
+  String? collectionError;
+  MobileScannerController? _scannerController;
+  bool _isScanned = false;
+
+  // Code Dialog Box :
   final FocusNode _codeFocusNode = FocusNode();
 
   String get _verificationCode => _codeController.text;
-
   bool get _isCodeComplete => _verificationCode.length == 6;
 
-  Future<void> _confirmCollection(
+  bool _isValidCode(String code) {
+    return RegExp(r'^\d{6}$').hasMatch(code);
+  }
+
+  String formattedDistance(double distance) {
+    if (distance < 1000) {
+      return '${distance.round()} m';
+    }
+
+    return '${(distance / 1000).toStringAsFixed(1)} km';
+  }
+
+  Future<bool> _confirmCollection(
     String code,
     StateSetter setModalState,
   ) async {
-    if (_isRequesting) return;
-
     setModalState(() {
       _isRequesting = true;
+      collectionError = null;
     });
 
     try {
@@ -94,13 +120,47 @@ class _MapPageState extends State<MapPage> {
         userprovider: userProvider,
       );
 
-      if (!mounted) return;
+      if (!mounted) return false;
 
-      if (response['status'] == true) {
-        // Handle successful collection
-      } else {
-        // Handle API error
+      if (response['status'] != true) {
+        final errorMessage = switch (response['code']) {
+          'INVALID_PICKUP_CODE' ||
+          'INCORRECT_PICKUP_CODE' => 'Incorrect verification code.',
+
+          'PICKUP_CODE_NOT_GENERATED' => 'Verification code is not available.',
+
+          'PICKUP_NOT_AVAILABLE_FOR_COLLECTION' ||
+          'PICKUP_NOT_ACCEPTED' => 'This pickup is no longer available.',
+
+          'PICKUP_NOT_ASSIGNED_TO_WORKER' || 'INSUFFICIENT_PERMISSIONS' =>
+            'You are not authorized to collect this pickup.',
+
+          'COLLECTION_ALREADY_PENDING' ||
+          'COLLECTION_PENDING_SYNC' => 'Collection is already being processed.',
+
+          'NETWORK_ERROR' => 'Unable to connect to the server.',
+
+          'INVALID_RESPONSE' => 'Invalid response from the server.',
+
+          _ => 'Unable to verify collection. Try again.',
+        };
+
+        setModalState(() {
+          collectionError = errorMessage;
+        });
+
+        return false;
       }
+
+      return true;
+    } catch (e) {
+      if (!mounted) return false;
+
+      setModalState(() {
+        collectionError = 'Unable to connect to the server.';
+      });
+
+      return false;
     } finally {
       if (mounted) {
         setModalState(() {
@@ -253,7 +313,7 @@ class _MapPageState extends State<MapPage> {
                       const SizedBox(height: 12),
                       _receiptDetail(
                         label: l10n.distanceLabel,
-                        value: '${widget.distance.toStringAsFixed(2)} km',
+                        value: formattedDistance(widget.distance),
                       ),
                       const SizedBox(height: 18),
                     ],
@@ -291,182 +351,497 @@ class _MapPageState extends State<MapPage> {
   }
 
   void _accepted() {
-    final l10n = AppLocalizations.of(context)!;
-
     _codeController.clear();
     _codeFocusNode.unfocus();
+
+    modalState = AcceptedModalState.idle;
+    collectionError = null;
 
     showCupertinoModalPopup(
       context: context,
       builder: (modalContext) {
         return StatefulBuilder(
           builder: (context, setModalState) {
-            return Container(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-              decoration: const BoxDecoration(
-                color: AppColors.backgroundwhite,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-              ),
-              child: SafeArea(
-                top: false,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Container(
-                          width: 38,
-                          height: 4,
-                          decoration: BoxDecoration(
-                            color: AppColors.layering,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 22),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(18),
-                        decoration: BoxDecoration(
-                          color: AppColors.backgroundwhite,
-                          borderRadius: BorderRadius.circular(22),
-                          border: Border.all(
-                            color: AppColors.backgroundblack,
-                            width: 1.3,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.cube_box_fill,
-                                  color: AppColors.boxyellow,
-                                  size: 33,
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  l10n.verifyPickup,
-                                  style: AppText.cardTitle.copyWith(
-                                    fontSize: 19,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 18),
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 22,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.backgroundwhite,
-                                borderRadius: BorderRadius.circular(17),
-                                border: Border.all(
-                                  color: AppColors.backgroundblack,
-                                  width: 1.3,
-                                ),
-                              ),
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    AssetMapper.qrCode,
-                                    height: 180,
-                                    width: 180,
-                                    fit: BoxFit.contain,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    l10n.scanHouseholdQrCode,
-                                    textAlign: TextAlign.center,
-                                    style: AppText.cardTitle.copyWith(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                    ),
-                                    child: Text(
-                                      l10n.scanHouseholdQrInstructions,
-                                      textAlign: TextAlign.center,
-                                      style: AppText.cardSubtitle.copyWith(
-                                        height: 1.5,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            AppPrimaryButton(
-                              isLoading: _isRequesting,
-                              text: l10n.scanQrCode,
-                              loadingText: l10n.pleaseWait,
-                              onPressed: () {},
-                            ),
-                            const SizedBox(height: 10),
-                            if (!_isRequesting)
-                              SizedBox(
-                                width: double.infinity,
-                                child: CupertinoButton(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 13,
-                                  ),
-                                  color: AppColors.backgroundwhite,
-                                  borderRadius: BorderRadius.circular(14),
-                                  onPressed: () {
-                                    _codeController.clear();
-                                    _codeFocusNode.unfocus();
-
-                                    _codeDailogBox(
-                                      modalContext,
-                                      l10n,
-                                      setModalState,
-                                    );
-
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) {
-                                          if (modalContext.mounted) {
-                                            _codeFocusNode.requestFocus();
-                                          }
-                                        });
-                                  },
-                                  child: Text(
-                                    l10n.tryAnotherWay,
-                                    style: AppText.cardTitle.copyWith(
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                    ],
-                  ),
-                ),
-              ),
-            );
+            return _buildAcceptedModal(modalContext, setModalState);
           },
         );
       },
-    ).whenComplete(() {
+    ).whenComplete(_disposeAcceptedModal);
+  }
+
+  Future<void> _disposeAcceptedModal() async {
+    await _disposeScanner();
+
+    if (!mounted) return;
+
+    setState(() {
       isModalOpen = false;
-      _codeController.clear();
-      _codeFocusNode.unfocus();
+      modalState = AcceptedModalState.idle;
+      collectionError = null;
+      _isRequesting = false;
     });
+
+    _isScanned = false;
+    _codeController.clear();
+    _codeFocusNode.unfocus();
+  }
+
+  Future<void> _disposeScanner() async {
+    final controller = _scannerController;
+    _scannerController = null;
+
+    await controller?.dispose();
+  }
+
+  Future<void> _startScanner(StateSetter setModalState) async {
+    if (modalState != AcceptedModalState.idle || _isRequesting) {
+      return;
+    }
+
+    _isScanned = false;
+
+    _scannerController = MobileScannerController(
+      formats: [BarcodeFormat.qrCode],
+      autoTorch: true,
+      facing: CameraFacing.back,
+    );
+
+    setModalState(() {
+      collectionError = null;
+      modalState = AcceptedModalState.scanning;
+    });
+  }
+
+  Future<void> _stopScanner(StateSetter setModalState) async {
+    await _disposeScanner();
+
+    _isScanned = false;
+
+    setModalState(() {
+      modalState = AcceptedModalState.idle;
+    });
+  }
+
+  Future<void> _verifyCode(
+    String code,
+    BuildContext modalContext,
+    StateSetter setModalState,
+  ) async {
+    if (_isRequesting || modalState == AcceptedModalState.success) {
+      return;
+    }
+
+    _isScanned = true;
+
+    await _disposeScanner();
+
+    if (!mounted || !modalContext.mounted) return;
+
+    setModalState(() {
+      modalState = AcceptedModalState.idle;
+      collectionError = null;
+    });
+
+    final success = await _confirmCollection(code, setModalState);
+
+    if (!mounted || !modalContext.mounted) return;
+
+    setModalState(() {
+      modalState = success
+          ? AcceptedModalState.success
+          : AcceptedModalState.idle;
+
+      if (success) {
+        collectionError = null;
+      }
+    });
+
+    _isScanned = false;
+  }
+
+  Future<void> _handleScannedCode(
+    String code,
+    BuildContext modalContext,
+    StateSetter setModalState,
+  ) async {
+    if (modalState != AcceptedModalState.scanning ||
+        _isRequesting ||
+        _isScanned ||
+        !_isValidCode(code)) {
+      return;
+    }
+
+    _isScanned = true;
+
+    await _verifyCode(code, modalContext, setModalState);
+  }
+
+  Widget _buildAcceptedModal(
+    BuildContext modalContext,
+    StateSetter setModalState,
+  ) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      decoration: const BoxDecoration(
+        color: AppColors.backgroundwhite,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 38,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AppColors.layering,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 22),
+
+              _buildVerificationCard(modalContext, setModalState),
+
+              const SizedBox(height: 12),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVerificationCard(
+    BuildContext modalContext,
+    StateSetter setModalState,
+  ) {
+    final l10n = AppLocalizations.of(context)!;
+
+    final isScanning = modalState == AcceptedModalState.scanning;
+    final isSuccess = modalState == AcceptedModalState.success;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundwhite,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: AppColors.backgroundblack, width: 1.3),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildVerificationHeader(l10n, isSuccess),
+
+          const SizedBox(height: 18),
+
+          _buildVerificationContent(
+            modalContext,
+            setModalState,
+            l10n,
+            isScanning,
+            isSuccess,
+          ),
+
+          const SizedBox(height: 12),
+
+          _buildVerificationActions(
+            modalContext,
+            setModalState,
+            l10n,
+            isScanning,
+            isSuccess,
+          ),
+
+          if (collectionError != null && !isSuccess) _buildCollectionError(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVerificationHeader(AppLocalizations l10n, bool isSuccess) {
+    return Row(
+      children: [
+        Icon(
+          CupertinoIcons.cube_box_fill,
+          color: AppColors.boxyellow,
+          size: 33,
+        ),
+
+        const SizedBox(width: 10),
+
+        Text(
+          isSuccess ? 'Collection confirmed' : l10n.verifyPickup,
+          style: AppText.cardTitle.copyWith(fontSize: 19),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVerificationContent(
+    BuildContext modalContext,
+    StateSetter setModalState,
+    AppLocalizations l10n,
+    bool isScanning,
+    bool isSuccess,
+  ) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundwhite,
+        borderRadius: BorderRadius.circular(17),
+        border: Border.all(color: AppColors.backgroundblack, width: 1.3),
+      ),
+      child: Column(
+        children: [
+          if (isSuccess)
+            _buildSuccessContent()
+          else if (isScanning && _scannerController != null)
+            _buildScannerPreview(modalContext, setModalState)
+          else if (_isRequesting)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 55),
+              child: CupertinoActivityIndicator(radius: 18),
+            )
+          else
+            Image.asset(
+              AssetMapper.qrCode,
+              height: 180,
+              width: 180,
+              fit: BoxFit.contain,
+            ),
+
+          if (!isSuccess) ...[
+            const SizedBox(height: 16),
+
+            Text(
+              isScanning
+                  ? 'Scan the household QR code'
+                  : _isRequesting
+                  ? 'Verifying collection...'
+                  : l10n.scanHouseholdQrCode,
+              textAlign: TextAlign.center,
+              style: AppText.cardTitle.copyWith(fontSize: 16),
+            ),
+
+            const SizedBox(height: 8),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                isScanning
+                    ? 'Position the QR code inside the camera frame.'
+                    : _isRequesting
+                    ? 'Please wait while we verify the code.'
+                    : l10n.scanHouseholdQrInstructions,
+                textAlign: TextAlign.center,
+                style: AppText.cardSubtitle.copyWith(height: 1.5),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSuccessContent() {
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+
+        Lottie.asset(
+          AssetMapper.pickupConfirmed,
+          width: 100,
+          height: 100,
+          fit: BoxFit.contain,
+          repeat: false,
+        ),
+
+        const SizedBox(height: 18),
+
+        Text(
+          'Pickup collected successfully!',
+          textAlign: TextAlign.center,
+          style: AppText.cardTitle.copyWith(fontSize: 17),
+        ),
+
+        const SizedBox(height: 8),
+
+        Text(
+          'The collection has been verified.',
+          textAlign: TextAlign.center,
+          style: AppText.cardSubtitle.copyWith(height: 1.5),
+        ),
+
+        const SizedBox(height: 20),
+      ],
+    );
+  }
+
+  Widget _buildScannerPreview(
+    BuildContext modalContext,
+    StateSetter setModalState,
+  ) {
+    return Center(
+      child: SizedBox(
+        width: 280,
+        height: 280,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: MobileScanner(
+            controller: _scannerController!,
+            onDetect: (capture) {
+              if (_isScanned || capture.barcodes.isEmpty) {
+                return;
+              }
+
+              final value = capture.barcodes.first.rawValue ?? '';
+
+              _handleScannedCode(value, modalContext, setModalState);
+            },
+            errorBuilder: (context, error) {
+              return _buildScannerError(error);
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildScannerError(MobileScannerException error) {
+    return Container(
+      color: CupertinoColors.black,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            CupertinoIcons.exclamationmark_circle,
+            color: CupertinoColors.white,
+            size: 32,
+          ),
+
+          const SizedBox(height: 12),
+
+          const Text(
+            'Camera unavailable',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: CupertinoColors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          Text(
+            error.errorDetails?.message ?? 'Unable to access the camera.',
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: CupertinoColors.white, fontSize: 13),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVerificationActions(
+    BuildContext modalContext,
+    StateSetter setModalState,
+    AppLocalizations l10n,
+    bool isScanning,
+    bool isSuccess,
+  ) {
+    if (isSuccess) {
+      return AppPrimaryButton(
+        text: 'Done',
+        onPressed: () {
+          Navigator.of(modalContext).pop();
+          Navigator.of(context).pop(true);
+        },
+      );
+    }
+
+    return Column(
+      children: [
+        AppPrimaryButton(
+          isLoading: _isRequesting,
+          text: isScanning ? l10n.cancel : l10n.scanQrCode,
+          loadingText: l10n.pleaseWait,
+          onPressed: () {
+            if (_isRequesting) return;
+
+            if (isScanning) {
+              _stopScanner(setModalState);
+            } else {
+              _startScanner(setModalState);
+            }
+          },
+        ),
+
+        if (!isScanning && !_isRequesting) ...[
+          const SizedBox(height: 10),
+
+          SizedBox(
+            width: double.infinity,
+            child: CupertinoButton(
+              padding: const EdgeInsets.symmetric(vertical: 13),
+              color: AppColors.backgroundwhite,
+              borderRadius: BorderRadius.circular(14),
+              onPressed: () {
+                _codeController.clear();
+                _codeFocusNode.unfocus();
+
+                _codeDailogBox(modalContext, l10n, setModalState, (code) async {
+                  await _verifyCode(code, modalContext, setModalState);
+                });
+
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (modalContext.mounted) {
+                    _codeFocusNode.requestFocus();
+                  }
+                });
+              },
+              child: Text(
+                l10n.tryAnotherWay,
+                style: AppText.cardTitle.copyWith(fontSize: 15),
+              ),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildCollectionError() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Center(
+        child: Text(
+          collectionError!,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 13,
+            color: CupertinoColors.systemRed,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
   }
 
   void _codeDailogBox(
     BuildContext modalContext,
     AppLocalizations l10n,
     StateSetter setModalState,
+    Future<void> Function(String code) onVerify,
   ) {
     showCupertinoDialog(
       context: modalContext,
@@ -579,8 +954,9 @@ class _MapPageState extends State<MapPage> {
                             onPressed: _isCodeComplete
                                 ? () {
                                     final code = _verificationCode;
-                                    _confirmCollection(code, setModalState);
+
                                     Navigator.pop(dialogContext);
+                                    onVerify(code);
                                   }
                                 : null,
                             child: Text(
