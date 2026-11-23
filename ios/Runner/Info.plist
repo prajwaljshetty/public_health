@@ -24,8 +24,20 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+
+	<!-- Mapbox Navigation SDK -->
+	<key>MBXAccessToken</key>
+	<string>$(MAPBOX_ACCESS_TOKEN)</string>
+
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+
+	<!-- Background audio for navigation voice instructions -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
+
 	<key>NSCameraUsageDescription</key>
 	<string>Camera access is required to scan QR codes for verification.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

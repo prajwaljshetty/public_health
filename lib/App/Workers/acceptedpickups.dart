@@ -30,7 +30,7 @@ import 'package:public_health/App/Workers/map.dart';
 import 'package:geolocator/geolocator.dart';
 
 // Provider
-import 'package:public_health/Providers/Location/location.dart';
+import 'package:public_health/Providers/Navigation/location.dart';
 
 // Services
 import 'package:public_health/Services/API/Workers/api_service.dart';

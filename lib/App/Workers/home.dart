@@ -33,7 +33,7 @@ import 'package:geolocator/geolocator.dart';
 // Provider :
 import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
-import 'package:public_health/Providers/Location/location.dart';
+import 'package:public_health/Providers/Navigation/location.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

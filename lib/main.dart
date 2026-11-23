@@ -15,7 +15,8 @@ import 'package:public_health/bridge.dart';
 import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Household/requestpickup.dart';
-import 'package:public_health/Providers/Location/location.dart';
+import 'package:public_health/Providers/Navigation/location.dart';
+import 'package:public_health/Providers/Navigation/navigation.dart';
 
 // Map :
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
@@ -34,6 +35,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => PickupRequestProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
+        ChangeNotifierProvider(create: (_) => NavigationProvider()),
       ],
       child: const MyApp(),
     ),

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:public_health/Services/Location/locationstream.dart';
+import 'package:public_health/Services/Navigation/locationstream.dart';
 
 class LocationProvider extends ChangeNotifier {
   Position? position;

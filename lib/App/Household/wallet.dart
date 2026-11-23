@@ -35,7 +35,7 @@ class WalletPageState extends State<WalletPage> {
   bool _isLoading = true;
   String? _errorMessage;
 
-  static const _animationDuration = Duration(milliseconds: 350);
+  //static const _animationDuration = Duration(milliseconds: 350);
 
   @override
   void initState() {

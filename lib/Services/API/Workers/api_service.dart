@@ -208,8 +208,6 @@ class ApiService {
         body: jsonEncode({'pickup_id': pickupid}),
       );
 
-      print(response.body);
-
       if (response.statusCode == 401) {
         final refreshToken = userprovider.refreshtoken;
 

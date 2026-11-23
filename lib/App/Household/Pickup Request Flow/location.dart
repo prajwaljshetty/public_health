@@ -73,7 +73,6 @@ class _LocationPageState extends State<LocationPage> {
         );
       }
     } catch (e) {
-      print('LOCATION ERROR: $e');
       if (mounted) _showDeniedDialog();
     } finally {
       if (mounted) setState(() => _loading = false);
