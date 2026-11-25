@@ -30,6 +30,7 @@ class NavigationProvider extends ChangeNotifier {
   }
 
   Future<void> startNavigation({
+    required String languageCode,
     required double originLatitude,
     required double originLongitude,
     required double destinationLatitude,
@@ -44,6 +45,7 @@ class NavigationProvider extends ChangeNotifier {
 
     try {
       _route = await _directionsService.getRoute(
+        languageCode: languageCode,
         originLatitude: originLatitude,
         originLongitude: originLongitude,
         destinationLatitude: destinationLatitude,

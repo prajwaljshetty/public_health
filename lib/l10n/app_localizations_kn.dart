@@ -17,14 +17,14 @@ class AppLocalizationsKn extends AppLocalizations {
       'ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ಮನೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುವ ಸೇವೆ.';
 
   @override
-  String get selectRole => 'ಮುಂದುವರಿಯಲು ನಿಮ್ಮ ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ.';
+  String get selectRole => 'ಮುಂದುವರಿಯಲು ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ.';
 
   @override
   String get household => 'ಮನೆ';
 
   @override
   String get householdSubtitle =>
-      'ನಿಮ್ಮ ಮನೆಯಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ವಿನಂತಿಸಿ.';
+      'ಮನೆಯಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಿ.';
 
   @override
   String get worker => 'ಪುರಸಭೆ ಕಾರ್ಮಿಕ';
@@ -34,155 +34,178 @@ class AppLocalizationsKn extends AppLocalizations {
       'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ವೀಕ್ಷಿಸಿ, ಸ್ವೀಕರಿಸಿ ಮತ್ತು ಪೂರ್ಣಗೊಳಿಸಿ.';
 
   @override
+  String get termsNote =>
+      'ಮುಂದುವರಿಯುವ ಮೂಲಕ, ಗೌಪ್ಯತಾ ನೀತಿ ಮತ್ತು ನಿಯಮಗಳು ಹಾಗೂ ಷರತ್ತುಗಳಿಗೆ ನೀವು ಒಪ್ಪುತ್ತೀರಿ.';
+
+  @override
   String get welcome => 'ಸ್ವಾಗತ';
 
   @override
   String get authSubtitle =>
-      'ನಿಮ್ಮ ಮನೆಯ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ವಿನಂತಿಸಿ.';
+      'ಮನೆಯ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಮತ್ತು ಅನುಕೂಲಕರವಾಗಿ ಸಂಗ್ರಹಿಸಲು ವ್ಯವಸ್ಥೆ ಮಾಡಿ.';
 
   @override
-  String get login => 'ಲಾಗಿನ್';
+  String get login => 'ಸೈನ್ ಇನ್';
 
   @override
   String get loginSubtitle =>
-      'ಪಿಕಪ್ ವಿನಂತಿಸಲು ಅಥವಾ ಈಗಾಗಲೇ ಸಲ್ಲಿಸಿದ ವಿನಂತಿಯ ಸ್ಥಿತಿಯನ್ನು ತಿಳಿಯಲು ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.';
+      'ಪಿಕಪ್ ವಿನಂತಿಸಲು ಅಥವಾ ವಿನಂತಿಯ ಸ್ಥಿತಿಯನ್ನು ನೋಡಲು ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.';
 
   @override
-  String get loginCardSubtitle => 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ? ಮುಂದುವರಿಯಲು ಲಾಗಿನ್ ಮಾಡಿ.';
+  String get loginCardSubtitle => 'ಖಾತೆ ಇದೆಯೇ? ಮುಂದುವರಿಯಲು ಸೈನ್ ಇನ್ ಮಾಡಿ.';
 
   @override
   String get createAccount => 'ಖಾತೆ ರಚಿಸಿ';
 
   @override
   String get createAccountSubtitle =>
-      'ನಿಮ್ಮ ಮನೆಯಿಂದ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿಸಲು ನೋಂದಾಯಿಸಿ.';
+      'ಸುರಕ್ಷಿತ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಪಿಕಪ್‌ಗಾಗಿ ಮನೆಯನ್ನು ನೋಂದಾಯಿಸಿ.';
 
   @override
-  String get createAccountCardSubtitle =>
-      'ಈ ಸೇವೆಗೆ ಹೊಸಬರೇ? ಪ್ರಾರಂಭಿಸಲು ಖಾತೆ ರಚಿಸಿ.';
+  String get createAccountCardSubtitle => 'ಹೊಸಬರೇ? ಪ್ರಾರಂಭಿಸಲು ಖಾತೆ ರಚಿಸಿ.';
 
   @override
   String get createAccountNote =>
-      'ನಿಮ್ಮ ವಿವರಗಳನ್ನು ಖಾತೆ ನಿರ್ವಹಣೆ ಮತ್ತು ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಮಾತ್ರ ಬಳಸಲಾಗುತ್ತದೆ.';
+      'ಖಾತೆ ನಿರ್ವಹಣೆ ಮತ್ತು ಪಿಕಪ್ ವ್ಯವಸ್ಥೆಗಾಗಿ ಮಾತ್ರ ನಿಮ್ಮ ವಿವರಗಳನ್ನು ಬಳಸಲಾಗುತ್ತದೆ.';
 
   @override
   String get fullName => 'ಪೂರ್ಣ ಹೆಸರು';
 
   @override
-  String get fullNamePlaceholder => 'ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ';
+  String get fullNamePlaceholder => 'ಪೂರ್ಣ ಹೆಸರು ನಮೂದಿಸಿ';
 
   @override
   String get phoneNumber => 'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ';
 
   @override
-  String get phonePlaceholder => 'ನಿಮ್ಮ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
+  String get phonePlaceholder => 'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ';
 
   @override
-  String get registeredPlaceholder =>
-      'ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ';
+  String get registeredPlaceholder => 'ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ';
 
   @override
   String get password => 'ಪಾಸ್‌ವರ್ಡ್';
 
   @override
-  String get passwordPlaceholder => 'ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ';
+  String get passwordPlaceholder => 'ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ';
 
   @override
-  String get usernameRequired => 'ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.';
+  String get signIn => 'ಸೈನ್ ಇನ್';
 
   @override
-  String get usernameMinLength =>
-      'ನಿಮ್ಮ ಹೆಸರು ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳನ್ನು ಹೊಂದಿರಬೇಕು.';
+  String get loggingIn => 'ಸೈನ್ ಇನ್ ಆಗುತ್ತಿದೆ…';
 
   @override
-  String get invalidUsername =>
-      'ಹೆಸರಿನಲ್ಲಿ ಅಕ್ಷರಗಳು ಮತ್ತು ಖಾಲಿ ಜಾಗಗಳನ್ನು ಮಾತ್ರ ಬಳಸಿ.';
+  String get pleaseWait => 'ನಿರೀಕ್ಷಿಸಿ…';
 
   @override
-  String get phoneNumberRequired =>
-      'ದಯವಿಟ್ಟು ನಿಮ್ಮ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.';
+  String get usernameRequired => 'ಪೂರ್ಣ ಹೆಸರು ನಮೂದಿಸಿ.';
 
   @override
-  String get invalidPhoneNumber =>
-      'ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.';
+  String get usernameMinLength => 'ಹೆಸರು ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳಿರಬೇಕು.';
+
+  @override
+  String get invalidUsername => 'ಹೆಸರಿನಲ್ಲಿ ಅಕ್ಷರಗಳು ಮತ್ತು ಸ್ಪೇಸ್ ಮಾತ್ರ ಬಳಸಿ.';
+
+  @override
+  String get phoneNumberRequired => 'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.';
+
+  @override
+  String get invalidPhoneNumber => 'ಮಾನ್ಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.';
 
   @override
   String get phoneNumberAlreadyRegistered =>
-      'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ.';
+      'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಈಗಾಗಲೇ ನೋಂದಾಯಿತವಾಗಿದೆ.';
 
   @override
-  String get phoneNumberNotRegistered =>
-      'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಗೆ ಯಾವುದೇ ಖಾತೆ ಕಂಡುಬಂದಿಲ್ಲ.';
+  String get phoneNumberNotRegistered => 'ಈ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಗೆ ಖಾತೆ ಇಲ್ಲ.';
 
   @override
-  String get passwordRequired => 'ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.';
+  String get passwordRequired => 'ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.';
 
   @override
-  String get passwordMinLength =>
-      'ನಿಮ್ಮ ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳನ್ನು ಹೊಂದಿರಬೇಕು.';
+  String get passwordMinLength => 'ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳಿರಬೇಕು.';
 
   @override
-  String get incorrectPassword => 'ನೀವು ನಮೂದಿಸಿದ ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ.';
+  String get incorrectPassword => 'ತಪ್ಪಾದ ಪಾಸ್‌ವರ್ಡ್. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
 
   @override
-  String get loggingIn => 'ಲಾಗಿನ್ ಆಗಲಾಗುತ್ತಿದೆ';
+  String get loginFailed => 'ಸೈನ್ ಇನ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
 
   @override
-  String get pleaseWait => 'ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ';
+  String get accountCreationFailed => 'ಖಾತೆ ರಚಿಸಲು ಆಗಲಿಲ್ಲ.';
 
   @override
-  String get loginFailed => 'ಲಾಗಿನ್ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
-
-  @override
-  String get networkError => 'ಸರ್ವರ್‌ಗೆ ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.';
-
-  @override
-  String get invalidServerResponse => 'ಸರ್ವರ್‌ನಿಂದ ಅಮಾನ್ಯ ಪ್ರತಿಕ್ರಿಯೆ ಬಂದಿದೆ.';
-
-  @override
-  String get sessionExpired =>
-      'ನಿಮ್ಮ ಸೆಷನ್ ಅವಧಿ ಮುಗಿದಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಲಾಗಿನ್ ಮಾಡಿ.';
-
-  @override
-  String get unableToLoadAccount =>
-      'ನಿಮ್ಮ ಖಾತೆಯ ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.';
-
-  @override
-  String get unableToLoadPickupDetails =>
-      'ಪಿಕಪ್ ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.';
-
-  @override
-  String get accountCreationFailed => 'ಖಾತೆ ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.';
-
-  @override
-  String get workerLoginTitle => 'ಕಾರ್ಮಿಕರ ಲಾಗಿನ್';
+  String get workerLoginTitle => 'ಕಾರ್ಮಿಕರ ಸೈನ್ ಇನ್';
 
   @override
   String get workerLoginSubtitle =>
-      'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ವೀಕ್ಷಿಸಲು ಮತ್ತು ಸ್ವೀಕರಿಸಲು ನಿಮ್ಮ ಪುರಸಭೆ ಕಾರ್ಮಿಕ ಐಡಿಯೊಂದಿಗೆ ಲಾಗಿನ್ ಮಾಡಿ.';
+      'ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ವೀಕ್ಷಿಸಲು ಮತ್ತು ಸ್ವೀಕರಿಸಲು ಪುರಸಭೆ ಕಾರ್ಮಿಕ ಐಡಿಯೊಂದಿಗೆ ಸೈನ್ ಇನ್ ಮಾಡಿ.';
 
   @override
   String get workerId => 'ಕಾರ್ಮಿಕ ಐಡಿ';
 
   @override
-  String get workerIdPlaceholder => 'ನಿಮ್ಮ ಪುರಸಭೆ ಕಾರ್ಮಿಕ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ';
+  String get workerIdPlaceholder => 'ಪುರಸಭೆ ಕಾರ್ಮಿಕ ಐಡಿ ನಮೂದಿಸಿ';
 
   @override
-  String get workerIdRequired => 'ದಯವಿಟ್ಟು ನಿಮ್ಮ ಕಾರ್ಮಿಕ ಐಡಿಯನ್ನು ನಮೂದಿಸಿ.';
-
-  @override
-  String get signIn => 'ಲಾಗಿನ್ ಮಾಡಿ';
+  String get workerIdRequired => 'ಕಾರ್ಮಿಕ ಐಡಿ ನಮೂದಿಸಿ.';
 
   @override
   String get workerNote =>
-      'ಪರಿಶೀಲಿಸಲಾದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರು ಮಾತ್ರ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಬಹುದು. ನಿಮ್ಮ ಖಾತೆಗೆ ಸಂಬಂಧಿಸಿದ ಸಹಾಯಕ್ಕಾಗಿ ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+      'ಪರಿಶೀಲಿಸಿದ ಪುರಸಭೆ ಕಾರ್ಮಿಕರು ಮಾತ್ರ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಬಹುದು. ಖಾತೆ ಸಹಾಯಕ್ಕಾಗಿ ನಿರ್ವಾಹಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.';
 
   @override
-  String get termsNote =>
-      'ಮುಂದುವರಿಯುವ ಮೂಲಕ, ನಮ್ಮ ಗೌಪ್ಯತಾ ನೀತಿ ಮತ್ತು ನಿಯಮಗಳು ಹಾಗೂ ಷರತ್ತುಗಳನ್ನು ನೀವು ಒಪ್ಪುತ್ತೀರಿ.';
+  String get workerNotFound => 'ಕಾರ್ಮಿಕರ ಖಾತೆ ಕಂಡುಬಂದಿಲ್ಲ.';
 
   @override
-  String get householdHeroTitle => 'ತ್ಯಾಜ್ಯ ನೀಡಲು ಸಿದ್ಧರಿದ್ದೀರಾ?';
+  String get workerIdentification => 'ಕಾರ್ಮಿಕರ ಗುರುತು';
+
+  @override
+  String get workerIdLabel => 'ಕಾರ್ಮಿಕ ಐಡಿ';
+
+  @override
+  String get nameLabel => 'ಹೆಸರು';
+
+  @override
+  String get profile => 'ಪ್ರೊಫೈಲ್';
+
+  @override
+  String get account => 'ಖಾತೆ';
+
+  @override
+  String get personalInformation => 'ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ';
+
+  @override
+  String get changePassword => 'ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಿ';
+
+  @override
+  String get logOut => 'ಸೈನ್ ಔಟ್';
+
+  @override
+  String get points => 'ಅಂಕಗಳು';
+
+  @override
+  String get unableToLoadAccount => 'ಖಾತೆ ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ.';
+
+  @override
+  String get walletTitle => 'ವಾಲೆಟ್';
+
+  @override
+  String get walletSubtitle => 'ನಿಮ್ಮ ಅಂಕಗಳು ಮತ್ತು ಬಹುಮಾನಗಳು ಒಂದೇ ಕಡೆ.';
+
+  @override
+  String get walletTotalBalance => 'ಒಟ್ಟು ಅಂಕಗಳು';
+
+  @override
+  String get walletEarnPoints => 'ಅಂಕಗಳನ್ನು ಗಳಿಸಿ';
+
+  @override
+  String get walletEarnPointsDescription =>
+      'ಸುರಕ್ಷಿತ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಣೆಯಲ್ಲಿ ಭಾಗವಹಿಸಿ, ಸ್ವಚ್ಛ ಮತ್ತು ಆರೋಗ್ಯಕರ ಸಮುದಾಯಕ್ಕೆ ಕೊಡುಗೆ ನೀಡಿ ಅಂಕಗಳನ್ನು ಗಳಿಸಿ. ಮುಂದೆ ಬಹುಮಾನಗಳು ಬರಬಹುದು.';
+
+  @override
+  String get householdHeroTitle => 'ಹಸ್ತಾಂತರಿಸಲು ಸಿದ್ಧವೇ?';
 
   @override
   String get householdHeroSubtitle => 'ಉಳಿದದ್ದನ್ನು ನಾವು ನೋಡಿಕೊಳ್ಳುತ್ತೇವೆ.';
@@ -191,17 +214,8 @@ class AppLocalizationsKn extends AppLocalizations {
   String get householdPickups => 'ನಿಮ್ಮ ಪಿಕಪ್‌ಗಳು';
 
   @override
-  String get workerHeroTitle => 'ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಕ್ಕೆ ಸಿದ್ಧರಿದ್ದೀರಾ?';
-
-  @override
-  String get workerHeroSubtitle => 'ನಿಮ್ಮ ಮುಂದಿನ ಪಿಕಪ್ ನಿಮಗಾಗಿ ಕಾಯುತ್ತಿದೆ.';
-
-  @override
-  String get workerPickups => 'ಇಂದಿನ ಬಾಕಿ ಇರುವ ಪಿಕಪ್‌ಗಳು';
-
-  @override
   String get noPickupsYet =>
-      'ಇನ್ನೂ ಯಾವುದೇ ಪಿಕಪ್‌ಗಳಿಲ್ಲ. ನೀವು ವಿನಂತಿಸಿದ ನಂತರ ಅವು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
+      'ಇನ್ನೂ ಪಿಕಪ್‌ಗಳಿಲ್ಲ. ನೀವು ಸಲ್ಲಿಸುವ ವಿನಂತಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
 
   @override
   String get requestPickup => 'ಪಿಕಪ್ ವಿನಂತಿಸಿ';
@@ -211,7 +225,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get wasteVerificationSubtitle =>
-      'ನೀವು ಹಸ್ತಾಂತರಿಸುವ ತ್ಯಾಜ್ಯದ ಬಗ್ಗೆ ನಮಗೆ ತಿಳಿಸಿ.';
+      'ನೀವು ಹಸ್ತಾಂತರಿಸುವ ತ್ಯಾಜ್ಯದ ವಿವರ ಹಂಚಿಕೊಳ್ಳಿ.';
 
   @override
   String get addPhoto => 'ಫೋಟೋ ಸೇರಿಸಿ';
@@ -221,7 +235,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get quickCheckSubtitle =>
-      'ನಿಮ್ಮ ಪಿಕಪ್‌ಗೆ ಸಿದ್ಧರಾಗಲು ಕೆಲವು ತ್ವರಿತ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸಿ.ನಿಮ್ಮ ಉತ್ತರಗಳು ಕಾರ್ಮಿಕರು ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ನಿರ್ವಹಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತವೆ.';
+      'ಕಾರ್ಮಿಕರು ತ್ಯಾಜ್ಯವನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ನಿರ್ವಹಿಸಲು ಈ ಪ್ರಶ್ನೆಗಳಿಗೆ ಉತ್ತರಿಸಿ.';
 
   @override
   String get sharpObjectsQuestion =>
@@ -248,128 +262,87 @@ class AppLocalizationsKn extends AppLocalizations {
   String get continueButton => 'ಮುಂದುವರಿಸಿ';
 
   @override
+  String get cancel => 'ರದ್ದುಮಾಡಿ';
+
+  @override
   String get confirmPickup => 'ಪಿಕಪ್ ದೃಢೀಕರಿಸಿ';
 
   @override
-  String get locationTitle => 'ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ತಿಳಿಸಿ.';
+  String get locationTitle => 'ಸ್ಥಳವನ್ನು ಗುರುತಿಸಿ';
 
   @override
   String get locationSubtitle =>
-      'ನಿಮ್ಮ ಪಿಕಪ್ ಅನ್ನು ಸರಿಯಾದ ಸ್ಥಳದಲ್ಲಿ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ನೀಡಿ.';
+      'ಸರಿಯಾದ ವಿಳಾಸದಲ್ಲಿ ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಸ್ಥಳದ ಅನುಮತಿ ನೀಡಿ.';
 
   @override
   String get allowLocation => 'ಸ್ಥಳದ ಅನುಮತಿ ನೀಡಿ';
 
   @override
-  String get cancel => 'ರದ್ದುಮಾಡಿ';
-
-  @override
-  String get locationDeniedTitle => 'ಸ್ಥಳದ ಅನುಮತಿ ಅಗತ್ಯವಿದೆ';
+  String get locationDeniedTitle => 'ಸ್ಥಳದ ಅನುಮತಿ ಅಗತ್ಯ';
 
   @override
   String get locationDeniedMessage =>
-      'ನಿಮ್ಮ ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಸಾಧನದ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ.';
+      'ಪಿಕಪ್ ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ಆನ್ ಮಾಡಿ.';
 
   @override
-  String get openSettings => 'ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ';
+  String get openSettings => 'ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ';
 
   @override
-  String get confirmPickupRequest => 'ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ದೃಢೀಕರಿಸಿ';
+  String get locationUnavailable => 'ಸ್ಥಳ ಲಭ್ಯವಿಲ್ಲ';
+
+  @override
+  String get currentLocationUnavailable =>
+      'ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಸ್ಥಳ ಇನ್ನೂ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get confirmPickupRequest => 'ಪಿಕಪ್ ವಿನಂತಿ ದೃಢೀಕರಿಸಿ';
 
   @override
   String get pickupConfirmationMessage =>
-      'ಪಿಕಪ್ ದೃಢೀಕರಿಸುವ ಮೊದಲು ನಿಮ್ಮ ವಿನಂತಿಯ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.';
+      'ಪಿಕಪ್ ದೃಢೀಕರಿಸುವ ಮೊದಲು ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.';
 
   @override
-  String get pickupConfirmed => 'ಪಿಕಪ್ ವಿನಂತಿ ಯಶಸ್ವಿಯಾಗಿದೆ';
+  String get requesting => 'ಸಲ್ಲಿಸಲಾಗುತ್ತಿದೆ…';
 
   @override
-  String get pickupConfirmedMessage =>
-      'ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ.';
+  String get pickupConfirmed => 'ಪಿಕಪ್ ವಿನಂತಿಸಲಾಗಿದೆ';
 
   @override
-  String get requesting => 'ವಿನಂತಿಯನ್ನು ಸಲ್ಲಿಸಲಾಗುತ್ತಿದೆ';
-
-  @override
-  String get done => 'ಮುಗಿದಿದೆ';
-
-  @override
-  String get availablePickups => 'ಇಂದಿನ ಬಾಕಿ ಇರುವ ಪಿಕಪ್‌ಗಳು';
-
-  @override
-  String get pickupDetails => 'ಪಿಕಪ್ ವಿವರಗಳು';
-
-  @override
-  String get pickupAvailable => 'ಪಿಕಪ್ ಲಭ್ಯವಿದೆ';
-
-  @override
-  String get noAvailablePickups => 'ಪ್ರಸ್ತುತ ಯಾವುದೇ ಪಿಕಪ್ ವಿನಂತಿಗಳು ಲಭ್ಯವಿಲ್ಲ.';
-
-  @override
-  String get acceptPickup => 'ಪಿಕಪ್ ಸ್ವೀಕರಿಸಿ';
-
-  @override
-  String get workerNotFound => 'ಕಾರ್ಮಿಕರ ಖಾತೆ ಕಂಡುಬಂದಿಲ್ಲ.';
-
-  @override
-  String get profile => 'ಪ್ರೊಫೈಲ್';
-
-  @override
-  String get account => 'ಖಾತೆ';
-
-  @override
-  String get personalInformation => 'ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ';
-
-  @override
-  String get changePassword => 'ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಿ';
-
-  @override
-  String get logOut => 'ಲಾಗ್ ಔಟ್';
-
-  @override
-  String get points => 'ಅಂಕಗಳು';
-
-  @override
-  String get walletTitle => 'ನನ್ನ ವಾಲೆಟ್';
-
-  @override
-  String get walletSubtitle =>
-      'ನಿಮ್ಮ ಅಂಕಗಳು ಮತ್ತು ಬಹುಮಾನಗಳನ್ನು ಒಂದೇ ಸ್ಥಳದಲ್ಲಿ ನೋಡಿ.';
-
-  @override
-  String get walletTotalBalance => 'ಒಟ್ಟು ಅಂಕಗಳು';
-
-  @override
-  String get walletEarnPoints => 'ಅಂಕಗಳನ್ನು ಗಳಿಸಿ';
-
-  @override
-  String get walletEarnPointsDescription =>
-      'ಸುರಕ್ಷಿತ ವೈದ್ಯಕೀಯ ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಣೆಯಲ್ಲಿ ಭಾಗವಹಿಸಿ ಅಂಕಗಳನ್ನು ಗಳಿಸಿ. ಸ್ವಚ್ಛ ಮತ್ತು ಆರೋಗ್ಯಕರ ಸಮುದಾಯ ನಿರ್ಮಾಣಕ್ಕೆ ನಿಮ್ಮ ಕೊಡುಗೆ ನೀಡಿ. ಭವಿಷ್ಯದಲ್ಲಿ ಬಹುಮಾನಗಳು ಲಭ್ಯವಾಗಬಹುದು.';
+  String get pickupConfirmedMessage => 'ನಿಮ್ಮ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಸಲ್ಲಿಸಲಾಗಿದೆ.';
 
   @override
   String get pickupRequestedTitle => 'ಪಿಕಪ್ ವಿನಂತಿಸಲಾಗಿದೆ';
 
   @override
-  String get pickupRequestedSubtitle => 'ವಿನಂತಿ ಸಲ್ಲಿಸಲಾಗಿದೆ.';
+  String get pickupRequestedSubtitle => 'ನಿಮ್ಮ ವಿನಂತಿಯನ್ನು ಸಲ್ಲಿಸಲಾಗಿದೆ.';
 
   @override
-  String get verifyYourPickup => 'ಪಿಕಪ್ ದೃಢೀಕರಣ';
+  String get pickupConfirmationPending => 'ಎಲ್ಲವೂ ಸಿದ್ಧವಾಗಿದೆ';
 
   @override
-  String get pickupQrInstructions =>
-      'ಕಾರ್ಮಿಕರು ಬಂದಾಗ QR ಕೋಡ್ ರಚಿಸಿ, ಪಿಕಪ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಅವರಿಗೆ ತೋರಿಸಿ.';
+  String get pickupConfirmationPendingMessage =>
+      'ನಿಮ್ಮ ವಿನಂತಿಯನ್ನು ಸಲ್ಲಿಸಲಾಗಿದೆ. ದೃಢಪಟ್ಟ ತಕ್ಷಣ ತಿಳಿಸುತ್ತೇವೆ.';
 
   @override
-  String get generateQrCode => 'QR ಕೋಡ್ ರಚಿಸಿ';
+  String get waitingForPickupConfirmation => 'ಅಪ್‌ಡೇಟ್‌ಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ';
 
   @override
-  String get scanQrCode => 'QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ';
+  String get done => 'ಮುಗಿದಿದೆ';
 
   @override
-  String get requestDetails => 'ವಿನಂತಿಯ ವಿವರಗಳು';
+  String get okButton => 'ಸರಿ';
+
+  @override
+  String get pickupDetails => 'ಪಿಕಪ್ ವಿವರಗಳು';
+
+  @override
+  String get requestDetails => 'ವಿನಂತಿ ವಿವರಗಳು';
 
   @override
   String get recipientLabel => 'ಸ್ವೀಕರಿಸುವವರು';
+
+  @override
+  String get householdRecipient => 'ಮನೆ';
 
   @override
   String get pickupIdLabel => 'ಪಿಕಪ್ ಐಡಿ';
@@ -387,43 +360,52 @@ class AppLocalizationsKn extends AppLocalizations {
   String get pickupCodeCopied => 'ಪಿಕಪ್ ಕೋಡ್ ನಕಲಿಸಲಾಗಿದೆ';
 
   @override
-  String get okButton => 'ಸರಿ';
-
-  @override
-  String get householdRecipient => 'ಮನೆ';
-
-  @override
   String get unavailableValue => 'ಲಭ್ಯವಿಲ್ಲ';
 
   @override
   String get notAvailableValue => 'ಲಭ್ಯವಿಲ್ಲ';
 
   @override
-  String get pickupConfirmationPending => 'ಎಲ್ಲವೂ ಸಿದ್ಧವಾಗಿದೆ!';
+  String get unableToLoadPickupDetails =>
+      'ಪಿಕಪ್ ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ.';
 
   @override
-  String get pickupConfirmationPendingMessage =>
-      'ನಿಮ್ಮ ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಣೆಯ ವಿನಂತಿಯನ್ನು ಕಳುಹಿಸಲಾಗಿದೆ. ಅದು ಖಚಿತವಾದ ತಕ್ಷಣ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.';
+  String get workerHeroTitle => 'ಸಂಗ್ರಹಿಸಲು ಸಿದ್ಧವೇ?';
 
   @override
-  String get waitingForPickupConfirmation => 'ನಿಮಗೆ ಮಾಹಿತಿ ನೀಡುತ್ತೇವೆ';
+  String get workerHeroSubtitle => 'ಮುಂದಿನ ಪಿಕಪ್ ಸಿದ್ಧವಾಗಿದೆ.';
 
   @override
-  String get reviewPickupRequest => 'ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ';
+  String get workerPickups => 'ಇಂದಿನ ಬಾಕಿ ಪಿಕಪ್‌ಗಳು';
+
+  @override
+  String get availablePickups => 'ಇಂದಿನ ಬಾಕಿ ಪಿಕಪ್‌ಗಳು';
+
+  @override
+  String get pickupAvailable => 'ಲಭ್ಯವಿದೆ';
+
+  @override
+  String get noAvailablePickups => 'ಈಗ ಯಾವುದೇ ಪಿಕಪ್ ವಿನಂತಿಗಳು ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get reviewPickupRequest => 'ವಿನಂತಿ ಪರಿಶೀಲಿಸಿ';
 
   @override
   String get reviewPickupRequestSubtitle =>
-      'ಈ ವಿನಂತಿಯನ್ನು ಸ್ವೀಕರಿಸುವ ಮೊದಲು ಪಿಕಪ್ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.';
+      'ಪಿಕಪ್ ಸ್ವೀಕರಿಸುವ ಮೊದಲು ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.';
 
   @override
   String get distanceLabel => 'ದೂರ';
 
   @override
-  String get pickupQuestionnaire => 'ಪಿಕಪ್ ಪ್ರಶ್ನಾವಳಿ';
+  String get pickupQuestionnaire => 'ಸುರಕ್ಷತಾ ಪಟ್ಟಿ';
+
+  @override
+  String get acceptPickup => 'ಪಿಕಪ್ ಸ್ವೀಕರಿಸಿ';
 
   @override
   String pickupAcceptedSubtitle(String username) {
-    return 'ನೀವು $username ಅವರ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ.';
+    return '$username ಅವರಿಂದ ಬಂದ ಪಿಕಪ್ ವಿನಂತಿಯನ್ನು ನೀವು ಸ್ವೀಕರಿಸಿದ್ದೀರಿ.';
   }
 
   @override
@@ -431,7 +413,7 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get manageAcceptedPickups =>
-      'ನೀವು ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ನಿರ್ವಹಿಸಿ.';
+      'ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ನಿರ್ವಹಿಸಿ.';
 
   @override
   String get acceptedPickups => 'ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳು';
@@ -440,25 +422,74 @@ class AppLocalizationsKn extends AppLocalizations {
   String get activePickups => 'ಸಕ್ರಿಯ ಪಿಕಪ್‌ಗಳು';
 
   @override
-  String get yourAcceptedPickups => 'ನೀವು ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳು';
+  String get yourAcceptedPickups => 'ನಿಮ್ಮ ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳು';
 
   @override
-  String get tryAgain => 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ';
-
-  @override
-  String get somethingWentWrong => 'ಏನೋ ತಪ್ಪಾಗಿದೆ.';
-
-  @override
-  String get noAcceptedPickups =>
-      'ಇನ್ನೂ ಯಾವುದೇ ಪಿಕಪ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸಿಲ್ಲ.';
-
-  @override
-  String get locationUnavailable =>
-      'ಸ್ಥಳ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಸ್ಥಳದ ಅನುಮತಿಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ.';
+  String get noAcceptedPickups => 'ಇನ್ನೂ ಯಾವುದೇ ಪಿಕಪ್ ಸ್ವೀಕರಿಸಿಲ್ಲ.';
 
   @override
   String get unableToLoadAcceptedPickups =>
-      'ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.';
+      'ಸ್ವೀಕರಿಸಿದ ಪಿಕಪ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ.';
+
+  @override
+  String get preparingMap => 'ನಕ್ಷೆ ಸಿದ್ಧವಾಗುತ್ತಿದೆ';
+
+  @override
+  String get loadingMapDescription =>
+      'ನಿಮ್ಮ ಸ್ಥಳ ಪತ್ತೆ ಹಚ್ಚಿ ಪಿಕಪ್ ವಿವರ ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ…';
+
+  @override
+  String get routeDetails => 'ಮಾರ್ಗ ವಿವರಗಳು';
+
+  @override
+  String get pickupRouteReady => 'ನಿಮ್ಮ ಮಾರ್ಗ ಸಿದ್ಧವಾಗಿದೆ.';
+
+  @override
+  String get estimatedArrival => 'ಅಂದಾಜು ಆಗಮನ';
+
+  @override
+  String get roadDistance => 'ರಸ್ತೆ ದೂರ';
+
+  @override
+  String get startNavigation => 'ನ್ಯಾವಿಗೇಶನ್ ಆರಂಭಿಸಿ';
+
+  @override
+  String get unableToStartNavigation =>
+      'ನ್ಯಾವಿಗೇಶನ್ ಪ್ರಾರಂಭಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.';
+
+  @override
+  String get rerouting => 'ಹೊಸ ಮಾರ್ಗವನ್ನು ಹುಡುಕಲಾಗುತ್ತಿದೆ…';
+
+  @override
+  String get arrivedAtDestination => 'ನೀವು ನಿಮ್ಮ ಗಮ್ಯಸ್ಥಾನವನ್ನು ತಲುಪಿದ್ದೀರಿ';
+
+  @override
+  String get continueOnRoute => 'ಮಾರ್ಗದಲ್ಲಿ ಮುಂದುವರಿಯಿರಿ';
+
+  @override
+  String get findingNewRoute => 'ಹೊಸ ಮಾರ್ಗವನ್ನು ಹುಡುಕಲಾಗುತ್ತಿದೆ';
+
+  @override
+  String get destinationReached => 'ಗಮ್ಯಸ್ಥಾನ ತಲುಪಲಾಗಿದೆ';
+
+  @override
+  String get remaining => 'ಉಳಿದಿರುವುದು';
+
+  @override
+  String get arrival => 'ಆಗಮನ';
+
+  @override
+  String get endNavigation => 'ನ್ಯಾವಿಗೇಶನ್ ಮುಗಿಸಿ';
+
+  @override
+  String get verifyYourPickup => 'ಪಿಕಪ್ ದೃಢೀಕರಿಸಿ';
+
+  @override
+  String get pickupQrInstructions =>
+      'ಕಾರ್ಮಿಕರು ಬಂದಾಗ QR ಕೋಡ್ ರಚಿಸಿ, ಹಸ್ತಾಂತರ ದೃಢೀಕರಿಸಲು ಅವರಿಗೆ ತೋರಿಸಿ.';
+
+  @override
+  String get generateQrCode => 'QR ಕೋಡ್ ರಚಿಸಿ';
 
   @override
   String get verifyPickup => 'ಪಿಕಪ್ ದೃಢೀಕರಿಸಿ';
@@ -468,41 +499,104 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get scanHouseholdQrInstructions =>
-      'ಮನೆಯವರು ತಮ್ಮ ಪಿಕಪ್ QR ಕೋಡ್ ತೋರಿಸಲು ಕೇಳಿ. ನಂತರ ಹಸ್ತಾಂತರವನ್ನು ದೃಢೀಕರಿಸಲು ಅದನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.';
+      'ಮನೆಯವರ ಪಿಕಪ್ QR ಕೋಡ್ ತೋರಿಸಲು ಕೇಳಿ, ಹಸ್ತಾಂತರ ದೃಢೀಕರಿಸಲು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.';
+
+  @override
+  String get scanQrCode => 'QR ಸ್ಕ್ಯಾನ್ ಮಾಡಿ';
+
+  @override
+  String get positionQrCode => 'ಚೌಕಟ್ಟಿನೊಳಗೆ QR ಕೋಡ್ ಇರಿಸಿ.';
+
+  @override
+  String get cameraUnavailable => 'ಕ್ಯಾಮೆರಾ ಲಭ್ಯವಿಲ್ಲ';
+
+  @override
+  String get unableToAccessCamera => 'ಕ್ಯಾಮೆರಾ ಬಳಸಲು ಆಗುತ್ತಿಲ್ಲ.';
 
   @override
   String get orLabel => 'ಅಥವಾ';
 
   @override
-  String get cantScanQr => 'QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲವೇ?';
+  String get cantScanQr => 'QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಆಗುತ್ತಿಲ್ಲವೇ?';
 
   @override
-  String get enterPickupVerificationCode =>
-      '6 ಅಂಕಿಗಳ ಪಿಕಪ್ ದೃಢೀಕರಣ ಕೋಡ್ ನಮೂದಿಸಿ.';
+  String get enterPickupVerificationCode => '6 ಅಂಕಿಗಳ ದೃಢೀಕರಣ ಕೋಡ್ ನಮೂದಿಸಿ.';
 
   @override
   String get verifyCode => 'ಕೋಡ್ ದೃಢೀಕರಿಸಿ';
 
   @override
-  String get tryAnotherWay => 'ಬೇರೆ ವಿಧಾನವನ್ನು ಪ್ರಯತ್ನಿಸಿ';
+  String get tryAnotherWay => 'ಬೇರೆ ವಿಧಾನ ಪ್ರಯತ್ನಿಸಿ';
 
   @override
-  String get serverDownTitle => 'ಸರ್ವರ್ ತಾತ್ಕಾಲಿಕವಾಗಿ ಸ್ಥಗಿತಗೊಂಡಿದೆ';
+  String get verifyingCollection => 'ಸಂಗ್ರಹ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ…';
+
+  @override
+  String get verifyingCodeMessage => 'ಕೋಡ್ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ…';
+
+  @override
+  String get collectionAlreadyProcessing => 'ಸಂಗ್ರಹ ಈಗಾಗಲೇ ಪ್ರಗತಿಯಲ್ಲಿದೆ.';
+
+  @override
+  String get incorrectVerificationCode => 'ತಪ್ಪಾದ ಕೋಡ್. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get verificationCodeUnavailable => 'ದೃಢೀಕರಣ ಕೋಡ್ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get pickupNoLongerAvailable => 'ಈ ಪಿಕಪ್ ಈಗ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get unauthorizedCollection => 'ಈ ಪಿಕಪ್ ಸಂಗ್ರಹಿಸಲು ನಿಮಗೆ ಅನುಮತಿ ಇಲ್ಲ.';
+
+  @override
+  String get collectionVerificationFailed =>
+      'ಸಂಗ್ರಹ ಪರಿಶೀಲಿಸಲು ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get collectionConfirmed => 'ಸಂಗ್ರಹ ದೃಢಪಟ್ಟಿದೆ';
+
+  @override
+  String get pickupCollectedSuccessfully => 'ಪಿಕಪ್ ಸಂಗ್ರಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get collectionVerifiedMessage => 'ಸಂಗ್ರಹ ದೃಢಪಟ್ಟಿದೆ.';
+
+  @override
+  String get serverDownTitle => 'ಸೇವೆ ತಾತ್ಕಾಲಿಕವಾಗಿ ಲಭ್ಯವಿಲ್ಲ';
 
   @override
   String get serverDownDescription =>
-      'ನಮ್ಮ ಸರ್ವರ್‌ಗಳು ಪ್ರಸ್ತುತ ಲಭ್ಯವಿಲ್ಲ. ಸೇವೆಗಳನ್ನು ಆದಷ್ಟು ಬೇಗ ಪುನಃ ಪ್ರಾರಂಭಿಸಲು ನಾವು ಕೆಲಸ ಮಾಡುತ್ತಿದ್ದೇವೆ.';
+      'ನಮ್ಮ ಸರ್ವರ್‌ಗಳು ಸದ್ಯಕ್ಕೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿಲ್ಲ. ಆದಷ್ಟು ಬೇಗ ಸೇವೆಗಳನ್ನು ಪುನಃ ಸ್ಥಾಪಿಸುತ್ತಿದ್ದೇವೆ.';
 
   @override
-  String get serverDownWhatCanYouDo => 'ನೀವು ಏನು ಮಾಡಬಹುದು?';
+  String get serverDownWhatCanYouDo => 'ನೀವು ಏನು ಮಾಡಬಹುದು';
 
   @override
   String get serverDownInstructions =>
-      'ನಿಮ್ಮ ಕಡೆಯಿಂದ ಏನನ್ನೂ ಸರಿಪಡಿಸುವ ಅಗತ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯ ಕಾಯ್ದು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. ನಮ್ಮ ಸೇವೆಗಳನ್ನು ಪುನಃ ಪ್ರಾರಂಭಿಸುವವರೆಗೆ ನಿಮ್ಮ ತಾಳ್ಮೆಗೆ ಧನ್ಯವಾದಗಳು.';
+      'ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿ ಏನನ್ನೂ ಬದಲಾಯಿಸುವ ಅಗತ್ಯವಿಲ್ಲ. ಸ್ವಲ್ಪ ಸಮಯ ಕಾದು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
 
   @override
   String get serverDownRetry => 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ';
 
   @override
-  String get serverDownFooter => 'ನಿಮ್ಮ ಸಹನೆಗೆ ಧನ್ಯವಾದಗಳು.';
+  String get serverDownFooter => 'ನಿಮ್ಮ ತಾಳ್ಮೆಗೆ ಧನ್ಯವಾದಗಳು.';
+
+  @override
+  String get networkError => 'ಸರ್ವರ್‌ಗೆ ಸಂಪರ್ಕಿಸಲು ಆಗುತ್ತಿಲ್ಲ.';
+
+  @override
+  String get serverConnectionError => 'ಸರ್ವರ್‌ಗೆ ಸಂಪರ್ಕಿಸಲು ಆಗುತ್ತಿಲ್ಲ.';
+
+  @override
+  String get invalidServerResponse => 'ಸರ್ವರ್‌ನಿಂದ ಅಮಾನ್ಯ ಪ್ರತಿಕ್ರಿಯೆ ಬಂದಿದೆ.';
+
+  @override
+  String get sessionExpired => 'ಸೆಷನ್ ಅವಧಿ ಮುಗಿದಿದೆ. ಮತ್ತೆ ಸೈನ್ ಇನ್ ಮಾಡಿ.';
+
+  @override
+  String get somethingWentWrong => 'ಏನೋ ತಪ್ಪಾಗಿದೆ.';
+
+  @override
+  String get tryAgain => 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ';
 }

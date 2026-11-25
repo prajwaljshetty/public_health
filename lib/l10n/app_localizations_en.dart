@@ -14,7 +14,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get portalSubtitle =>
-      'A Purasabhe service connecting households with verified workers for the safe collection of medical waste.';
+      'A Purasabhe service connecting households with verified workers to safely collect medical waste.';
 
   @override
   String get selectRole => 'Choose your role to get started.';
@@ -24,7 +24,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get householdSubtitle =>
-      'Arrange a safe medical waste pickup from your home.';
+      'Schedule a safe medical waste pickup from your home.';
 
   @override
   String get worker => 'Purasabhe Worker';
@@ -33,33 +33,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workerSubtitle => 'View, accept, and complete pickup requests.';
 
   @override
+  String get termsNote =>
+      'By continuing, you agree to the Privacy Policy and Terms & Conditions.';
+
+  @override
   String get welcome => 'Welcome';
 
   @override
   String get authSubtitle =>
-      'Arrange a safe and convenient pickup for your household\'s medical waste.';
+      'Schedule a safe, convenient pickup for your household\'s medical waste.';
 
   @override
-  String get login => 'Log In';
+  String get login => 'Sign In';
 
   @override
   String get loginSubtitle =>
-      'Enter your registered phone number to request a pickup or track an existing request.';
+      'Enter your registered mobile number to request a pickup or track an existing one.';
 
   @override
   String get loginCardSubtitle =>
-      'Already have an account? Log in to continue.';
+      'Already have an account? Sign in to continue.';
 
   @override
   String get createAccount => 'Create Account';
 
   @override
   String get createAccountSubtitle =>
-      'Register your household to arrange safe medical waste pickups.';
+      'Register your household to schedule safe medical waste pickups.';
 
   @override
   String get createAccountCardSubtitle =>
-      'New to the service? Create an account to get started.';
+      'New here? Create an account to get started.';
 
   @override
   String get createAccountNote =>
@@ -87,69 +91,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordPlaceholder => 'Enter your password';
 
   @override
-  String get usernameRequired => 'Please enter your full name.';
+  String get signIn => 'Sign In';
 
   @override
-  String get usernameMinLength =>
-      'Your name must contain at least 3 characters.';
+  String get loggingIn => 'Signing in…';
+
+  @override
+  String get pleaseWait => 'Please wait…';
+
+  @override
+  String get usernameRequired => 'Enter your full name.';
+
+  @override
+  String get usernameMinLength => 'Use at least 3 characters for your name.';
 
   @override
   String get invalidUsername => 'Use only letters and spaces in your name.';
 
   @override
-  String get phoneNumberRequired => 'Please enter your phone number.';
+  String get phoneNumberRequired => 'Enter your phone number.';
 
   @override
-  String get invalidPhoneNumber => 'Please enter a valid phone number.';
+  String get invalidPhoneNumber => 'Enter a valid mobile number.';
 
   @override
   String get phoneNumberAlreadyRegistered =>
-      'This phone number is already registered.';
+      'That phone number is already registered.';
 
   @override
   String get phoneNumberNotRegistered =>
-      'No account was found for this phone number.';
+      'No account matches this phone number.';
 
   @override
-  String get passwordRequired => 'Please enter your password.';
+  String get passwordRequired => 'Enter your password.';
 
   @override
   String get passwordMinLength =>
-      'Your password must contain at least 6 characters.';
+      'Use at least 6 characters for your password.';
 
   @override
-  String get incorrectPassword => 'The password you entered is incorrect.';
+  String get incorrectPassword => 'Incorrect password. Try again.';
 
   @override
-  String get loggingIn => 'Logging in';
+  String get loginFailed => 'Couldn\'t sign you in. Try again.';
 
   @override
-  String get pleaseWait => 'Please wait';
+  String get accountCreationFailed => 'Couldn\'t create your account.';
 
   @override
-  String get loginFailed => 'Login failed. Please try again.';
-
-  @override
-  String get networkError => 'Unable to connect to the server.';
-
-  @override
-  String get invalidServerResponse =>
-      'Invalid response received from the server.';
-
-  @override
-  String get sessionExpired => 'Your session has expired. Please log in again.';
-
-  @override
-  String get unableToLoadAccount => 'Unable to load your account.';
-
-  @override
-  String get unableToLoadPickupDetails => 'Unable to load pickup details.';
-
-  @override
-  String get accountCreationFailed => 'Account creation failed.';
-
-  @override
-  String get workerLoginTitle => 'Worker Login';
+  String get workerLoginTitle => 'Worker Sign In';
 
   @override
   String get workerLoginSubtitle =>
@@ -162,149 +152,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workerIdPlaceholder => 'Enter your Purasabhe worker ID';
 
   @override
-  String get workerIdRequired => 'Please enter your worker ID.';
-
-  @override
-  String get signIn => 'Sign In';
+  String get workerIdRequired => 'Enter your worker ID.';
 
   @override
   String get workerNote =>
       'Only verified Purasabhe workers can accept pickup requests. Contact your administrator if you need help accessing your account.';
 
   @override
-  String get termsNote =>
-      'By continuing, you agree to our Privacy Policy and Terms & Conditions.';
-
-  @override
-  String get householdHeroTitle => 'Ready to hand it over?';
-
-  @override
-  String get householdHeroSubtitle => 'We\'ll take care of the rest.';
-
-  @override
-  String get householdPickups => 'Your Pickups';
-
-  @override
-  String get workerHeroTitle => 'Ready to collect?';
-
-  @override
-  String get workerHeroSubtitle => 'Your next pickup is waiting.';
-
-  @override
-  String get workerPickups => 'Today\'s Pending Pickups';
-
-  @override
-  String get noPickupsYet =>
-      'No pickups yet. Your requests will appear here once you make one.';
-
-  @override
-  String get requestPickup => 'Request a Pickup';
-
-  @override
-  String get wasteVerification => 'Waste Verification';
-
-  @override
-  String get wasteVerificationSubtitle =>
-      'Help us understand the waste you\'re handing over.';
-
-  @override
-  String get addPhoto => 'Add Photo';
-
-  @override
-  String get quickCheck => 'Quick Safety Check';
-
-  @override
-  String get quickCheckSubtitle =>
-      'Just a few quick questions to help us prepare for your pickup.Your answers help workers handle the waste safely.';
-
-  @override
-  String get sharpObjectsQuestion =>
-      'Does the waste contain any sharp objects, such as needles or blades?';
-
-  @override
-  String get expiredMedicineQuestion =>
-      'Does the waste contain unused or expired medicines?';
-
-  @override
-  String get bodyFluidsQuestion =>
-      'Does the waste include items that have come into contact with blood or other body fluids?';
-
-  @override
-  String get yes => 'Yes';
-
-  @override
-  String get no => 'No';
-
-  @override
-  String get next => 'Next';
-
-  @override
-  String get continueButton => 'Continue';
-
-  @override
-  String get confirmPickup => 'Confirm Pickup';
-
-  @override
-  String get locationTitle => 'Let us find you.';
-
-  @override
-  String get locationSubtitle =>
-      'Allow location access so we can arrange your pickup at the right place.';
-
-  @override
-  String get allowLocation => 'Allow Location Access';
-
-  @override
-  String get cancel => 'Cancel';
-
-  @override
-  String get locationDeniedTitle => 'Location Access Required';
-
-  @override
-  String get locationDeniedMessage =>
-      'Enable location access in your device settings so we can arrange your pickup.';
-
-  @override
-  String get openSettings => 'Open Settings';
-
-  @override
-  String get confirmPickupRequest => 'Confirm Your Pickup Request';
-
-  @override
-  String get pickupConfirmationMessage =>
-      'Review your request details before confirming your pickup.';
-
-  @override
-  String get pickupConfirmed => 'Pickup Requested Successfully';
-
-  @override
-  String get pickupConfirmedMessage =>
-      'Your pickup request has been submitted successfully.';
-
-  @override
-  String get requesting => 'Submitting Request';
-
-  @override
-  String get done => 'Done';
-
-  @override
-  String get availablePickups => 'Today\'s Pending Pickups';
-
-  @override
-  String get pickupDetails => 'Pickup Details';
-
-  @override
-  String get pickupAvailable => 'Pickup Available';
-
-  @override
-  String get noAvailablePickups =>
-      'No pickup requests are available right now.';
-
-  @override
-  String get acceptPickup => 'Accept Pickup';
-
-  @override
   String get workerNotFound => 'Worker account not found.';
+
+  @override
+  String get workerIdentification => 'WORKER IDENTIFICATION';
+
+  @override
+  String get workerIdLabel => 'WORKER ID';
+
+  @override
+  String get nameLabel => 'NAME';
 
   @override
   String get profile => 'Profile';
@@ -319,16 +183,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get changePassword => 'Change Password';
 
   @override
-  String get logOut => 'Log Out';
+  String get logOut => 'Sign Out';
 
   @override
   String get points => 'Points';
 
   @override
-  String get walletTitle => 'My Wallet';
+  String get unableToLoadAccount => 'Couldn\'t load your account.';
 
   @override
-  String get walletSubtitle => 'Your points and rewards, all in one place.';
+  String get walletTitle => 'Wallet';
+
+  @override
+  String get walletSubtitle => 'Your points and rewards in one place.';
 
   @override
   String get walletTotalBalance => 'Total Points';
@@ -338,7 +205,114 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get walletEarnPointsDescription =>
-      'Take part in safe medical waste collection and earn points as you contribute to a cleaner, healthier community. Rewards may be available in the future.';
+      'Take part in safe medical waste collection to earn points toward a cleaner, healthier community. Rewards may be introduced later.';
+
+  @override
+  String get householdHeroTitle => 'Ready to hand it over?';
+
+  @override
+  String get householdHeroSubtitle => 'We\'ll take care of the rest.';
+
+  @override
+  String get householdPickups => 'Your Pickups';
+
+  @override
+  String get noPickupsYet =>
+      'No pickups yet. Requests you submit will appear here.';
+
+  @override
+  String get requestPickup => 'Request Pickup';
+
+  @override
+  String get wasteVerification => 'Waste Verification';
+
+  @override
+  String get wasteVerificationSubtitle =>
+      'Share a few details about the waste you\'re handing over.';
+
+  @override
+  String get addPhoto => 'Add Photo';
+
+  @override
+  String get quickCheck => 'Quick Safety Check';
+
+  @override
+  String get quickCheckSubtitle =>
+      'Answer a few quick questions so workers can handle the waste safely.';
+
+  @override
+  String get sharpObjectsQuestion =>
+      'Does the waste contain sharp objects, such as needles or blades?';
+
+  @override
+  String get expiredMedicineQuestion =>
+      'Does the waste contain unused or expired medicines?';
+
+  @override
+  String get bodyFluidsQuestion =>
+      'Does the waste include items that have contacted blood or other body fluids?';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get continueButton => 'Continue';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get confirmPickup => 'Confirm Pickup';
+
+  @override
+  String get locationTitle => 'Find Your Location';
+
+  @override
+  String get locationSubtitle =>
+      'Allow location access so we can schedule your pickup at the right address.';
+
+  @override
+  String get allowLocation => 'Allow Location Access';
+
+  @override
+  String get locationDeniedTitle => 'Location Access Required';
+
+  @override
+  String get locationDeniedMessage =>
+      'Turn on location access in Settings so we can schedule your pickup.';
+
+  @override
+  String get openSettings => 'Open Settings';
+
+  @override
+  String get locationUnavailable => 'Location Unavailable';
+
+  @override
+  String get currentLocationUnavailable =>
+      'Your current location isn\'t available yet.';
+
+  @override
+  String get confirmPickupRequest => 'Confirm Pickup Request';
+
+  @override
+  String get pickupConfirmationMessage =>
+      'Review your details before confirming the pickup.';
+
+  @override
+  String get requesting => 'Submitting…';
+
+  @override
+  String get pickupConfirmed => 'Pickup Requested';
+
+  @override
+  String get pickupConfirmedMessage =>
+      'Your pickup request has been submitted.';
 
   @override
   String get pickupRequestedTitle => 'Pickup Requested';
@@ -347,17 +321,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pickupRequestedSubtitle => 'Your request has been submitted.';
 
   @override
-  String get verifyYourPickup => 'Verify Your Pickup';
+  String get pickupConfirmationPending => 'You\'re All Set';
 
   @override
-  String get pickupQrInstructions =>
-      'When your collection worker arrives, generate your QR code and show it to them to verify the pickup and confirm the handover.';
+  String get pickupConfirmationPendingMessage =>
+      'Your request is submitted. We\'ll notify you once it\'s confirmed.';
 
   @override
-  String get generateQrCode => 'Generate QR Code';
+  String get waitingForPickupConfirmation => 'Updates will appear here';
 
   @override
-  String get scanQrCode => 'Scan Qr';
+  String get done => 'Done';
+
+  @override
+  String get okButton => 'OK';
+
+  @override
+  String get pickupDetails => 'Pickup Details';
 
   @override
   String get requestDetails => 'Request Details';
@@ -366,13 +346,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recipientLabel => 'Recipient';
 
   @override
+  String get householdRecipient => 'Household';
+
+  @override
   String get pickupIdLabel => 'Pickup ID';
 
   @override
   String get pickupCodeLabel => 'Pickup Code';
 
   @override
-  String get requestedTimeLabel => 'Requested Time';
+  String get requestedTimeLabel => 'Requested';
 
   @override
   String get pickupIdCopied => 'Pickup ID copied';
@@ -381,75 +364,132 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pickupCodeCopied => 'Pickup Code copied';
 
   @override
-  String get okButton => 'OK';
-
-  @override
-  String get householdRecipient => 'Household';
-
-  @override
   String get unavailableValue => 'Unavailable';
 
   @override
   String get notAvailableValue => 'Not available';
 
   @override
-  String get pickupConfirmationPending => 'You\'re All Set!';
+  String get unableToLoadPickupDetails => 'Couldn\'t load pickup details.';
 
   @override
-  String get pickupConfirmationPendingMessage =>
-      'Your pickup request is submitted. We\'ll let you know when it\'s confirmed.';
+  String get workerHeroTitle => 'Ready to collect?';
 
   @override
-  String get waitingForPickupConfirmation => 'We\'ll keep you updated';
+  String get workerHeroSubtitle => 'Your next pickup is waiting.';
 
   @override
-  String get reviewPickupRequest => 'Review Pickup Request';
+  String get workerPickups => 'Today\'s Pending Pickups';
+
+  @override
+  String get availablePickups => 'Today\'s Pending Pickups';
+
+  @override
+  String get pickupAvailable => 'Available';
+
+  @override
+  String get noAvailablePickups => 'No pickup requests available right now.';
+
+  @override
+  String get reviewPickupRequest => 'Review Request';
 
   @override
   String get reviewPickupRequestSubtitle =>
-      'Review the pickup information before accepting this request.';
+      'Review the details before accepting this pickup.';
 
   @override
   String get distanceLabel => 'Distance';
 
   @override
-  String get pickupQuestionnaire => 'Pickup Questionnaire';
+  String get pickupQuestionnaire => 'Safety Checklist';
+
+  @override
+  String get acceptPickup => 'Accept Pickup';
 
   @override
   String pickupAcceptedSubtitle(String username) {
-    return 'You have successfully accepted the pickup request from $username.';
+    return 'You accepted the pickup request from $username.';
   }
 
   @override
   String get myPickups => 'My Pickups';
 
   @override
-  String get manageAcceptedPickups => 'Manage your accepted pickup requests.';
+  String get manageAcceptedPickups => 'Manage accepted pickup requests.';
 
   @override
   String get acceptedPickups => 'Accepted Pickups';
 
   @override
-  String get activePickups => 'Active pickups';
+  String get activePickups => 'Active Pickups';
 
   @override
   String get yourAcceptedPickups => 'Your Accepted Pickups';
 
   @override
-  String get tryAgain => 'Try Again';
-
-  @override
-  String get somethingWentWrong => 'Something went wrong.';
-
-  @override
   String get noAcceptedPickups => 'No accepted pickups yet.';
 
   @override
-  String get locationUnavailable =>
-      'Location is unavailable. Please enable location access.';
+  String get unableToLoadAcceptedPickups => 'Couldn\'t load accepted pickups.';
 
   @override
-  String get unableToLoadAcceptedPickups => 'Unable to load accepted pickups.';
+  String get preparingMap => 'Preparing Map';
+
+  @override
+  String get loadingMapDescription =>
+      'Finding your location and loading pickup details…';
+
+  @override
+  String get routeDetails => 'Route Details';
+
+  @override
+  String get pickupRouteReady => 'Your route is ready.';
+
+  @override
+  String get estimatedArrival => 'Estimated arrival';
+
+  @override
+  String get roadDistance => 'Road distance';
+
+  @override
+  String get startNavigation => 'Start Navigation';
+
+  @override
+  String get unableToStartNavigation => 'Couldn\'t start navigation.';
+
+  @override
+  String get rerouting => 'Rerouting…';
+
+  @override
+  String get arrivedAtDestination => 'You have arrived at your destination';
+
+  @override
+  String get continueOnRoute => 'Continue on route';
+
+  @override
+  String get findingNewRoute => 'Finding a new route';
+
+  @override
+  String get destinationReached => 'Destination reached';
+
+  @override
+  String get remaining => 'Remaining';
+
+  @override
+  String get arrival => 'Arrival';
+
+  @override
+  String get endNavigation => 'End Navigation';
+
+  @override
+  String get verifyYourPickup => 'Verify Pickup';
+
+  @override
+  String get pickupQrInstructions =>
+      'Generate your QR code when the worker arrives and show it to confirm the handover.';
+
+  @override
+  String get generateQrCode => 'Generate QR Code';
 
   @override
   String get verifyPickup => 'Verify Pickup';
@@ -459,17 +499,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scanHouseholdQrInstructions =>
-      'Ask the household to display their pickup QR code, then scan it to verify the handover.';
+      'Ask the household to show their pickup QR code, then scan it to verify the handover.';
+
+  @override
+  String get scanQrCode => 'Scan QR';
+
+  @override
+  String get positionQrCode => 'Align the QR code within the frame.';
+
+  @override
+  String get cameraUnavailable => 'Camera Unavailable';
+
+  @override
+  String get unableToAccessCamera => 'Couldn\'t access the camera.';
 
   @override
   String get orLabel => 'OR';
 
   @override
-  String get cantScanQr => 'Can\'t scan QR?';
+  String get cantScanQr => 'Can\'t scan the QR code?';
 
   @override
   String get enterPickupVerificationCode =>
-      'Enter the 6-digit pickup verification code.';
+      'Enter the 6-digit verification code.';
 
   @override
   String get verifyCode => 'Verify Code';
@@ -478,22 +530,78 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tryAnotherWay => 'Try Another Way';
 
   @override
-  String get serverDownTitle => 'Server Temporarily Down';
+  String get verifyingCollection => 'Verifying collection…';
+
+  @override
+  String get verifyingCodeMessage => 'Verifying code…';
+
+  @override
+  String get collectionAlreadyProcessing =>
+      'Collection is already in progress.';
+
+  @override
+  String get incorrectVerificationCode => 'Incorrect code. Try again.';
+
+  @override
+  String get verificationCodeUnavailable => 'Verification code unavailable.';
+
+  @override
+  String get pickupNoLongerAvailable => 'This pickup is no longer available.';
+
+  @override
+  String get unauthorizedCollection =>
+      'You aren\'t authorized to collect this pickup.';
+
+  @override
+  String get collectionVerificationFailed =>
+      'Couldn\'t verify collection. Try again.';
+
+  @override
+  String get collectionConfirmed => 'Collection Confirmed';
+
+  @override
+  String get pickupCollectedSuccessfully => 'Pickup Collected';
+
+  @override
+  String get collectionVerifiedMessage => 'Collection verified.';
+
+  @override
+  String get serverDownTitle => 'Service Temporarily Unavailable';
 
   @override
   String get serverDownDescription =>
-      'Our servers are currently unavailable. We’re working hard to get everything back up and running.';
+      'Our servers are down right now. We\'re working to restore everything quickly.';
 
   @override
-  String get serverDownWhatCanYouDo => 'What can you do?';
+  String get serverDownWhatCanYouDo => 'What You Can Do';
 
   @override
   String get serverDownInstructions =>
-      'There’s nothing you need to fix on your end. Please wait a little while and try again. We appreciate your patience while we restore our services.';
+      'Nothing needs to be changed on your device. Wait a moment and try again.';
 
   @override
   String get serverDownRetry => 'Try Again';
 
   @override
-  String get serverDownFooter => 'Thank you for bearing with us.';
+  String get serverDownFooter => 'Thanks for your patience.';
+
+  @override
+  String get networkError => 'Can\'t connect to the server.';
+
+  @override
+  String get serverConnectionError => 'Can\'t connect to the server.';
+
+  @override
+  String get invalidServerResponse =>
+      'Received an invalid response from the server.';
+
+  @override
+  String get sessionExpired =>
+      'Your session expired. Sign in again to continue.';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong.';
+
+  @override
+  String get tryAgain => 'Try Again';
 }

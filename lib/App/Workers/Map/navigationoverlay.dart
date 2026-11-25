@@ -1,7 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+
+// Services
 import 'package:public_health/Services/Navigation/custom_navigation.dart';
+
+// Theme ;
 import 'package:public_health/Theme/theme.dart';
+
+// Language
+import 'package:public_health/l10n/app_localizations.dart';
 
 String formatManeuverDistance(double meters) {
   if (meters < 1000) {
@@ -66,8 +73,6 @@ IconData maneuverIcon(String type, String? modifier) {
   return CupertinoIcons.arrow_up;
 }
 
-// ───────────────── Navigation banner ─────────────────
-
 class NavigationBanner extends StatelessWidget {
   const NavigationBanner({
     super.key,
@@ -82,16 +87,17 @@ class NavigationBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isRerouting = status == NavStatus.rerouting;
     final isArrived = status == NavStatus.arrived;
 
     final instruction = isRerouting
-        ? 'Rerouting…'
+        ? l10n.rerouting
         : isArrived
-        ? 'You have arrived at your destination'
+        ? l10n.arrivedAtDestination
         : (step?.instruction.isNotEmpty == true
               ? step!.instruction
-              : 'Continue on route');
+              : l10n.continueOnRoute);
 
     return Container(
       width: double.infinity,
@@ -138,9 +144,9 @@ class NavigationBanner extends StatelessWidget {
               children: [
                 Text(
                   isRerouting
-                      ? 'Finding a new route'
+                      ? l10n.findingNewRoute
                       : isArrived
-                      ? 'Destination reached'
+                      ? l10n.destinationReached
                       : formatManeuverDistance(distanceToManeuver),
                   style: const TextStyle(
                     color: CupertinoColors.white,
@@ -181,8 +187,6 @@ class NavigationBanner extends StatelessWidget {
   }
 }
 
-// ───────────────── Bottom navigation panel ─────────────────
-
 class NavigationBottomBar extends StatelessWidget {
   const NavigationBottomBar({
     super.key,
@@ -197,6 +201,7 @@ class NavigationBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final eta = DateTime.now().add(Duration(seconds: remainingDuration.ceil()));
 
     return Container(
@@ -204,7 +209,7 @@ class NavigationBottomBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.backgroundwhite,
         borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: AppColors.border),
+
         boxShadow: [
           BoxShadow(
             color: CupertinoColors.black.withAlpha(22),
@@ -216,41 +221,58 @@ class NavigationBottomBar extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: _Metric(
-                  value: formatDuration(remainingDuration),
-                  label: 'Remaining',
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: AppColors.backgroundwhite,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: AppColors.backgroundblack, width: 1.1),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _Metric(
+                    value: formatDuration(remainingDuration),
+                    label: l10n.remaining,
+                  ),
                 ),
-              ),
-              Container(width: 1, height: 38, color: AppColors.layering),
-              Expanded(
-                child: _Metric(
-                  value: formatTotalDistance(remainingDistance),
-                  label: 'Distance',
+                Container(
+                  width: 1,
+                  height: 42,
+                  color: AppColors.backgroundblack,
                 ),
-              ),
-              Container(width: 1, height: 38, color: AppColors.layering),
-              Expanded(
-                child: _Metric(
-                  value: DateFormat('h:mm a').format(eta),
-                  label: 'Arrival',
+                Expanded(
+                  child: _Metric(
+                    value: formatTotalDistance(remainingDistance),
+                    label: l10n.distanceLabel,
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  width: 1,
+                  height: 42,
+                  color: AppColors.backgroundblack,
+                ),
+                Expanded(
+                  child: _Metric(
+                    value: DateFormat('h:mm a').format(eta),
+                    label: l10n.arrival,
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 14),
           SizedBox(
             width: double.infinity,
             child: CupertinoButton(
               padding: const EdgeInsets.symmetric(vertical: 13),
-              color: CupertinoColors.systemRed,
+              color: CupertinoColors.destructiveRed,
               borderRadius: BorderRadius.circular(14),
               onPressed: onEnd,
-              child: const Text(
-                'End Navigation',
-                style: TextStyle(
+              child: Text(
+                l10n.endNavigation,
+                style: const TextStyle(
                   color: CupertinoColors.white,
                   fontWeight: FontWeight.w600,
                 ),
@@ -262,8 +284,6 @@ class NavigationBottomBar extends StatelessWidget {
     );
   }
 }
-
-// ───────────────── Metric ─────────────────
 
 class _Metric extends StatelessWidget {
   const _Metric({required this.value, required this.label});
@@ -283,8 +303,6 @@ class _Metric extends StatelessWidget {
   }
 }
 
-// ───────────────── Recenter button ─────────────────
-
 class RecenterButton extends StatelessWidget {
   const RecenterButton({super.key, required this.onPressed});
 
@@ -300,6 +318,7 @@ class RecenterButton extends StatelessWidget {
         height: 46,
         decoration: BoxDecoration(
           color: AppColors.backgroundwhite,
+          border: BoxBorder.all(width: 1),
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
@@ -310,7 +329,7 @@ class RecenterButton extends StatelessWidget {
           ],
         ),
         child: const Icon(
-          CupertinoIcons.location_fill,
+          CupertinoIcons.map_pin_ellipse,
           color: AppColors.accent,
           size: 20,
         ),

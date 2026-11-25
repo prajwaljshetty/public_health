@@ -43,8 +43,8 @@ class ProfilePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'WORKER IDENTIFICATION',
+                      Text(
+                        l10n.workerIdentification,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w900,
@@ -86,8 +86,8 @@ class ProfilePage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'WORKER ID',
+                            Text(
+                              l10n.workerId.toUpperCase(),
                               style: TextStyle(
                                 fontSize: 9,
                                 fontWeight: FontWeight.w800,
@@ -104,8 +104,8 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            const Text(
-                              'NAME',
+                            Text(
+                              l10n.nameLabel,
                               style: TextStyle(
                                 fontSize: 9,
                                 fontWeight: FontWeight.w800,
@@ -126,8 +126,8 @@ class ProfilePage extends StatelessWidget {
 
                             const SizedBox(height: 10),
 
-                            const Text(
-                              'PHONE NUMBER',
+                            Text(
+                              l10n.phoneNumber.toUpperCase(),
                               style: TextStyle(
                                 fontSize: 9,
                                 fontWeight: FontWeight.w800,

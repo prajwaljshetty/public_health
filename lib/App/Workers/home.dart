@@ -22,7 +22,7 @@ import 'package:public_health/Services/API/Workers/api_service.dart';
 import 'package:public_health/App/Workers/profile.dart';
 
 // Map :
-import 'package:public_health/App/Workers/map.dart';
+import 'package:public_health/App/Workers/Map/map.dart';
 
 // Accepted pickups :
 import 'package:public_health/App/Workers/acceptedpickups.dart';

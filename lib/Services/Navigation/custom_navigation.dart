@@ -1,9 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+
+// Service :
 import 'package:public_health/Services/Navigation/directions.dart';
 
-// ───────────────────────── Geometry helpers ─────────────────────────
+// Language :
+import 'package:public_health/l10n/app_localizations.dart';
 
 const double _earthRadius = 6371008.8;
 
@@ -33,8 +36,6 @@ double bearingBetween(double lat1, double lon1, double lat2, double lon2) {
   return (_deg(atan2(y, x)) + 360) % 360;
 }
 
-// ───────────────────────── Models ─────────────────────────
-
 typedef NavStep = DirectionsStep;
 
 class NavRoute {
@@ -45,14 +46,12 @@ class NavRoute {
     required this.duration,
   }) : cumulative = _buildCumulative(coordinates);
 
-  /// Coordinates in [longitude, latitude] format.
   final List<List<double>> coordinates;
 
   final List<NavStep> steps;
   final double distance;
   final double duration;
 
-  /// Distance travelled along the route at each coordinate.
   final List<double> cumulative;
 
   static List<double> _buildCumulative(List<List<double>> coordinates) {
@@ -74,12 +73,11 @@ class NavRoute {
   }
 }
 
-// ───────────────────────── Controller ─────────────────────────
-
 enum NavStatus { idle, loading, navigating, rerouting, arrived }
 
 class _Snap {
   const _Snap({
+    required this.languageCode,
     required this.segment,
     required this.along,
     required this.distance,
@@ -87,6 +85,7 @@ class _Snap {
     required this.longitude,
   });
 
+  final String languageCode;
   final int segment;
   final double along;
   final double distance;
@@ -96,6 +95,7 @@ class _Snap {
 
 class CustomNavigationController extends ChangeNotifier {
   CustomNavigationController({
+    required this.languageCode,
     required this.directionsService,
     required this.destinationLatitude,
     required this.destinationLongitude,
@@ -111,6 +111,8 @@ class CustomNavigationController extends ChangeNotifier {
 
   final double offRouteThreshold;
   final double arrivalThreshold;
+
+  final String languageCode;
 
   final void Function(String text)? onSpeak;
 
@@ -193,6 +195,7 @@ class CustomNavigationController extends ChangeNotifier {
 
     try {
       final directionsRoute = await directionsService.getRoute(
+        languageCode: languageCode,
         originLatitude: latitude,
         originLongitude: longitude,
         destinationLatitude: destinationLatitude,
@@ -259,7 +262,6 @@ class CustomNavigationController extends ChangeNotifier {
       return;
     }
 
-    // 1. Find the closest point on the route.
     var snap = _snap(route, latitude, longitude, windowed: true);
 
     if (snap.distance > offRouteThreshold) {
@@ -288,7 +290,6 @@ class CustomNavigationController extends ChangeNotifier {
 
     bearing = bearingBetween(a[1], a[0], b[1], b[0]);
 
-    // 4. Calculate route progress.
     final total = route.cumulative.last;
 
     final progress = route.cumulative[_segIndex] + snap.along;
@@ -297,7 +298,6 @@ class CustomNavigationController extends ChangeNotifier {
 
     final travelled = progress * scale;
 
-    // 5. Advance the current navigation step.
     while (_stepIndex + 1 < route.steps.length - 1 &&
         route.steps[_stepIndex + 1].startDistance <= travelled) {
       _stepIndex++;
@@ -305,7 +305,6 @@ class CustomNavigationController extends ChangeNotifier {
 
     remainingDistance = max(0.0, route.distance - travelled).toDouble();
 
-    // 6. Calculate distance and duration to the next maneuver.
     if (route.steps.length >= 2) {
       final current = route.steps[_stepIndex];
       final next = route.steps[_stepIndex + 1];
@@ -334,7 +333,6 @@ class CustomNavigationController extends ChangeNotifier {
           route.duration * (remainingDistance / max(1.0, route.distance));
     }
 
-    // 7. Check arrival.
     if (remainingDistance <= arrivalThreshold) {
       _status = NavStatus.arrived;
 
@@ -343,8 +341,6 @@ class CustomNavigationController extends ChangeNotifier {
 
     _notify();
   }
-
-  // ───────────────── Route management ─────────────────
 
   void _applyRoute(NavRoute route) {
     if (route.coordinates.length < 2) {
@@ -395,6 +391,7 @@ class CustomNavigationController extends ChangeNotifier {
 
     try {
       final directionsRoute = await directionsService.getRoute(
+        languageCode: languageCode,
         originLatitude: latitude,
         originLongitude: longitude,
         destinationLatitude: destinationLatitude,
@@ -503,6 +500,7 @@ class CustomNavigationController extends ChangeNotifier {
         route.cumulative[bestSegment + 1] - route.cumulative[bestSegment];
 
     return _Snap(
+      languageCode: languageCode,
       segment: bestSegment,
       along: bestT * segmentLength,
       distance: bestDistance,

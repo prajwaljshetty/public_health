@@ -402,18 +402,16 @@ class _PickupAcceptanceConfirmationPageState
               )
             : Center(
                 key: const ValueKey('tile'),
-                child: Container(
-                  width: 68,
-                  height: 68,
-                  decoration: BoxDecoration(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    width: 68,
+                    height: 68,
                     color: AppColors.backgroundwhite,
-                    border: BoxBorder.all(width: 1),
-                    borderRadius: BorderRadius.circular(22),
-                  ),
-                  child: const Icon(
-                    CupertinoIcons.cube_box,
-                    size: 44,
-                    color: AppColors.accent,
+                    child: Image.asset(
+                      AssetMapper.running,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),

@@ -24,7 +24,7 @@ import 'package:public_health/l10n/app_localizations.dart';
 import 'package:public_health/App/Workers/pickupcard.dart';
 
 // Map
-import 'package:public_health/App/Workers/map.dart';
+import 'package:public_health/App/Workers/Map/map.dart';
 
 // Geolocator
 import 'package:geolocator/geolocator.dart';
@@ -253,7 +253,7 @@ class _AcceptedPickupsPageState extends State<AcceptedPickupsPage> {
             Text(
               l10n.noAcceptedPickups,
               textAlign: TextAlign.center,
-              style: AppText.cardSubtitle.copyWith(fontSize: 16),
+              style: AppText.cardSubtitle.copyWith(fontSize: 14),
             ),
           ],
         ),

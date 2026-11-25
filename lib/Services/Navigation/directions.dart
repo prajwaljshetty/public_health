@@ -1,12 +1,17 @@
 import 'dart:convert';
 
+// HTTP :
 import 'package:http/http.dart' as http;
 import 'package:public_health/Config/mapbox_config.dart';
+
+// Language
+import 'package:public_health/l10n/app_localizations.dart';
 
 class DirectionsService {
   static const String _baseUrl = 'https://api.mapbox.com/directions/v5/mapbox';
 
   Future<DirectionsRoute> getRoute({
+    required String languageCode,
     required double originLatitude,
     required double originLongitude,
     required double destinationLatitude,
@@ -21,7 +26,7 @@ class DirectionsService {
         'steps': 'true',
         'geometries': 'geojson',
         'overview': 'full',
-        'language': 'en',
+        'language': languageCode,
         'alternatives': 'false',
         'roundabout_exits': 'true',
       },
