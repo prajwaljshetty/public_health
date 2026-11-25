@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/Users/prajwal/Downloads/public health/public_health/linux/flutter"
+    "cmake.sourceDirectory": "/Users/prajwal/Downloads/public health/public_health/linux/flutter",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

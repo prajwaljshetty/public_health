@@ -11,7 +11,6 @@ import 'dart:convert';
 // Map
 import 'package:public_health/Theme/theme.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-import 'package:mapbox_navigation_sdk/mapbox_navigation_sdk.dart';
 
 // Language
 import 'package:public_health/l10n/app_localizations.dart';
@@ -33,6 +32,9 @@ import 'package:provider/provider.dart';
 import 'package:public_health/Providers/User/user.dart';
 import 'package:public_health/Providers/Navigation/location.dart';
 import 'package:public_health/Providers/Navigation/navigation.dart';
+import 'package:public_health/Services/Navigation/directions.dart';
+import 'package:public_health/Services/Navigation/custom_navigation.dart';
+import 'package:public_health/App/Workers/navigation_overlay.dart';
 
 // Services :
 import 'package:public_health/Services/API/Workers/api_service.dart';
@@ -78,27 +80,38 @@ class _MapPageState extends State<MapPage> {
   bool _markerReady = false;
   bool _initializationStarted = false;
 
-  // Routing :
   GeoJsonSource? _routeSource;
-  MapBoxNavigationViewController? _navigationController;
+  CustomNavigationController? _customNavigationController;
+  LocationProvider? _navigationLocationProvider;
   bool _navigationStarted = false;
-  bool _navigationRouteStarted = false;
+  bool _isDrawingNavigationRoute = false;
+  bool _isFollowingCamera = false;
+  DateTime _lastRouteDrawAt = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime _lastCameraFollowAt = DateTime.fromMillisecondsSinceEpoch(0);
 
   bool _isRequesting = false;
 
   final TextEditingController _codeController = TextEditingController();
 
-  // State and Error :
   AcceptedModalState modalState = AcceptedModalState.idle;
   String? collectionError;
   MobileScannerController? _scannerController;
   bool _isScanned = false;
 
-  // Code Dialog Box :
   final FocusNode _codeFocusNode = FocusNode();
 
   String get _verificationCode => _codeController.text;
   bool get _isCodeComplete => _verificationCode.length == 6;
+
+  @override
+  void dispose() {
+    _navigationLocationProvider?.removeListener(_onLocationChanged);
+    _customNavigationController?.removeListener(_onCustomNavigationChanged);
+    _customNavigationController?.dispose();
+    _codeController.dispose();
+    _codeFocusNode.dispose();
+    super.dispose();
+  }
 
   bool _isValidCode(String code) {
     return RegExp(r'^\d{6}$').hasMatch(code);
@@ -110,74 +123,6 @@ class _MapPageState extends State<MapPage> {
     }
 
     return '${(distance / 1000).toStringAsFixed(1)} km';
-  }
-
-  Future<bool> _confirmCollection(
-    String code,
-    StateSetter setModalState,
-  ) async {
-    setModalState(() {
-      _isRequesting = true;
-      collectionError = null;
-    });
-
-    try {
-      final userProvider = context.read<UserProvider>();
-
-      final response = await ApiService.confirmCollection(
-        pickupid: widget.pickupId,
-        code: code,
-        userprovider: userProvider,
-      );
-
-      if (!mounted) return false;
-
-      if (response['status'] != true) {
-        final errorMessage = switch (response['code']) {
-          'INVALID_PICKUP_CODE' ||
-          'INCORRECT_PICKUP_CODE' => 'Incorrect verification code.',
-
-          'PICKUP_CODE_NOT_GENERATED' => 'Verification code is not available.',
-
-          'PICKUP_NOT_AVAILABLE_FOR_COLLECTION' ||
-          'PICKUP_NOT_ACCEPTED' => 'This pickup is no longer available.',
-
-          'PICKUP_NOT_ASSIGNED_TO_WORKER' || 'INSUFFICIENT_PERMISSIONS' =>
-            'You are not authorized to collect this pickup.',
-
-          'COLLECTION_ALREADY_PENDING' ||
-          'COLLECTION_PENDING_SYNC' => 'Collection is already being processed.',
-
-          'NETWORK_ERROR' => 'Unable to connect to the server.',
-
-          'INVALID_RESPONSE' => 'Invalid response from the server.',
-
-          _ => 'Unable to verify collection. Try again.',
-        };
-
-        setModalState(() {
-          collectionError = errorMessage;
-        });
-
-        return false;
-      }
-
-      return true;
-    } catch (e) {
-      if (!mounted) return false;
-
-      setModalState(() {
-        collectionError = 'Unable to connect to the server.';
-      });
-
-      return false;
-    } finally {
-      if (mounted) {
-        setModalState(() {
-          _isRequesting = false;
-        });
-      }
-    }
   }
 
   String _formatNavigationDuration(double seconds) {
@@ -199,6 +144,654 @@ class _MapPageState extends State<MapPage> {
     }
 
     return '${(meters / 1000).toStringAsFixed(1)} km';
+  }
+
+  double _calculateBearing({
+    required double startLatitude,
+    required double startLongitude,
+    required double endLatitude,
+    required double endLongitude,
+  }) {
+    final lat1 = startLatitude * pi / 180;
+    final lat2 = endLatitude * pi / 180;
+    final deltaLongitude = (endLongitude - startLongitude) * pi / 180;
+
+    final y = sin(deltaLongitude) * cos(lat2);
+
+    final x =
+        cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(deltaLongitude);
+
+    final bearing = atan2(y, x) * 180 / pi;
+
+    return (bearing + 360) % 360;
+  }
+
+  Future<void> _onMapLoaded() async {
+    _mapLoaded = true;
+    await _initializeMap();
+  }
+
+  Future<void> _onStyleLoaded() async {
+    try {
+      await _configurePickupMarker();
+
+      if (!mounted) return;
+
+      _styleLoaded = true;
+      _markerReady = true;
+
+      await _initializeMap();
+    } catch (_) {}
+  }
+
+  Future<void> _initializeMap() async {
+    if (!mounted ||
+        !_mapLoaded ||
+        !_styleLoaded ||
+        !_markerReady ||
+        _initializationStarted) {
+      return;
+    }
+
+    _initializationStarted = true;
+
+    try {
+      await _moveCamera();
+
+      await _loadRoutePreview();
+
+      if (!mounted) return;
+
+      setState(() {
+        _isMapReady = true;
+      });
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _showPickupModal(widget.mode);
+      });
+    } catch (e) {
+      _initializationStarted = false;
+    }
+  }
+
+  Future<void> _moveCamera() async {
+    final mapboxMap = _mapboxMap;
+
+    if (mapboxMap == null || !mounted) return;
+
+    final position = context.read<LocationProvider>().position;
+
+    if (position == null) return;
+
+    final screenSize = MediaQuery.sizeOf(context);
+
+    final bounds = CoordinateBounds(
+      southwest: Point(
+        coordinates: Position(
+          min(position.longitude, widget.longitude),
+          min(position.latitude, widget.latitude),
+        ),
+      ),
+      northeast: Point(
+        coordinates: Position(
+          max(position.longitude, widget.longitude),
+          max(position.latitude, widget.latitude),
+        ),
+      ),
+      infiniteBounds: false,
+    );
+
+    final bearing = _calculateBearing(
+      startLatitude: position.latitude,
+      startLongitude: position.longitude,
+      endLatitude: widget.latitude,
+      endLongitude: widget.longitude,
+    );
+
+    final camera = await mapboxMap.cameraForCoordinateBounds(
+      bounds,
+      MbxEdgeInsets(
+        top: 110,
+        left: 65,
+        bottom: screenSize.height * 0.48,
+        right: 65,
+      ),
+      bearing,
+      0,
+      17,
+      null,
+    );
+
+    if (!mounted || _mapboxMap == null) return;
+
+    await mapboxMap.flyTo(
+      CameraOptions(
+        center: camera.center,
+        zoom: camera.zoom,
+        bearing: bearing,
+        pitch: 0,
+      ),
+      MapAnimationOptions(duration: 1200),
+    );
+  }
+
+  Future<void> _configurePickupMarker() async {
+    final mapboxMap = _mapboxMap;
+
+    if (mapboxMap == null) return;
+
+    await mapboxMap.addSource(
+      GeoJsonSource(
+        id: 'pickup-source',
+        data:
+            '''
+      {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                ${widget.longitude},
+                ${widget.latitude}
+              ]
+            },
+            "properties": {}
+          }
+        ]
+      }
+      ''',
+      ),
+    );
+
+    await mapboxMap.addLayer(
+      CircleLayer(
+        id: 'pickup-layer',
+        sourceId: 'pickup-source',
+        circleColor: AppColors.accent.toARGB32(),
+        circleRadius: 10,
+        circleStrokeColor: CupertinoColors.white.toARGB32(),
+        circleStrokeWidth: 3,
+      ),
+    );
+
+    _routeSource = GeoJsonSource(
+      id: 'navigation-route-source',
+      data: '''
+    {
+      "type": "FeatureCollection",
+      "features": []
+    }
+    ''',
+    );
+
+    await mapboxMap.addSource(_routeSource!);
+
+    await mapboxMap.addLayer(
+      LineLayer(
+        id: 'navigation-route-layer',
+        sourceId: 'navigation-route-source',
+        lineColor: AppColors.accent.toARGB32(),
+        lineWidth: 6,
+        lineCap: LineCap.ROUND,
+        lineJoin: LineJoin.ROUND,
+      ),
+    );
+  }
+
+  Future<void> _loadRoutePreview() async {
+    final position = context.read<LocationProvider>().position;
+    final routeSource = _routeSource;
+
+    if (position == null || routeSource == null) return;
+
+    final navigationProvider = context.read<NavigationProvider>();
+
+    try {
+      await navigationProvider.startNavigation(
+        originLatitude: position.latitude,
+        originLongitude: position.longitude,
+        destinationLatitude: widget.latitude,
+        destinationLongitude: widget.longitude,
+      );
+
+      if (!mounted) return;
+
+      final route = navigationProvider.route;
+
+      if (route == null || route.coordinates.length < 2) return;
+
+      final geoJson = jsonEncode({
+        'type': 'FeatureCollection',
+        'features': [
+          {
+            'type': 'Feature',
+            'geometry': {
+              'type': 'LineString',
+              'coordinates': route.coordinates,
+            },
+            'properties': {},
+          },
+        ],
+      });
+
+      await routeSource.updateGeoJSON(geoJson);
+
+      if (mounted) {
+        setState(() {});
+      }
+    } catch (e) {}
+  }
+
+  Future<void> _startCustomNavigation() async {
+    final locationProvider = context.read<LocationProvider>();
+    final position = locationProvider.position;
+
+    if (position == null) {
+      showCupertinoDialog<void>(
+        context: context,
+        builder: (dialogContext) => CupertinoAlertDialog(
+          title: const Text('Location unavailable'),
+          content: const Text('Your current location is not available yet.'),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    _navigationLocationProvider = locationProvider;
+    final controller = CustomNavigationController(
+      directionsService: DirectionsService(),
+      destinationLatitude: widget.latitude,
+      destinationLongitude: widget.longitude,
+      onSpeak: (instruction) => debugPrint('Navigation: $instruction'),
+    );
+
+    _customNavigationController = controller;
+    controller.addListener(_onCustomNavigationChanged);
+    locationProvider.addListener(_onLocationChanged);
+
+    setState(() => _navigationStarted = true);
+
+    try {
+      await controller.start(position.latitude, position.longitude);
+      if (!mounted) return;
+      controller.onLocation(
+        position.latitude,
+        position.longitude,
+        accuracy: position.accuracy,
+      );
+      await _drawRemainingRoute(force: true);
+      await _followNavigationCamera(force: true);
+    } catch (error) {
+      if (!mounted) return;
+      _endCustomNavigation(restorePreview: true);
+      showCupertinoDialog<void>(
+        context: context,
+        builder: (dialogContext) => CupertinoAlertDialog(
+          title: const Text('Unable to start navigation'),
+          content: Text(error.toString()),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void _onLocationChanged() {
+    final position = _navigationLocationProvider?.position;
+    final controller = _customNavigationController;
+    if (position == null || controller == null) return;
+
+    controller.onLocation(
+      position.latitude,
+      position.longitude,
+      accuracy: position.accuracy,
+    );
+  }
+
+  void _onCustomNavigationChanged() {
+    if (!mounted) return;
+    setState(() {});
+    unawaited(_drawRemainingRoute());
+    unawaited(_followNavigationCamera());
+  }
+
+  Future<void> _drawRemainingRoute({bool force = false}) async {
+    final controller = _customNavigationController;
+    final source = _routeSource;
+    if (controller == null || source == null || _isDrawingNavigationRoute) {
+      return;
+    }
+
+    final now = DateTime.now();
+    if (!force && now.difference(_lastRouteDrawAt).inMilliseconds < 700) return;
+
+    final coordinates = controller.remainingCoordinates;
+    if (coordinates.length < 2) return;
+
+    _isDrawingNavigationRoute = true;
+    _lastRouteDrawAt = now;
+    try {
+      final geoJson = jsonEncode({
+        'type': 'FeatureCollection',
+        'features': [
+          {
+            'type': 'Feature',
+            'geometry': {'type': 'LineString', 'coordinates': coordinates},
+            'properties': {},
+          },
+        ],
+      });
+      await source.updateGeoJSON(geoJson);
+    } catch (error) {
+      debugPrint('Unable to update navigation route: $error');
+    } finally {
+      _isDrawingNavigationRoute = false;
+    }
+  }
+
+  Future<void> _followNavigationCamera({bool force = false}) async {
+    final map = _mapboxMap;
+    final controller = _customNavigationController;
+    if (map == null || controller == null || _isFollowingCamera) return;
+    if (controller.status != NavStatus.navigating &&
+        controller.status != NavStatus.rerouting &&
+        controller.status != NavStatus.arrived) {
+      return;
+    }
+
+    final now = DateTime.now();
+    if (!force && now.difference(_lastCameraFollowAt).inMilliseconds < 1100) {
+      return;
+    }
+
+    _isFollowingCamera = true;
+    _lastCameraFollowAt = now;
+    try {
+      await map.flyTo(
+        CameraOptions(
+          center: Point(
+            coordinates: Position(
+              controller.snappedLongitude,
+              controller.snappedLatitude,
+            ),
+          ),
+          zoom: 15,
+          bearing: controller.bearing,
+          pitch: 0,
+        ),
+        MapAnimationOptions(duration: 850),
+      );
+    } catch (error) {
+      debugPrint('Unable to follow navigation camera: $error');
+    } finally {
+      _isFollowingCamera = false;
+    }
+  }
+
+  Future<void> _recenterNavigation() async {
+    await _followNavigationCamera(force: true);
+  }
+
+  void _endCustomNavigation({bool restorePreview = true}) {
+    final controller = _customNavigationController;
+    final locationProvider = _navigationLocationProvider;
+
+    locationProvider?.removeListener(_onLocationChanged);
+    controller?.removeListener(_onCustomNavigationChanged);
+    controller?.stop();
+    controller?.dispose();
+
+    _customNavigationController = null;
+    _navigationLocationProvider = null;
+    _navigationStarted = false;
+    _isDrawingNavigationRoute = false;
+    _isFollowingCamera = false;
+
+    if (mounted) setState(() {});
+    if (restorePreview) unawaited(_restoreRoutePreview());
+  }
+
+  Future<void> _restoreRoutePreview() async {
+    final route = context.read<NavigationProvider>().route;
+    final source = _routeSource;
+    if (route == null || source == null || route.coordinates.length < 2) return;
+
+    final geoJson = jsonEncode({
+      'type': 'FeatureCollection',
+      'features': [
+        {
+          'type': 'Feature',
+          'geometry': {'type': 'LineString', 'coordinates': route.coordinates},
+          'properties': {},
+        },
+      ],
+    });
+    try {
+      await source.updateGeoJSON(geoJson);
+    } catch (error) {
+      debugPrint('Unable to restore route preview: $error');
+    }
+  }
+
+  Widget _buildRoutePreview() {
+    return Consumer<NavigationProvider>(
+      builder: (context, navigationProvider, _) {
+        final route = navigationProvider.route;
+
+        if (route == null) return const SizedBox.shrink();
+
+        final eta = DateTime.now().add(
+          Duration(seconds: route.duration.round()),
+        );
+
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: AppColors.backgroundwhite,
+            borderRadius: BorderRadius.circular(28),
+            border: Border.all(color: AppColors.border, width: 1),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 52,
+                    height: 52,
+                    decoration: BoxDecoration(
+                      color: AppColors.accent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.location_fill,
+                      color: AppColors.backgroundwhite,
+                      size: 25,
+                    ),
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Route Details',
+                          style: AppText.cardTitle.copyWith(fontSize: 18),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Your pickup route is ready.',
+                          style: AppText.cardSubtitle,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const Icon(
+                    CupertinoIcons.map,
+                    color: AppColors.accent,
+                    size: 23,
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 18),
+
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundwhite,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: AppColors.border, width: 1),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _formatNavigationDuration(route.duration),
+                            style: AppText.title.copyWith(fontSize: 25),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            'Estimated arrival · ${DateFormat('h:mm a').format(eta)}',
+                            style: AppText.cardSubtitle,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(width: 12),
+
+                    Container(width: 1, height: 48, color: AppColors.layering),
+
+                    const SizedBox(width: 16),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _formatNavigationDistance(route.distance),
+                            style: AppText.title.copyWith(fontSize: 23),
+                          ),
+                          const SizedBox(height: 5),
+                          Text('Road distance', style: AppText.cardSubtitle),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: CupertinoButton(
+                      color: AppColors.accent,
+                      borderRadius: BorderRadius.circular(16),
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      onPressed: _startCustomNavigation,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            CupertinoIcons.location_north_fill,
+                            color: CupertinoColors.white,
+                            size: 19,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            'Start Navigation',
+                            style: TextStyle(
+                              color: CupertinoColors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  if (widget.mode == MapViewMode.accepted) ...[
+                    const SizedBox(width: 10),
+
+                    Expanded(
+                      child: CupertinoButton(
+                        color: AppColors.accent,
+                        borderRadius: BorderRadius.circular(16),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        onPressed: () {
+                          _showPickupModal(widget.mode);
+                        },
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              CupertinoIcons.qrcode,
+                              color: CupertinoColors.white,
+                              size: 19,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Scan QR',
+                              style: TextStyle(
+                                color: CupertinoColors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showPickupModal(MapViewMode mode) {
+    if (isModalOpen || !_isMapReady) return;
+
+    isModalOpen = true;
+
+    switch (mode) {
+      case MapViewMode.discover:
+        _discover();
+        break;
+
+      case MapViewMode.accepted:
+        _accepted();
+        break;
+    }
   }
 
   void _discover() {
@@ -381,6 +974,30 @@ class _MapPageState extends State<MapPage> {
     });
   }
 
+  Widget _receiptDetail({required String label, required String value}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Text(
+            label,
+            style: AppText.cardSubtitle.copyWith(color: AppColors.accent),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          flex: 3,
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            style: AppText.label.copyWith(fontSize: 14, height: 1.4),
+          ),
+        ),
+      ],
+    );
+  }
+
   void _accepted() {
     _codeController.clear();
     _codeFocusNode.unfocus();
@@ -415,96 +1032,6 @@ class _MapPageState extends State<MapPage> {
     _isScanned = false;
     _codeController.clear();
     _codeFocusNode.unfocus();
-  }
-
-  Future<void> _disposeScanner() async {
-    final controller = _scannerController;
-    _scannerController = null;
-
-    await controller?.dispose();
-  }
-
-  Future<void> _startScanner(StateSetter setModalState) async {
-    if (modalState != AcceptedModalState.idle || _isRequesting) {
-      return;
-    }
-
-    _isScanned = false;
-
-    _scannerController = MobileScannerController(
-      formats: [BarcodeFormat.qrCode],
-      autoTorch: true,
-      facing: CameraFacing.back,
-    );
-
-    setModalState(() {
-      collectionError = null;
-      modalState = AcceptedModalState.scanning;
-    });
-  }
-
-  Future<void> _stopScanner(StateSetter setModalState) async {
-    await _disposeScanner();
-
-    _isScanned = false;
-
-    setModalState(() {
-      modalState = AcceptedModalState.idle;
-    });
-  }
-
-  Future<void> _verifyCode(
-    String code,
-    BuildContext modalContext,
-    StateSetter setModalState,
-  ) async {
-    if (_isRequesting || modalState == AcceptedModalState.success) {
-      return;
-    }
-
-    _isScanned = true;
-
-    await _disposeScanner();
-
-    if (!mounted || !modalContext.mounted) return;
-
-    setModalState(() {
-      modalState = AcceptedModalState.idle;
-      collectionError = null;
-    });
-
-    final success = await _confirmCollection(code, setModalState);
-
-    if (!mounted || !modalContext.mounted) return;
-
-    setModalState(() {
-      modalState = success
-          ? AcceptedModalState.success
-          : AcceptedModalState.idle;
-
-      if (success) {
-        collectionError = null;
-      }
-    });
-
-    _isScanned = false;
-  }
-
-  Future<void> _handleScannedCode(
-    String code,
-    BuildContext modalContext,
-    StateSetter setModalState,
-  ) async {
-    if (modalState != AcceptedModalState.scanning ||
-        _isRequesting ||
-        _isScanned ||
-        !_isValidCode(code)) {
-      return;
-    }
-
-    _isScanned = true;
-
-    await _verifyCode(code, modalContext, setModalState);
   }
 
   Widget _buildAcceptedModal(
@@ -547,279 +1074,161 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  Widget _buildRoutePreview() {
-    return Consumer<NavigationProvider>(
-      builder: (context, navigationProvider, _) {
-        final route = navigationProvider.route;
-
-        if (route == null) return const SizedBox.shrink();
-
-        final eta = DateTime.now().add(
-          Duration(seconds: route.duration.round()),
-        );
-
-        return Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-            color: AppColors.backgroundwhite,
-            borderRadius: BorderRadius.circular(28),
-            border: Border.all(color: AppColors.border, width: 1),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Route header
-              Row(
-                children: [
-                  Container(
-                    width: 52,
-                    height: 52,
-                    decoration: BoxDecoration(
-                      color: AppColors.accent,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Icon(
-                      CupertinoIcons.location_fill,
-                      color: AppColors.backgroundwhite,
-                      size: 25,
-                    ),
-                  ),
-
-                  const SizedBox(width: 12),
-
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Route Details',
-                          style: AppText.cardTitle.copyWith(fontSize: 18),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Your pickup route is ready.',
-                          style: AppText.cardSubtitle,
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const Icon(
-                    CupertinoIcons.map,
-                    color: AppColors.accent,
-                    size: 23,
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 18),
-
-              // Route information
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundwhite,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: AppColors.border, width: 1),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _formatNavigationDuration(route.duration),
-                            style: AppText.title.copyWith(fontSize: 25),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            'Estimated arrival · ${DateFormat('h:mm a').format(eta)}',
-                            style: AppText.cardSubtitle,
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(width: 12),
-
-                    Container(width: 1, height: 48, color: AppColors.layering),
-
-                    const SizedBox(width: 16),
-
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _formatNavigationDistance(route.distance),
-                            style: AppText.title.copyWith(fontSize: 23),
-                          ),
-                          const SizedBox(height: 5),
-                          Text('Road distance', style: AppText.cardSubtitle),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Navigation actions
-              Row(
-                children: [
-                  Expanded(
-                    child: CupertinoButton(
-                      color: AppColors.accent,
-                      borderRadius: BorderRadius.circular(16),
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      onPressed: () {
-                        setState(() {
-                          _navigationStarted = true;
-                          _navigationRouteStarted = false;
-                        });
-                      },
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            CupertinoIcons.location_north_fill,
-                            color: CupertinoColors.white,
-                            size: 19,
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            'Start Navigation',
-                            style: TextStyle(
-                              color: CupertinoColors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  if (widget.mode == MapViewMode.accepted) ...[
-                    const SizedBox(width: 10),
-
-                    Expanded(
-                      child: CupertinoButton(
-                        color: AppColors.accent,
-                        borderRadius: BorderRadius.circular(16),
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        onPressed: () {
-                          _showPickupModal(widget.mode);
-                        },
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              CupertinoIcons.qrcode,
-                              color: CupertinoColors.white,
-                              size: 19,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              'Scan QR',
-                              style: TextStyle(
-                                color: CupertinoColors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildNativeNavigationView() {
-    final position = context.read<LocationProvider>().position;
-
-    if (position == null) {
-      return const Center(child: CupertinoActivityIndicator());
+  Future<void> _startScanner(StateSetter setModalState) async {
+    if (modalState != AcceptedModalState.idle || _isRequesting) {
+      return;
     }
 
-    final options = MapBoxOptions(
-      initialLatitude: position.latitude,
-      initialLongitude: position.longitude,
-      zoom: 16,
-      mode: MapBoxNavigationMode.drivingWithTraffic,
-      voiceInstructionsEnabled: true,
-      bannerInstructionsEnabled: true,
-      alternatives: false,
-      simulateRoute: false,
-      language: 'en',
+    _isScanned = false;
+
+    _scannerController = MobileScannerController(
+      formats: [BarcodeFormat.qrCode],
+      autoTorch: true,
+      facing: CameraFacing.back,
     );
 
-    return MapBoxNavigationView(
-      options: options,
-      onCreated: (MapBoxNavigationViewController controller) async {
-        _navigationController = controller;
-
-        await controller.buildRoute(
-          wayPoints: [
-            WayPoint(
-              name: 'Current Location',
-              latitude: position.latitude,
-              longitude: position.longitude,
-            ),
-            WayPoint(
-              name: widget.username,
-              latitude: widget.latitude,
-              longitude: widget.longitude,
-            ),
-          ],
-        );
-      },
-      onRouteEvent: _onNavigationEvent,
-    );
+    setModalState(() {
+      collectionError = null;
+      modalState = AcceptedModalState.scanning;
+    });
   }
 
-  Future<void> _onNavigationEvent(RouteEvent event) async {
-    switch (event.eventType) {
-      case MapBoxEvent.route_built:
-        if (_navigationRouteStarted) return;
-        _navigationRouteStarted = true;
-        await _navigationController?.startNavigation();
-        break;
+  Future<void> _stopScanner(StateSetter setModalState) async {
+    await _disposeScanner();
 
-      case MapBoxEvent.route_build_failed:
-        debugPrint('Mapbox navigation route build failed');
-        break;
+    _isScanned = false;
 
-      case MapBoxEvent.navigation_running:
-        debugPrint('Mapbox turn-by-turn navigation started');
-        break;
+    setModalState(() {
+      modalState = AcceptedModalState.idle;
+    });
+  }
 
-      case MapBoxEvent.on_arrival:
-        debugPrint('Pickup destination reached');
-        break;
+  Future<void> _disposeScanner() async {
+    final controller = _scannerController;
+    _scannerController = null;
 
-      case MapBoxEvent.navigation_finished:
-        debugPrint('Mapbox navigation finished');
-        break;
+    await controller?.dispose();
+  }
 
-      case MapBoxEvent.navigation_cancelled:
-        debugPrint('Mapbox navigation cancelled');
-        break;
+  Future<void> _handleScannedCode(
+    String code,
+    BuildContext modalContext,
+    StateSetter setModalState,
+  ) async {
+    if (modalState != AcceptedModalState.scanning ||
+        _isRequesting ||
+        _isScanned ||
+        !_isValidCode(code)) {
+      return;
+    }
 
-      default:
-        break;
+    _isScanned = true;
+
+    await _verifyCode(code, modalContext, setModalState);
+  }
+
+  Future<void> _verifyCode(
+    String code,
+    BuildContext modalContext,
+    StateSetter setModalState,
+  ) async {
+    if (_isRequesting || modalState == AcceptedModalState.success) {
+      return;
+    }
+
+    _isScanned = true;
+
+    await _disposeScanner();
+
+    if (!mounted || !modalContext.mounted) return;
+
+    setModalState(() {
+      modalState = AcceptedModalState.idle;
+      collectionError = null;
+    });
+
+    final success = await _confirmCollection(code, setModalState);
+
+    if (!mounted || !modalContext.mounted) return;
+
+    setModalState(() {
+      modalState = success
+          ? AcceptedModalState.success
+          : AcceptedModalState.idle;
+
+      if (success) {
+        collectionError = null;
+      }
+    });
+
+    _isScanned = false;
+  }
+
+  Future<bool> _confirmCollection(
+    String code,
+    StateSetter setModalState,
+  ) async {
+    setModalState(() {
+      _isRequesting = true;
+      collectionError = null;
+    });
+
+    try {
+      final userProvider = context.read<UserProvider>();
+
+      final response = await ApiService.confirmCollection(
+        pickupid: widget.pickupId,
+        code: code,
+        userprovider: userProvider,
+      );
+
+      if (!mounted) return false;
+
+      if (response['status'] != true) {
+        final errorMessage = switch (response['code']) {
+          'INVALID_PICKUP_CODE' ||
+          'INCORRECT_PICKUP_CODE' => 'Incorrect verification code.',
+
+          'PICKUP_CODE_NOT_GENERATED' => 'Verification code is not available.',
+
+          'PICKUP_NOT_AVAILABLE_FOR_COLLECTION' ||
+          'PICKUP_NOT_ACCEPTED' => 'This pickup is no longer available.',
+
+          'PICKUP_NOT_ASSIGNED_TO_WORKER' || 'INSUFFICIENT_PERMISSIONS' =>
+            'You are not authorized to collect this pickup.',
+
+          'COLLECTION_ALREADY_PENDING' ||
+          'COLLECTION_PENDING_SYNC' => 'Collection is already being processed.',
+
+          'NETWORK_ERROR' => 'Unable to connect to the server.',
+
+          'INVALID_RESPONSE' => 'Invalid response from the server.',
+
+          _ => 'Unable to verify collection. Try again.',
+        };
+
+        setModalState(() {
+          collectionError = errorMessage;
+        });
+
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      if (!mounted) return false;
+
+      setModalState(() {
+        collectionError = 'Unable to connect to the server.';
+      });
+
+      return false;
+    } finally {
+      if (mounted) {
+        setModalState(() {
+          _isRequesting = false;
+        });
+      }
     }
   }
 
@@ -1310,297 +1719,6 @@ class _MapPageState extends State<MapPage> {
     });
   }
 
-  void _showPickupModal(MapViewMode mode) {
-    if (isModalOpen || !_isMapReady) return;
-
-    isModalOpen = true;
-
-    switch (mode) {
-      case MapViewMode.discover:
-        _discover();
-        break;
-
-      case MapViewMode.accepted:
-        _accepted();
-        break;
-    }
-  }
-
-  Widget _receiptDetail({required String label, required String value}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Text(
-            label,
-            style: AppText.cardSubtitle.copyWith(color: AppColors.accent),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          flex: 3,
-          child: Text(
-            value,
-            textAlign: TextAlign.end,
-            style: AppText.label.copyWith(fontSize: 14, height: 1.4),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Future<void> _onMapLoaded() async {
-    _mapLoaded = true;
-    await _initializeMap();
-  }
-
-  Future<void> _onStyleLoaded() async {
-    try {
-      await _configurePickupMarker();
-
-      if (!mounted) return;
-
-      _styleLoaded = true;
-      _markerReady = true;
-
-      await _initializeMap();
-    } catch (_) {}
-  }
-
-  Future<void> _initializeMap() async {
-    if (!mounted ||
-        !_mapLoaded ||
-        !_styleLoaded ||
-        !_markerReady ||
-        _initializationStarted) {
-      return;
-    }
-
-    _initializationStarted = true;
-
-    try {
-      await _moveCamera();
-
-      // Route preview is available in both Discover and Accepted.
-      await _loadRoutePreview();
-
-      if (!mounted) return;
-
-      setState(() {
-        _isMapReady = true;
-      });
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        _showPickupModal(widget.mode);
-      });
-    } catch (e) {
-      _initializationStarted = false;
-    }
-  }
-
-  double _calculateBearing({
-    required double startLatitude,
-    required double startLongitude,
-    required double endLatitude,
-    required double endLongitude,
-  }) {
-    final lat1 = startLatitude * pi / 180;
-    final lat2 = endLatitude * pi / 180;
-    final deltaLongitude = (endLongitude - startLongitude) * pi / 180;
-
-    final y = sin(deltaLongitude) * cos(lat2);
-
-    final x =
-        cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(deltaLongitude);
-
-    final bearing = atan2(y, x) * 180 / pi;
-
-    return (bearing + 360) % 360;
-  }
-
-  Future<void> _moveCamera() async {
-    final mapboxMap = _mapboxMap;
-
-    if (mapboxMap == null || !mounted) return;
-
-    final position = context.read<LocationProvider>().position;
-
-    if (position == null) return;
-
-    final screenSize = MediaQuery.sizeOf(context);
-
-    final bounds = CoordinateBounds(
-      southwest: Point(
-        coordinates: Position(
-          min(position.longitude, widget.longitude),
-          min(position.latitude, widget.latitude),
-        ),
-      ),
-      northeast: Point(
-        coordinates: Position(
-          max(position.longitude, widget.longitude),
-          max(position.latitude, widget.latitude),
-        ),
-      ),
-      infiniteBounds: false,
-    );
-
-    // Direction from current location (source) to pickup (destination).
-    final bearing = _calculateBearing(
-      startLatitude: position.latitude,
-      startLongitude: position.longitude,
-      endLatitude: widget.latitude,
-      endLongitude: widget.longitude,
-    );
-
-    final camera = await mapboxMap.cameraForCoordinateBounds(
-      bounds,
-      MbxEdgeInsets(
-        top: 110,
-        left: 65,
-        bottom: screenSize.height * 0.48,
-        right: 65,
-      ),
-      bearing,
-      0,
-      17,
-      null,
-    );
-
-    if (!mounted || _mapboxMap == null) return;
-
-    await mapboxMap.flyTo(
-      CameraOptions(
-        center: camera.center,
-        zoom: camera.zoom,
-        bearing: bearing,
-        pitch: 0,
-      ),
-      MapAnimationOptions(duration: 1200),
-    );
-  }
-
-  Future<void> _configurePickupMarker() async {
-    final mapboxMap = _mapboxMap;
-
-    if (mapboxMap == null) return;
-
-    // Pickup marker source
-    await mapboxMap.addSource(
-      GeoJsonSource(
-        id: 'pickup-source',
-        data:
-            '''
-      {
-        "type": "FeatureCollection",
-        "features": [
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                ${widget.longitude},
-                ${widget.latitude}
-              ]
-            },
-            "properties": {}
-          }
-        ]
-      }
-      ''',
-      ),
-    );
-
-    // Pickup marker layer
-    await mapboxMap.addLayer(
-      CircleLayer(
-        id: 'pickup-layer',
-        sourceId: 'pickup-source',
-        circleColor: AppColors.accent.toARGB32(),
-        circleRadius: 10,
-        circleStrokeColor: CupertinoColors.white.toARGB32(),
-        circleStrokeWidth: 3,
-      ),
-    );
-
-    // Navigation route source
-    _routeSource = GeoJsonSource(
-      id: 'navigation-route-source',
-      data: '''
-    {
-      "type": "FeatureCollection",
-      "features": []
-    }
-    ''',
-    );
-
-    await mapboxMap.addSource(_routeSource!);
-
-    // Navigation route layer
-    await mapboxMap.addLayer(
-      LineLayer(
-        id: 'navigation-route-layer',
-        sourceId: 'navigation-route-source',
-        lineColor: AppColors.accent.toARGB32(),
-        lineWidth: 6,
-        lineCap: LineCap.ROUND,
-        lineJoin: LineJoin.ROUND,
-      ),
-    );
-  }
-
-  Future<void> _loadRoutePreview() async {
-    final position = context.read<LocationProvider>().position;
-    final routeSource = _routeSource;
-
-    if (position == null || routeSource == null) return;
-
-    final navigationProvider = context.read<NavigationProvider>();
-
-    try {
-      await navigationProvider.startNavigation(
-        origin: position,
-        destinationLatitude: widget.latitude,
-        destinationLongitude: widget.longitude,
-      );
-
-      if (!mounted) return;
-
-      final route = navigationProvider.route;
-
-      if (route == null || route.coordinates.length < 2) return;
-
-      final geoJson = jsonEncode({
-        'type': 'FeatureCollection',
-        'features': [
-          {
-            'type': 'Feature',
-            'geometry': {
-              'type': 'LineString',
-              'coordinates': route.coordinates,
-            },
-            'properties': {},
-          },
-        ],
-      });
-
-      await routeSource.updateGeoJSON(geoJson);
-
-      if (mounted) {
-        setState(() {});
-      }
-    } catch (e) {}
-  }
-
-  @override
-  void dispose() {
-    _codeController.dispose();
-    _codeFocusNode.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -1609,44 +1727,42 @@ class _MapPageState extends State<MapPage> {
       child: Stack(
         children: [
           SizedBox.expand(
-            child: _navigationStarted
-                ? _buildNativeNavigationView()
-                : MapWidget(
-                    styleUri: 'mapbox://styles/mapbox/standard',
-                    //'mapbox://styles/spotmap-app/cmoa88xof000z01sacg9b4om8',
-                    onMapCreated: (MapboxMap mapboxMap) async {
-                      _mapboxMap = mapboxMap;
+            child: MapWidget(
+              styleUri: 'mapbox://styles/mapbox/outdoors-v12',
+              //styleUri: 'mapbox://styles/mapbox/navigation-day-v1',
+              onMapCreated: (MapboxMap mapboxMap) async {
+                _mapboxMap = mapboxMap;
 
-                      try {
-                        await mapboxMap.location.updateSettings(
-                          LocationComponentSettings(
-                            enabled: true,
-                            pulsingEnabled: true,
-                            pulsingColor: AppColors.accent.toARGB32(),
-                            pulsingMaxRadius: 30,
-                          ),
-                        );
+                try {
+                  await mapboxMap.location.updateSettings(
+                    LocationComponentSettings(
+                      enabled: true,
+                      pulsingEnabled: true,
+                      pulsingColor: AppColors.accent.toARGB32(),
+                      pulsingMaxRadius: 30,
+                    ),
+                  );
 
-                        await mapboxMap.setCamera(
-                          CameraOptions(
-                            center: Point(
-                              coordinates: Position(
-                                widget.longitude,
-                                widget.latitude,
-                              ),
-                            ),
-                            zoom: 18,
-                          ),
-                        );
-                      } catch (_) {}
-                    },
-                    onStyleLoadedListener: (_) {
-                      _onStyleLoaded();
-                    },
-                    onMapLoadedListener: (_) {
-                      _onMapLoaded();
-                    },
-                  ),
+                  await mapboxMap.setCamera(
+                    CameraOptions(
+                      center: Point(
+                        coordinates: Position(
+                          widget.longitude,
+                          widget.latitude,
+                        ),
+                      ),
+                      zoom: 18,
+                    ),
+                  );
+                } catch (_) {}
+              },
+              onStyleLoadedListener: (_) {
+                _onStyleLoaded();
+              },
+              onMapLoadedListener: (_) {
+                _onMapLoaded();
+              },
+            ),
           ),
           if (!_isMapReady)
             Positioned.fill(
@@ -1729,7 +1845,38 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
             ),
-            if (!_navigationStarted)
+            if (_navigationStarted && _customNavigationController != null) ...[
+              Positioned(
+                top: 108,
+                left: 16,
+                right: 16,
+                child: NavigationBanner(
+                  step:
+                      _customNavigationController!.nextStep ??
+                      _customNavigationController!.currentStep,
+                  distanceToManeuver:
+                      _customNavigationController!.distanceToManeuver,
+                  status: _customNavigationController!.status,
+                ),
+              ),
+              Positioned(
+                right: 16,
+                bottom: 205,
+                child: RecenterButton(onPressed: _recenterNavigation),
+              ),
+              Positioned(
+                left: 16,
+                right: 16,
+                bottom: 18,
+                child: NavigationBottomBar(
+                  remainingDuration:
+                      _customNavigationController!.remainingDuration,
+                  remainingDistance:
+                      _customNavigationController!.remainingDistance,
+                  onEnd: () => _endCustomNavigation(),
+                ),
+              ),
+            ] else if (widget.mode == MapViewMode.accepted)
               Positioned(
                 bottom: 20,
                 left: 16,

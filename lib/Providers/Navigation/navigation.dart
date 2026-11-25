@@ -1,63 +1,77 @@
 import 'package:flutter/foundation.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:public_health/Services/Navigation/directions.dart';
 
 class NavigationProvider extends ChangeNotifier {
   final DirectionsService _directionsService = DirectionsService();
 
-  DirectionsRoute? route;
+  DirectionsRoute? _route;
+  bool _isLoading = false;
+  String? _error;
+  int _currentInstructionIndex = 0;
 
-  bool isLoading = false;
-  String? error;
+  DirectionsRoute? get route => _route;
 
-  int currentInstructionIndex = 0;
+  bool get isLoading => _isLoading;
+
+  String? get error => _error;
+
+  int get currentInstructionIndex => _currentInstructionIndex;
+
+  String? get currentInstruction {
+    if (_route == null || _route!.instructions.isEmpty) {
+      return null;
+    }
+
+    if (_currentInstructionIndex >= _route!.instructions.length) {
+      return null;
+    }
+
+    return _route!.instructions[_currentInstructionIndex];
+  }
 
   Future<void> startNavigation({
-    required Position origin,
+    required double originLatitude,
+    required double originLongitude,
     required double destinationLatitude,
     required double destinationLongitude,
   }) async {
-    isLoading = true;
-    error = null;
-    route = null;
-    currentInstructionIndex = 0;
+    _isLoading = true;
+    _error = null;
+    _route = null;
+    _currentInstructionIndex = 0;
+
     notifyListeners();
 
     try {
-      route = await _directionsService.getRoute(
-        originLatitude: origin.latitude,
-        originLongitude: origin.longitude,
+      _route = await _directionsService.getRoute(
+        originLatitude: originLatitude,
+        originLongitude: originLongitude,
         destinationLatitude: destinationLatitude,
         destinationLongitude: destinationLongitude,
       );
     } catch (e) {
-      error = e.toString();
+      _error = e.toString();
     } finally {
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
     }
   }
 
   void nextInstruction() {
-    if (route == null) return;
+    if (_route == null) return;
 
-    if (currentInstructionIndex < route!.instructions.length - 1) {
-      currentInstructionIndex++;
+    if (_currentInstructionIndex < _route!.instructions.length - 1) {
+      _currentInstructionIndex++;
       notifyListeners();
     }
   }
 
   void resetNavigation() {
-    route = null;
-    error = null;
-    isLoading = false;
-    currentInstructionIndex = 0;
+    _route = null;
+    _isLoading = false;
+    _error = null;
+    _currentInstructionIndex = 0;
+
     notifyListeners();
-  }
-
-  String? get currentInstruction {
-    if (route == null || route!.instructions.isEmpty) return null;
-
-    return route!.instructions[currentInstructionIndex];
   }
 }
