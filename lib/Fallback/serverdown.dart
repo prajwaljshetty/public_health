@@ -9,8 +9,13 @@ import 'package:public_health/Language/language_switcher.dart';
 
 class ServerDownPage extends StatelessWidget {
   final VoidCallback onReload;
+  final bool isLoading;
 
-  const ServerDownPage({super.key, required this.onReload});
+  const ServerDownPage({
+    super.key,
+    required this.onReload,
+    this.isLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +112,12 @@ class ServerDownPage extends StatelessWidget {
               const SizedBox(height: 32),
 
               // Retry
-              AppPrimaryButton(text: l10n.serverDownRetry, onPressed: onReload),
+              AppPrimaryButton(
+                text: l10n.serverDownRetry,
+                onPressed: onReload,
+                isLoading: isLoading,
+                loadingText: 'Checking...',
+              ),
 
               const SizedBox(height: 18),
 
@@ -120,30 +130,6 @@ class ServerDownPage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      bottom: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.backgroundblack, width: 1),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: CupertinoButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                // Open AI Assistant
-              },
-              child: const Icon(
-                CupertinoIcons.sparkles,
-                color: AppColors.accent,
-                size: 26,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

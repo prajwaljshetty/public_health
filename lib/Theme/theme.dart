@@ -85,78 +85,82 @@ class AppScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final keyboard = MediaQuery.viewInsetsOf(context).bottom;
+    final bottomInset = MediaQuery.viewPaddingOf(context).bottom;
 
     return CupertinoPageScaffold(
       backgroundColor: AppColors.backgroundwhite,
       resizeToAvoidBottomInset: false,
       child: SafeArea(
-        bottom: keyboard == 0,
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                if (header != null) ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 22),
-                    child: header!,
-                  ),
-
-                  // Feather
-                  Container(
-                    height: 20,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          AppColors.backgroundwhite,
-                          AppColors.backgroundwhite.withValues(alpha: 0),
-                        ],
+        bottom: false,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: bottomInset),
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  if (header != null) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      child: header!,
+                    ),
+                    Container(
+                      height: 20,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            AppColors.backgroundwhite,
+                            AppColors.backgroundwhite.withValues(alpha: 0),
+                          ],
+                        ),
                       ),
                     ),
+                  ],
+
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      child: body,
+                    ),
                   ),
+
+                  if (bottom != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      child: bottom,
+                    ),
                 ],
+              ),
 
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 22),
-                    child: body,
+              if (showBack)
+                Positioned(
+                  top: 0,
+                  left: 8,
+                  child: CupertinoButton(
+                    padding: const EdgeInsets.all(8),
+                    minimumSize: Size.zero,
+                    onPressed: () => Navigator.pop(context),
+                    child: const Icon(
+                      CupertinoIcons.chevron_left,
+                      size: 28,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ),
 
-                if (bottom != null)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 22),
-                    child: bottom,
-                  ),
-              ],
-            ),
-
-            if (showBack)
-              Positioned(
-                top: 0,
-                left: 8,
-                child: CupertinoButton(
-                  padding: const EdgeInsets.all(8),
-                  minimumSize: Size.zero,
-                  onPressed: () => Navigator.pop(context),
-                  child: const Icon(
-                    CupertinoIcons.chevron_left,
-                    size: 28,
-                    color: AppColors.textPrimary,
+              if (trailing != null)
+                Positioned(
+                  top: 0,
+                  left: showBack ? 60 : 22,
+                  right: 22,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: trailing!,
                   ),
                 ),
-              ),
-
-            if (trailing != null)
-              Positioned(
-                top: 0,
-                left: showBack ? 60 : 22,
-                right: 22,
-                child: Row(mainAxisSize: MainAxisSize.max, children: trailing!),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:public_health/Services/Navigation/directions.dart';
 
 // Language :
-import 'package:public_health/l10n/app_localizations.dart';
 
 const double _earthRadius = 6371008.8;
 
